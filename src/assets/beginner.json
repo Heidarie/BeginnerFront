@@ -1,0 +1,79 @@
+{
+	"offers": [
+		{
+			"title": "tytuł",
+			"from": "1500",
+			"to": "2000",
+			"place": "Poznań",
+			"profession": "Programista",
+			"display-style": "TUTAJ PODAMY KLASĘ CSS'A (1-BLOK/2-BLOKI)",
+			"benefits": [
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit"
+			]
+		},
+		{
+			"title": "tytuł",
+			"from": "1500",
+			"to": "2000",
+			"place": "Poznań",
+			"profession": "Programista",
+			"display-style": "TUTAJ PODAMY KLASĘ CSS'A (1-BLOK/2-BLOKI)",
+			"benefits": [
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit"
+			]
+		},
+		{
+			"title": "tytuł",
+			"from": "1500",
+			"to": "2000",
+			"place": "Poznań",
+			"profession": "Programista",
+			"display-style": "TUTAJ PODAMY KLASĘ CSS'A (1-BLOK/2-BLOKI)",
+			"benefits": [
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit"
+			]
+		},
+		{
+			"title": "tytuł",
+			"from": "1500",
+			"to": "2000",
+			"place": "Poznań",
+			"profession": "Programista",
+			"display-style": "TUTAJ PODAMY KLASĘ CSS'A (1-BLOK/2-BLOKI)",
+			"benefits": [
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit"
+			]
+		},
+		{
+			"title": "tytuł",
+			"from": "1500",
+			"to": "2000",
+			"place": "Poznań",
+			"profession": "Programista",
+			"display-style": "TUTAJ PODAMY KLASĘ CSS'A (1-BLOK/2-BLOKI)",
+			"benefits": [
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit",
+				"benefit"
+			]
+		}
+	]
+}
