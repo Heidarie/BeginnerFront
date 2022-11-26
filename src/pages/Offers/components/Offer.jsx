@@ -18,8 +18,8 @@ const Offer = ({
   return (
     <div
       className={classNames(
-        hover ? "row-span-2 h-[42rem]" : "h-[21rem]",
-        `${displayStyle} hover:h-[42rem] bg-white delay-100 transition-all hover:scale-95 ease-in duration-500 shadow-xl rounded-xl overflow-hidden mb-6 md:mb-0 max-h-[42rem]`
+        hover ? "row-span-2 h-[44rem]" : "h-[21rem]",
+        `${displayStyle} hover:h-[44rem] bg-white transition-all duration-100 hover:duration-700 ease-out shadow-xl rounded-xl overflow-hidden mb-6 md:mb-0 max-h-[44rem]`
       )}
       onMouseOver={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -44,7 +44,9 @@ const Offer = ({
         {hover ? (
           <div
             className={
-              hover ? "row-span-0 duration-500" : "row-span-1 duration-500"
+              hover
+                ? "row-span-0 transition-all delay-1000"
+                : "row-span-1 transition-transform delay-500"
             }
           >
             {benefits.map((benefit) => {

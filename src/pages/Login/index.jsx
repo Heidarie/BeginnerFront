@@ -1,6 +1,6 @@
 import React from "react";
-import loginBg from "../assets/loginBg.png";
-import Footer from "../components/Footer";
+import loginBg from "../../assets/loginBg.png";
+import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 
 const Login = () => {
@@ -32,7 +32,7 @@ const Login = () => {
               </h2>
 
               <p className="mt-3 text-gray-500 dark:text-gray-300">
-                Sign in to access your account
+                Sign in to access your account.
               </p>
             </div>
 
@@ -63,7 +63,7 @@ const Login = () => {
                       Password
                     </label>
                     <Link
-                      to="/asd"
+                      to="/Authentication/ForgotPassword"
                       className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
                     >
                       Forgot password?
@@ -87,9 +87,9 @@ const Login = () => {
               </form>
 
               <p className="mt-6 text-sm text-center text-gray-400">
-                Don&#x27;t have an account yet?{" "}
+                Don't have an account yet?{" "}
                 <Link
-                  to="/"
+                  to="/Authentication/Register"
                   className="text-blue-500 focus:outline-none focus:underline hover:underline"
                 >
                   Sign up

@@ -13,14 +13,12 @@ import {
 import { Menu, Transition } from "@headlessui/react";
 import profileCircle from "../assets/jamina.jpg";
 import { Link } from "react-router-dom";
+import { classNames } from "../utils";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
   const [hover, setHover] = useState([false, false, false, false, false]);
-
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(" ");
-  }
+  const [isLogged, setIsLogged] = useState(false);
 
   const handleNav = () => {
     setNav(!nav);
@@ -32,7 +30,7 @@ const Navbar = () => {
     );
   };
   return (
-    <nav className="bg-gray-800">
+    <nav className="bg-gray-800 sticky top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 z-[100]">
         <div className="relative flex items-center justify-between h-16 z-[100]">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden ">
@@ -48,20 +46,18 @@ const Navbar = () => {
             </div>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start ">
-            <div className="flex-shrink-0 flex items-center">
-              <Link to="/">
+            <Link to="/">
+              <div className="flex-shrink-0 flex items-center justify-center">
                 <img
                   className="block h-8 w-auto"
                   src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                   alt="Workflow"
                 />
-              </Link>
-              <Link to="/">
                 <h1 className="hidden text-3xl lg:block w-auto font-bold text-[#00df9a] pl-4 pr-4">
                   Beginner.
                 </h1>
-              </Link>
-            </div>
+              </div>
+            </Link>
             <div className="hidden sm:block sm:ml-6 ">
               <div className="flex space-x-4">
                 <Link className="" to="/Offers">
@@ -87,7 +83,7 @@ const Navbar = () => {
                     </p>
                   </div>
                 </Link>
-                <Link className="" to="/Offers">
+                <Link className="" to="/Applications">
                   <div
                     className="px-2 py-1 bg-[#00df9a] rounded-md"
                     onMouseOver={() => handleHover(1)}
@@ -111,7 +107,7 @@ const Navbar = () => {
                   </div>
                 </Link>
 
-                <Link className="" to="/Offers">
+                <Link className="" to="/Contacts">
                   <div
                     className="px-2 py-1 bg-[#00df9a] rounded-md"
                     onMouseOver={() => handleHover(2)}
@@ -135,7 +131,7 @@ const Navbar = () => {
                   </div>
                 </Link>
 
-                <Link className="" to="/Offers">
+                <Link className="" to="/Messages">
                   <div
                     className="px-2 py-1 bg-[#00df9a] rounded-md"
                     onMouseOver={() => handleHover(3)}
@@ -161,123 +157,147 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-            <button
-              type="button"
-              className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
-            >
-              <span className="sr-only">View notifications</span>
 
-              <svg
-                className="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-                stroke="currentColor"
-                aria-hidden="true"
+          {isLogged ? (
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <button
+                type="button"
+                className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-                />
-              </svg>
-            </button>
+                <span className="sr-only">View notifications</span>
 
-            <div className="ml-3 relative">
-              <div>
-                <Menu
-                  as="div"
-                  className="relative inline-block text-left overflow-visible ml-5 z-[100]"
+                <svg
+                  className="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  aria-hidden="true"
                 >
-                  <div>
-                    <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border border-gray-300 shadow-sm  py-0 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
-                      <div className="w-12 -left-2 md:-left-4 relative">
-                        <img
-                          src={profileCircle}
-                          alt="moje zdjecie"
-                          className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
-                        />
-                      </div>
-
-                      <div className="pr-3 hidden sm:block">
-                        <p>Maciej</p>
-                      </div>
-                      <div>
-                        <AiFillCaretDown
-                          className="mr-1 h-5 w-5 items-end"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    </Menu.Button>
-                  </div>
-
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                  />
+                </svg>
+              </button>
+              <div className="ml-3 relative">
+                <div>
+                  <Menu
+                    as="div"
+                    className="relative inline-block text-left overflow-visible ml-5 z-[100]"
                   >
-                    <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
-                      <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <Link
-                              to="/Profile"
-                              className={classNames(
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              Profil
-                            </Link>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/"
-                              className={classNames(
-                                active
-                                  ? "bg-gray-100 text-gray-900"
-                                  : "text-gray-700",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              Ustawienia konta
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </div>
-                      <div className="py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <a
-                              href="/Login"
-                              className={classNames(
-                                active
-                                  ? "bg-red-100 text-gray-900 "
-                                  : "text-gray-700 ",
-                                "block px-4 py-2 text-sm"
-                              )}
-                            >
-                              Wyloguj się
-                            </a>
-                          )}
-                        </Menu.Item>
-                      </div>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
+                    <div>
+                      <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border border-gray-300 shadow-sm  py-0 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
+                        <div className="w-12 -left-2 md:-left-4 relative">
+                          <img
+                            src={profileCircle}
+                            alt="moje zdjecie"
+                            className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
+                          />
+                        </div>
+
+                        <div className="pr-3 hidden sm:block">
+                          <p>Maciej</p>
+                        </div>
+                        <div>
+                          <AiFillCaretDown
+                            className="mr-1 h-5 w-5 items-end"
+                            aria-hidden="true"
+                          />
+                        </div>
+                      </Menu.Button>
+                    </div>
+
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
+                        <div className="py-1">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <Link
+                                to="/Profile"
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                  "block px-4 py-2 text-sm"
+                                )}
+                              >
+                                Profil
+                              </Link>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/"
+                                className={classNames(
+                                  active
+                                    ? "bg-gray-100 text-gray-900"
+                                    : "text-gray-700",
+                                  "block px-4 py-2 text-sm"
+                                )}
+                              >
+                                Ustawienia konta
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </div>
+                        <div className="py-1">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <a
+                                href="/Authentication/Login"
+                                className={classNames(
+                                  active
+                                    ? "bg-red-100 text-gray-900 "
+                                    : "text-gray-700 ",
+                                  "block px-4 py-2 text-sm"
+                                )}
+                              >
+                                Wyloguj się
+                              </a>
+                            )}
+                          </Menu.Item>
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+              <div className="ml-3 relative">
+                <div>
+                  <Menu
+                    as="div"
+                    className="relative inline-block text-left overflow-visible ml-5 z-[100]"
+                  >
+                    <div>
+                      <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border shadow-sm py-0 bg-white text-sm font-medium text-gray-700 hover:bg-[#00df9a]  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
+                        <Link
+                          to="/Authentication/Login"
+                          className="text-base leading-6 text-gray-500 hover:text-gray-900"
+                        >
+                          <div className="p-3">Zaloguj się</div>
+                        </Link>
+                      </Menu.Button>
+                    </div>
+                  </Menu>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -302,7 +322,7 @@ const Navbar = () => {
 
           <Link
             onClick={() => setNav(!nav)}
-            to="/"
+            to="/Applications"
             className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Aplikacje
@@ -310,7 +330,7 @@ const Navbar = () => {
 
           <Link
             onClick={() => setNav(!nav)}
-            to="."
+            to="/Contacts"
             className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Kontakty
@@ -318,7 +338,7 @@ const Navbar = () => {
 
           <Link
             onClick={() => setNav(!nav)}
-            to="."
+            to="/Messages"
             className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Wiadomości
