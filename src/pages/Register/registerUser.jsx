@@ -12,7 +12,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/Authentication/Register", values);
+    const res = await axiosPOST("/Register", values);
     if (res.status === 200) {
       navigate({ pathname: "/Login" });
     } else {
@@ -115,7 +115,7 @@ const Register = () => {
         <p className="mt-6 text-sm text-center text-gray-400 mb-5">
           Already have an account?{" "}
           <Link
-            to="/Authentication/Login"
+            to="/Login"
             className="text-blue-500 focus:outline-none focus:underline hover:underline"
           >
             Sign in

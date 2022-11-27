@@ -11,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/Authentication/Login", values);
+    const res = await axiosPOST("/Login", values);
     if (res.status === 200) {
       navigate({ pathname: res.request.response });
     } else {
@@ -111,7 +111,7 @@ const Login = () => {
               <p className="mt-6 text-sm text-center text-gray-400">
                 Don't have an account yet?{" "}
                 <Link
-                  to="/Authentication/Register"
+                  to="/Register"
                   className="text-blue-500 focus:outline-none focus:underline hover:underline"
                 >
                   Sign up

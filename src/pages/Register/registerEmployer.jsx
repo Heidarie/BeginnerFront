@@ -10,7 +10,7 @@ const Register = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/Authentication/RegisterEmployer", values);
+    const res = await axiosPOST("/RegisterEmployer", values);
     if (res.status === 200) {
       navigate({ pathname: "/Login" });
     } else {
