@@ -1,5 +1,7 @@
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
+
 export async function axiosGET(link) {
   return axios
     .get(`https://localhost:7064${link}`)
