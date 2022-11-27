@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Feed from "../Feed/index";
-import OffersPage2 from "../Offers/OffersPage2";
+import OffersPage from "../Offers/OffersPage";
 import { classNames } from "../../utils";
 const HomePage = () => {
   const [primary, setPrimary] = useState(true);
@@ -13,7 +13,7 @@ const HomePage = () => {
     window.addEventListener("resize", handleMobile);
   });
   return (
-    <div className="w-full h-full mx-auto text-center flex justify-center">
+    <div className="w-full h-full mx-auto flex justify-center">
       <div className="max-w-full mx-auto grid md:grid-cols-2 gap-8">
         <div onMouseOver={() => setPrimary(1)}>
           <div
@@ -36,7 +36,7 @@ const HomePage = () => {
               ""
             )}
           >
-            <OffersPage2 />
+            <OffersPage />
           </div>
         </div>
       </div>

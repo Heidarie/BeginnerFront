@@ -1,12 +1,31 @@
 import React from "react";
+import loginBg from "../../assets/loginBg.png";
+import InputBox from "./components/InputBox";
+import Post from "./components/Post";
 
 const Feed = () => {
   return (
-    <div>
-      <div>
-        <h2 className="text-[100px]">Feed</h2>
-      </div>
-    </div>
+    <>
+      <InputBox />
+      <Post
+        name="Maciek Moczadło"
+        title="TO jest moje nowe biurko"
+        description="Podoba się?"
+        postImage={loginBg}
+        image={loginBg}
+        category="Programowanie"
+        timestamp="2 hours ago"
+      />
+      <Post
+        name="Maciek Moczadło"
+        title="TO jest moje nowe biurko"
+        description="Podoba się?"
+        postImage={loginBg}
+        image={loginBg}
+        category="Programowanie"
+        timestamp="2 hours ago"
+      />
+    </>
   );
 };
 
