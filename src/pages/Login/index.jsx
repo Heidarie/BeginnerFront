@@ -11,7 +11,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/Login", values);
+    const res = await axiosPOST("/Authentication/Login", values);
     if (res.status === 200) {
       navigate({ pathname: res.request.response });
     } else {
