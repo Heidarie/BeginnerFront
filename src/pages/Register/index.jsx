@@ -16,7 +16,7 @@ function Register() {
           >
             <div className="flex items-center justify-center w-full max-w-md px-6 mx-auto lg:w-2/6">
               <div className="flex-1">
-                <div className="flex justify-between mb-4">
+                <div className="flex justify-between mb-4 bg-gray-800 rounded-2xl">
                   <button
                     className="m-2 text-2xl text-white bg-gray-800 rounded-lg px-3 p-1"
                     onClick={() => setView("basic")}
@@ -25,7 +25,7 @@ function Register() {
                     Employee
                   </button>
                   <button
-                    className="m-2 text-2xl text-white bg-gray-800 rounded-lg px-3 p-1"
+                    className="m-2 text-2xl text-white bg-gray-800 rounded-lg px-3 p-1 "
                     onClick={() => setView("advanced")}
                     style={{ color: view === "advanced" ? "#00df9a" : "" }}
                   >

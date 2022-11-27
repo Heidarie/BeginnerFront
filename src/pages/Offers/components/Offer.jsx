@@ -19,33 +19,33 @@ const Offer = ({
         premium
           ? "col-span-1 md:col-span-2 border-4 border-blue-200"
           : "col-span-1",
-        `group flex flex-col justify-between 2xl:block lg:justify-center overflow-clip items-center rounded-md bg-white  drop-shadow-2xl`
+        `group flex flex-col justify-between 2xl:block lg:justify-center overflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
       )}
     >
-      <div className="h-5/6 w-full">
+      <div className="w-full">
         <div className="text-right w-full -ml-2">
-          <h3 className="text-[#00df9a] text-lg 2xl:text-4xl font-extrabold">
+          <h3 className="text-[#00df9a] text-lg 2xl:text-2xl font-extrabold">
             {location}
           </h3>
         </div>
         <div className="p-2 grid grid-cols-6 xl:mb-4 md:grid-cols-1 mb-2 justify-start md:justify-items-center items-center">
           <div className="col-span-1">
-            <div className="min-h-12 min-w-12 xl:h-36 xl:w-36 justify-start text-center md:justify-center items-center">
+            <div className="min-h-12 min-w-12 xl:h-28 xl:w-28 justify-start text-center md:justify-center items-center">
               <img
                 className="block"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                 alt="profileIcon"
               />
             </div>
-            <p className="mt-1 text-center text-md text-semibold text-black xl:text-3xl">
+            <p className="mt-1 text-center text-md text-semibold text-black xl:text-2xl">
               {company}
             </p>
           </div>
           <div className="ml-2 -mt-5 md:m-0 2xl:mt-4 col-span-5 md:col-span-1 md:w-full">
-            <h2 className="font-bold text-xl sm:text-lg md:text-center  text-black 2xl:text-4xl">
+            <h2 className="font-bold text-xl sm:text-lg md:text-center  text-black 2xl:text-2xl">
               {profession}
             </h2>
-            <h2 className="font-semibold text-md md:text-center text-black -mt-2 xl:mt-0 2xl:text-3xl">
+            <h2 className="font-semibold text-md md:text-center text-black -mt-2 xl:mt-0 2xl:text-xl">
               {level}
             </h2>
           </div>
@@ -79,8 +79,8 @@ const Offer = ({
           </div>
         </ScrollContainer>
       </div>
-      <div className="col-span-1 h-1/6 bottom-0 text-center  mb-2">
-        <p className="text-4xl font-extrabold text-gray-700">
+      <div className="col-span-1 fixed inset-x-0 bottom-0 text-center mt-4 mb-2">
+        <p className="text-4xl font-extrabold text-gray-700 m-2">
           {from} - {to}
         </p>
         <button

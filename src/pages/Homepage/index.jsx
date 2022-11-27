@@ -3,7 +3,7 @@ import Feed from "../Feed/index";
 import OffersPage from "../Offers/OffersPage";
 import { classNames } from "../../utils";
 const HomePage = () => {
-  const [primary, setPrimary] = useState(true);
+  const [primary, setPrimary] = useState(1);
 
   const handleMobile = () => {
     if (window.innerWidth < 768) setPrimary(1);
@@ -13,15 +13,15 @@ const HomePage = () => {
     window.addEventListener("resize", handleMobile);
   });
   return (
-    <div className="w-full h-full mx-auto flex justify-center">
-      <div className="max-w-full mx-auto grid md:grid-cols-2 gap-8">
+    <div className="w-full flex justify-center">
+      <div className="max-w-full grid md:grid-cols-2 ">
         <div onMouseOver={() => setPrimary(1)}>
           <div
             className={classNames(
               primary === 1
-                ? "w-full md:w-10/12 absolute h-screen max-h-screen overflow-y-auto left-0 p-4 hover:scale-100 duration-500 bg-white"
-                : "w-0 sm:w-2/12 absolute h-screen md:flex max-h-screen overflow-y-auto left-0 p-4 hover:scale-100 duration-500 bg-white opacity-50",
-              ""
+                ? "hidden md:block md:w-9/12 absolute h-screen max-h-screen overflow-y-auto left-0 rounded-lg duration-500"
+                : "flex-col md:w-3/12 absolute left-0 opacity-50 rounded-lg duration-500",
+              "h-screen max-h-screen"
             )}
           >
             <Feed />
@@ -31,9 +31,9 @@ const HomePage = () => {
           <div
             className={classNames(
               primary === 2
-                ? "hidden md:flex w-full md:w-10/12 h-screen max-h-screen top-0 overflow-y-auto shadow-xl absolute right-0 rounded-lg hover:scale-100 duration-500 bg-white"
-                : "hidden md:flex absolute h-screen right-0 w-0 sm:w-2/12 opacity-10 shadow-xl p-4 rounded-lg hover:scale-100 duration-500 bg-black overflow-clip",
-              ""
+                ? "block md:w-9/12 absolute h-screen max-h-screen overflow-y-auto right-0 rounded-lg duration-500 top-0"
+                : "flex-col md:w-3/12 absolute right-0 opacity-100 md:opacity-50 rounded-lg duration-500 top-0",
+              "h-screen max-h-screen"
             )}
           >
             <OffersPage />
