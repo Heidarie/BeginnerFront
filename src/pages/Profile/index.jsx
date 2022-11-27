@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
+import { axiosGET } from "../../components/axiosMethods";
+import axios from "axios";
 
 const Profile = () => {
+  const [user, setUser] = useState("");
+  console.log(user);
+  useEffect(() => {
+    axios
+      .get(`https://localhost:7064/Account/Profile`, {})
+      .then((res) => {
+        console.log(res);
+        setUser(res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto ">
@@ -630,7 +646,7 @@ const Profile = () => {
                 type="search"
                 className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400"
                 placeholder="Post a comment..."
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
           </div>
@@ -793,7 +809,7 @@ const Profile = () => {
                 type="search"
                 className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
                 placeholder="Post a comment..."
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
           </div>
@@ -955,7 +971,7 @@ const Profile = () => {
                 type="search"
                 className="w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"
                 placeholder="Post a comment..."
-                autocomplete="off"
+                autoComplete="off"
               />
             </div>
           </div>

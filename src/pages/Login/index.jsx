@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
-import { Link } from "react-router-dom";
+import { axiosPOST } from "../../components/axiosMethods";
+import CustomInput from "../Register/components/CustomInput";
+import { Form, Formik } from "formik";
 
 const Login = () => {
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const onSubmit = async (values, actions) => {
+    const res = await axiosPOST("/Authentication/Login", values);
+    if (res.status === 200) {
+      navigate({ pathname: res.request.response });
+    } else {
+      setError(res.response.data.message);
+      await new Promise((resolve) => {
+        return setTimeout(resolve, 2000);
+      });
+      setError(false);
+    }
+  };
   return (
     <div className="bg-white dark:bg-gray-900 text-white">
       <div className="flex justify-center h-screen w-full">
@@ -37,54 +55,58 @@ const Login = () => {
             </div>
 
             <div className="mt-8">
-              <form>
-                <div>
-                  <label
-                    for="email"
-                    className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="example@example.com"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-                </div>
+              <Formik
+                initialValues={{
+                  email: "",
+                  password: "",
+                }}
+                onSubmit={onSubmit}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <div>
+                      <CustomInput
+                        label="Email adress"
+                        name="email"
+                        type="email"
+                        placeholder="example@example.com"
+                      />
+                    </div>
 
-                <div className="mt-6">
-                  <div className="flex justify-between mb-2">
-                    <label
-                      for="password"
-                      className="text-sm text-gray-600 dark:text-gray-200"
-                    >
-                      Password
-                    </label>
-                    <Link
-                      to="/Authentication/ForgotPassword"
-                      className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
-                    >
-                      Forgot password?
-                    </Link>
-                  </div>
+                    <div className="mt-6">
+                      <CustomInput
+                        label="Password"
+                        forgotPassword="true"
+                        name="password"
+                        type="password"
+                        placeholder="Enter your password"
+                      />
+                    </div>
 
-                  <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="Your Password"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                  />
-                </div>
-
-                <div className="mt-6">
-                  <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                    Sign in
-                  </button>
-                </div>
-              </form>
+                    {error ? (
+                      <div className="mt-6">
+                        <button
+                          type="submit"
+                          disabled={isSubmitting && error}
+                          className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-red-600 rounded-md focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                        >
+                          {error}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="mt-6">
+                        <button
+                          type="submit"
+                          disabled={isSubmitting && error}
+                          className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-[#00df9a] rounded-md hover:bg-green-500 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                        >
+                          Zaloguj się
+                        </button>
+                      </div>
+                    )}
+                  </Form>
+                )}
+              </Formik>
 
               <p className="mt-6 text-sm text-center text-gray-400">
                 Don't have an account yet?{" "}

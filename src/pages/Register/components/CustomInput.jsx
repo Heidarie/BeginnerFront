@@ -1,17 +1,36 @@
 import { useField } from "formik";
+import { Link } from "react-router-dom";
 
-const CustomInput = ({ label, ...props }) => {
+const CustomInput = ({ label, forgotPassword, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
     <>
       <div className="mt-6">
-        <label
-          htmlFor="email"
-          className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
-        >
-          {label}
-        </label>
+        {forgotPassword ? (
+          <div className="flex justify-between mb-2">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+            >
+              {label}
+            </label>
+            <Link
+              to="/Authentication/ForgotPassword"
+              className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
+        ) : (
+          <label
+            htmlFor="email"
+            className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+          >
+            {label}
+          </label>
+        )}
+
         <input
           {...field}
           {...props}

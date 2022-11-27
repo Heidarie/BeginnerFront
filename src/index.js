@@ -16,8 +16,8 @@ root.render(
     <Navbar />
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/Authentication/Login" element={<LoginPage />} />
-      <Route path="/Authentication/Register" element={<RegisterPage />} />
+      <Route path="/Login" element={<LoginPage />} />
+      <Route path="/Register" element={<RegisterPage />} />
       <Route path="/Offers" element={<OffersPage />} />
       <Route path="/Feed" element={<Feed />} />
       <Route path="/Account/Profile" element={<ProfilePage />} />

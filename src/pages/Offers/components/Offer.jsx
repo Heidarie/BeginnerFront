@@ -50,37 +50,39 @@ const Offer = ({
             </h2>
           </div>
         </div>
-        <ScrollContainer
-          horizontal="true"
-          nativeMobileScroll="true"
-          className={classNames(
-            benefits.length < 6 ? "justify-center" : "justify-start",
-            `group-hover:hidden scroll-container bg-[#00df9881] flex justify-start `
-          )}
-        >
-          <ul className="flex">
-            {benefits &&
-              benefits.map((benefit) => {
-                return (
-                  <li
-                    className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                    key={benefit}
-                  >
-                    {benefit}
-                  </li>
-                );
-              })}
-          </ul>
-        </ScrollContainer>
+        <div className="h-[10rem] md:h-[12rem]">
+          <ScrollContainer
+            horizontal="true"
+            nativeMobileScroll="true"
+            className={classNames(
+              benefits.length < 6 ? "justify-center" : "justify-start",
+              `group-hover:hidden scroll-container bg-[#00df9881] flex justify-start`
+            )}
+          >
+            <ul className="flex">
+              {benefits &&
+                benefits.map((benefit) => {
+                  return (
+                    <li
+                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                      key={benefit}
+                    >
+                      {benefit}
+                    </li>
+                  );
+                })}
+            </ul>
+          </ScrollContainer>
 
-        <ScrollContainer className="hidden group-hover:block scroll-container max-h-[10rem]">
-          <div className="flex text-2xl flex-nowrap justify-start text-start  text-black p-2">
-            {info}
-          </div>
-        </ScrollContainer>
+          <ScrollContainer className="hidden group-hover:block scroll-container h-[6rem]">
+            <div className="flex text-2xl flex-nowrap justify-start text-start  text-black p-2 -mt-2">
+              {info}
+            </div>
+          </ScrollContainer>
+        </div>
       </div>
       <div className="col-span-1 fixed inset-x-0 bottom-0 text-center mt-4 mb-2">
-        <p className="text-4xl font-extrabold text-gray-700 m-2">
+        <p className="text-4xl md:text-2xl font-extrabold text-gray-700 m-2">
           {from} - {to}
         </p>
         <button

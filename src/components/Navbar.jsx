@@ -256,7 +256,7 @@ const Navbar = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/Authentication/Login"
+                                href="/Login"
                                 className={classNames(
                                   active
                                     ? "bg-red-100 text-gray-900 "
@@ -286,7 +286,7 @@ const Navbar = () => {
                     <div>
                       <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border shadow-sm py-0 bg-white text-sm font-medium text-gray-700 hover:bg-[#00df9a]  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
                         <Link
-                          to="/Authentication/Login"
+                          to="/Login"
                           className="text-base leading-6 text-gray-500 hover:text-gray-900"
                         >
                           <div className="p-3">Zaloguj się</div>
