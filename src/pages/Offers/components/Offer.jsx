@@ -74,7 +74,7 @@ const Offer = ({
             </ul>
           </ScrollContainer>
 
-          <ScrollContainer className="hidden group-hover:block scroll-container h-[6rem]">
+          <ScrollContainer className="hidden group-hover:block scroll-container h-[6rem] md:h-[10rem]">
             <div className="flex text-2xl flex-nowrap justify-start text-start  text-black p-2 -mt-2">
               {info}
             </div>

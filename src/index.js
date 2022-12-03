@@ -21,7 +21,7 @@ root.render(
       <Route path="/Offers" element={<OffersPage />} />
       <Route path="/Feed" element={<Feed />} />
       <Route path="/Account/User/:id" element={<ProfilePage />} />
-      <Route path="/notfound" element={<NotFoundPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </BrowserRouter>
 );

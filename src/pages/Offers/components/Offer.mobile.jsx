@@ -26,7 +26,7 @@ const Offer = ({
         </div>
         <div className="p-2 grid grid-cols-6 mb-2 justify-start items-center">
           <div className="col-span-1">
-            <div className="min-h-12 min-w-12 justify-start text-center  items-center">
+            <div className="justify-start text-center items-center">
               <img
                 className="block"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
@@ -37,12 +37,12 @@ const Offer = ({
               {company}
             </p>
           </div>
-          <div className="ml-2 -mt-5col-span-5">
+          <div className="ml-2 -mt-5 col-span-5">
             <h2 className="font-bold text-xl text-black">{profession}</h2>
             <h2 className="font-semibold text-md text-black -mt-2">{level}</h2>
           </div>
         </div>
-        <div className="h-[12rem] ">
+        <div className="h-[12rem]">
           <ScrollContainer
             horizontal="true"
             nativeMobileScroll="true"

@@ -25,6 +25,14 @@ const Feed = () => {
         category="Programowanie"
         timestamp="2 hours ago"
       />
+      <Post
+        name="Maciek Moczadło"
+        title="TO jest moje nowe biurko"
+        description="Podoba się?"
+        image={loginBg}
+        category="Programowanie"
+        timestamp="2 hours ago"
+      />
     </>
   );
 };

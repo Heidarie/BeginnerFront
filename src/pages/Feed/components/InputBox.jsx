@@ -7,7 +7,7 @@ const InputBox = ({ name }) => {
     e.preventDefault();
   };
   return (
-    <div className="flex items-center justify-center md:my-5 drop-shadow-2xl">
+    <div className="flex items-center justify-center drop-shadow-2xl mt-[6rem]">
       <div className="md:rounded-xl border p-5 shadow-md w-full md:w-10/12 xl:w-6/12 bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">

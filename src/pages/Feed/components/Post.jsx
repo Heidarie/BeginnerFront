@@ -32,15 +32,22 @@ const Post = ({
             </div>
           </div>
         </div>
+        {postImage ? (
+          <div className="mt-4 mb-6">
+            <div className="mb-3 text-xl font-bold">{title}</div>
+            <div className="text-sm text-neutral-600 mb-2">{description}</div>
 
-        <div className="mt-4 mb-6">
-          <div className="mb-3 text-xl font-bold">{title}</div>
-          <div className="text-sm text-neutral-600 mb-2">{description}</div>
-          <div
-            className="flex items-center bg-cover object-fill max-h-[20rem] md:max-h-[40rem] h-screen justify-center px-20 bg-gray-900 bg-opacity-40"
-            style={{ backgroundImage: `url(${postImage})` }}
-          ></div>
-        </div>
+            <div
+              className="flex items-center bg-cover object-fill max-h-[20rem] md:max-h-[40rem] h-screen justify-center px-20 bg-gray-900 bg-opacity-40"
+              style={{ backgroundImage: `url(${postImage})` }}
+            ></div>
+          </div>
+        ) : (
+          <div className="mt-4 mb-6">
+            <div className="mb-3 text-xl font-bold">{title}</div>
+            <div className="text-sm text-neutral-600 mb-2">{description}</div>
+          </div>
+        )}
 
         <div>
           <div className="flex items-center justify-between text-slate-500">
