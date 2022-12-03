@@ -4,15 +4,19 @@ import { Form, Formik } from "formik";
 import { advancedSchema } from "./schema";
 import CustomInput from "./components/CustomInput";
 import CustomNumber from "./components/CustomNumber";
-import { axiosPOST } from "../../components/axiosMethods";
+import AuthService from "../../components/auth.service";
 
-const Register = () => {
+const RegisterEmployer = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/RegisterEmployer", values);
+    const res = await AuthService.register(
+      "/Authentication/RegisterEmployer",
+      values
+    );
     if (res.status === 200) {
       navigate({ pathname: "/Login" });
+      window.location.reload();
     } else {
       setError(res.response.data.message);
       await new Promise((resolve) => {
@@ -106,4 +110,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterEmployer;

@@ -1,52 +1,44 @@
 import React, { useState, useEffect } from "react";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
-import { axiosGET } from "../../components/axiosMethods";
-import axios from "axios";
+import AuthService from "../../components/auth.service";
+import { IoFlame } from "react-icons/io5";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
-  const [user, setUser] = useState("");
-  console.log(user);
-  useEffect(() => {
-    axios
-      .get(`https://localhost:7064/Account/Profile`, {})
-      .then((res) => {
-        console.log(res);
-        setUser(res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  let { id } = useParams();
+  console.log(id);
+  const [user, setUser] = useState(undefined);
 
+  useEffect(() => {
+    if (id) {
+      AuthService.getUser(id).then((res) => {
+        setUser(res.data);
+      });
+    }
+  }, []);
+  console.log(user?.isLoggedInUserAccount);
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto ">
         <aside className="my-10">
           <div className="bg-white shadow rounded-lg p-10">
+            {user?.isLoggedInUserAccount && (
+              <button class="px-4 py-2 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                Edytuj
+              </button>
+            )}
+
             <div className="flex flex-col gap-1 text-center items-center">
               <img
                 className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
                 src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
                 alt=""
               />
-              <p className="font-semibold">John Doe</p>
+              <p className="font-semibold">{`${user?.name} ${user?.surname}`}</p>
               <div className="text-sm leading-normal text-gray-400 flex justify-center items-center">
-                <svg
-                  viewBox="0 0 24 24"
-                  className="mr-1"
-                  width="16"
-                  height="16"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
-                Los Angeles, California
+                <IoFlame />
+                {user?.profession.toUpperCase()}
               </div>
             </div>
             <div className="flex justify-center items-center gap-2 my-3">

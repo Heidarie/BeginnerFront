@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
-import { axiosPOST } from "../../components/axiosMethods";
 import CustomInput from "../Register/components/CustomInput";
 import { Form, Formik } from "formik";
+import AuthService from "../../components/auth.service";
 
 const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/Authentication/Login", values);
+    const res = await AuthService.login(values);
+    console.log(res);
     if (res.status === 200) {
       navigate({ pathname: res.request.response });
+      window.location.reload();
     } else {
       setError(res.response.data.message);
       await new Promise((resolve) => {

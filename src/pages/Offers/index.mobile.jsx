@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { classNames } from "../../utils";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import ScrollContainer from "react-indiana-drag-scroll";
-import Offer from "./components/Offer";
+import OfferMobile from "./components/Offer.mobile";
 
-const OffersPage2 = () => {
+const OffersMobile = () => {
   const [isVisible, setIsVisible] = useState(false);
   const toggleVisibility = () => {
     if (window.pageYOffset > 800) {
@@ -22,8 +22,8 @@ const OffersPage2 = () => {
   window.addEventListener("scroll", toggleVisibility);
   return (
     <div className="">
-      <ScrollContainer className="sticky top-16 h-screen bg-white text-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-2 2xl:gap-7 p-8">
-        <Offer
+      <ScrollContainer className="sticky top-16 h-screen bg-white text-white grid grid-cols-1 gap-2 p-8">
+        <OfferMobile
           company="Accenture"
           location="REMOTE"
           level="Senior"
@@ -53,7 +53,7 @@ const OffersPage2 = () => {
           ]}
           premium={true}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -76,7 +76,7 @@ const OffersPage2 = () => {
           ]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -87,7 +87,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -98,7 +98,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -109,7 +109,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -120,7 +120,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -131,7 +131,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="Accenture"
           location="Warsaw"
           level="Senior"
@@ -143,8 +143,8 @@ const OffersPage2 = () => {
           premium={false}
         />
       </ScrollContainer>
-      <ScrollContainer className="sticky top-16 h-screen bg-white text-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-2 2xl:gap-7 p-8">
-        <Offer
+      <ScrollContainer className="sticky top-16 h-screen bg-white text-white grid grid-cols-1 gap-2 p-8">
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -174,7 +174,7 @@ const OffersPage2 = () => {
           ]}
           premium={true}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -197,7 +197,7 @@ const OffersPage2 = () => {
           ]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -208,7 +208,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -219,7 +219,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -230,7 +230,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -241,7 +241,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="NAZWA"
           location="REMOTE"
           level="Senior"
@@ -252,7 +252,7 @@ const OffersPage2 = () => {
           benefits={["JS", "REACT", "AWS"]}
           premium={false}
         />
-        <Offer
+        <OfferMobile
           company="Accenture"
           location="Warsaw"
           level="Senior"
@@ -282,4 +282,4 @@ const OffersPage2 = () => {
   );
 };
 
-export default OffersPage2;
+export default OffersMobile;

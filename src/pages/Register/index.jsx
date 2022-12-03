@@ -1,6 +1,6 @@
 import { useState } from "react";
-import BasicForm from "./registerUser";
-import AdvancedForm from "./registerEmployer";
+import RegisterEmployee from "./registerEmployee";
+import RegisterEmployer from "./registerEmployer";
 import Footer from "../../components/Footer";
 import loginBg from "../../assets/loginBg.png";
 
@@ -41,7 +41,7 @@ function Register() {
                     Sign up to create account.
                   </p>
                 </div>
-                {view === "basic" ? <BasicForm /> : <AdvancedForm />}
+                {view === "basic" ? <RegisterEmployee /> : <RegisterEmployer />}
               </div>
             </div>
           </div>

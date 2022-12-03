@@ -5,14 +5,17 @@ import { basicSchema } from "./schema";
 import CustomSelect from "./components/CustomSelect";
 import CustomInput from "./components/CustomInput";
 import CustomNumber from "./components/CustomNumber";
-import { axiosPOST } from "../../components/axiosMethods";
+import AuthService from "../../components/auth.service";
 
-const Register = () => {
+const RegisterEmployee = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await axiosPOST("/Register", values);
+    const res = await AuthService.register(
+      "/Authentication/RegisterEmployer",
+      values
+    );
     if (res.status === 200) {
       navigate({ pathname: "/Login" });
     } else {
@@ -127,4 +130,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterEmployee;

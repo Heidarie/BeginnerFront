@@ -16,41 +16,33 @@ const Offer = ({
   return (
     <div
       className={classNames(
-        premium
-          ? "col-span-1 md:col-span-2 border-4 border-blue-200"
-          : "col-span-1",
-        `group flex flex-col justify-between 2xl:block lg:justify-center overflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
+        premium ? "col-span-1 border-4 border-blue-200" : "col-span-1",
+        `group flex flex-col justify-betweenoverflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
       )}
     >
       <div className="w-full">
         <div className="text-right w-full -ml-2">
-          <h3 className="text-[#00df9a] text-lg 2xl:text-2xl font-extrabold">
-            {location}
-          </h3>
+          <h3 className="text-[#00df9a] text-lg font-extrabold">{location}</h3>
         </div>
-        <div className="p-2 grid grid-cols-6 xl:mb-4 md:grid-cols-1 mb-2 justify-start md:justify-items-center items-center">
+        <div className="p-2 grid grid-cols-6 mb-2 justify-start items-center">
           <div className="col-span-1">
-            <div className="min-h-12 min-w-12 xl:h-28 xl:w-28 justify-start text-center md:justify-center items-center">
+            <div className="min-h-12 min-w-12 justify-start text-center  items-center">
               <img
                 className="block"
                 src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                 alt="profileIcon"
               />
             </div>
-            <p className="mt-1 text-center text-md text-semibold text-black xl:text-2xl">
+            <p className="mt-1 text-center text-md text-semibold text-black">
               {company}
             </p>
           </div>
-          <div className="ml-2 -mt-5 md:m-0 2xl:mt-4 col-span-5 md:col-span-1 md:w-full">
-            <h2 className="font-bold text-xl sm:text-lg md:text-center  text-black 2xl:text-2xl">
-              {profession}
-            </h2>
-            <h2 className="font-semibold text-md md:text-center text-black -mt-2 xl:mt-0 2xl:text-xl">
-              {level}
-            </h2>
+          <div className="ml-2 -mt-5col-span-5">
+            <h2 className="font-bold text-xl text-black">{profession}</h2>
+            <h2 className="font-semibold text-md text-black -mt-2">{level}</h2>
           </div>
         </div>
-        <div className="h-[13rem] md:h-[12rem]">
+        <div className="h-[12rem] ">
           <ScrollContainer
             horizontal="true"
             nativeMobileScroll="true"
@@ -64,7 +56,7 @@ const Offer = ({
                 benefits.map((benefit) => {
                   return (
                     <li
-                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                      className="outline-offset-2 outline-white p-3 text-sm font-semibold text-black"
                       key={benefit}
                     >
                       {benefit}
@@ -75,14 +67,14 @@ const Offer = ({
           </ScrollContainer>
 
           <ScrollContainer className="hidden group-hover:block scroll-container h-[6rem]">
-            <div className="flex text-2xl flex-nowrap justify-start text-start  text-black p-2 -mt-2">
+            <div className="flex text-2xl flex-nowrap justify-start text-start text-black p-2 -mt-2">
               {info}
             </div>
           </ScrollContainer>
         </div>
       </div>
       <div className="col-span-1 fixed inset-x-0 bottom-0 text-center mt-4 mb-2">
-        <p className="text-4xl md:text-2xl font-extrabold text-gray-700 m-2">
+        <p className="text-4xl font-extrabold text-gray-700 m-2">
           {from} - {to}
         </p>
         <button
