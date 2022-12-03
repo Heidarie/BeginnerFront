@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@headlessui/react": "1.7.4",
+    "@tailwindcss/forms": "^0.5.3",
     "axios": "1.2.0",
     "formik": "2.2.9",
     "react-indiana-drag-scroll": "2.2.0",

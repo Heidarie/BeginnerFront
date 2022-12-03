@@ -4,31 +4,42 @@ import Footer from "../../components/Footer";
 import AuthService from "../../components/auth.service";
 import { IoFlame } from "react-icons/io5";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import EditProfile from "./editProfile";
 
 const Profile = () => {
   let { id } = useParams();
-  console.log(id);
   const [user, setUser] = useState(undefined);
+  const [editProfile, setEditProfile] = useState(false);
 
-  useEffect(() => {
+  const hideModal = () => {
+    setEditProfile(false);
+  };
+
+  const getUser = (id) => {
     if (id) {
       AuthService.getUser(id).then((res) => {
         setUser(res.data);
       });
     }
-  }, []);
-  console.log(user?.isLoggedInUserAccount);
+  };
+
+  useEffect(() => {
+    getUser(id);
+  }, [id]);
   return (
     <div className="app bg-gray-100">
-      <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto ">
+      <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">
         <aside className="my-10">
           <div className="bg-white shadow rounded-lg p-10">
             {user?.isLoggedInUserAccount && (
-              <button class="px-4 py-2 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
-                Edytuj
-              </button>
+              <Link onClick={() => setEditProfile(true)}>
+                <button className="px-4 py-2 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                  Edytuj
+                </button>
+              </Link>
             )}
-
+            {editProfile && <EditProfile hideModal={hideModal} />}
             <div className="flex flex-col gap-1 text-center items-center">
               <img
                 className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"

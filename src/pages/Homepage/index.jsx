@@ -3,13 +3,11 @@ import Feed from "../Feed/index.jsx";
 import FeedMobile from "../Feed/index.mobile.jsx";
 import Offers from "../Offers/index.jsx";
 import OffersMobile from "../Offers/index.mobile.jsx";
-import ScrollContainer from "react-indiana-drag-scroll";
 
 const HomePage = () => {
   const [primary, setPrimary] = useState(1);
 
   const handleMobile = () => {
-    console.log(window.innerWidth);
     if (window.innerWidth < 768) setPrimary(1);
   };
 

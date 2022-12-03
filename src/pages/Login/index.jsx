@@ -12,7 +12,6 @@ const Login = () => {
 
   const onSubmit = async (values, actions) => {
     const res = await AuthService.login(values);
-    console.log(res);
     if (res.status === 200) {
       navigate({ pathname: res.request.response });
       window.location.reload();

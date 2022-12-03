@@ -4,8 +4,13 @@ const API_URL = "https://localhost:7064";
 
 axios.defaults.withCredentials = true;
 
-const register = (link, values) => {
-  return axios.post(API_URL + link, values);
+const register = async (link, values) => {
+  try {
+    return await axios.post(API_URL + link, values);
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 };
 
 const login = async (values) => {
@@ -15,7 +20,7 @@ const login = async (values) => {
       values
     );
     console.log(response);
-    if (response.status === 200) {
+    if (response.status === 200 || response.status === 201) {
       axios.get(API_URL + "/Account/Profile").then((res) => {
         console.log(res);
         localStorage.setItem("user", JSON.stringify(res.data));
@@ -24,6 +29,7 @@ const login = async (values) => {
     return response;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 
@@ -45,6 +51,7 @@ const getUser = async (userPublicUrl) => {
     return response;
   } catch (error) {
     console.log(error);
+    return error;
   }
 };
 const getCurrentUser = () => {

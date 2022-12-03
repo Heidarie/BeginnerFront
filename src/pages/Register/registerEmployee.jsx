@@ -12,14 +12,14 @@ const RegisterEmployee = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await AuthService.register(
-      "/Authentication/RegisterEmployer",
-      values
-    );
+    const res = await AuthService.register("/Authentication/Register", values);
     if (res.status === 200) {
       navigate({ pathname: "/Login" });
+      window.location.reload();
     } else {
-      setError(res.response.data.message);
+      setError(
+        res.response.data.message || res.response.data.errors.PhoneNumber[0]
+      );
       await new Promise((resolve) => {
         return setTimeout(resolve, 2000);
       });

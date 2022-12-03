@@ -8,7 +8,9 @@ import OffersPage from "./pages/Offers";
 import NotFoundPage from "./pages/NotFound/index";
 import Navbar from "./components/Navbar";
 import ProfilePage from "./pages/Profile/index";
+import EditProfile from "./pages/Profile/editProfile";
 import Feed from "./pages/Feed";
+import Modal from "./components/Modal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -21,6 +23,8 @@ root.render(
       <Route path="/Offers" element={<OffersPage />} />
       <Route path="/Feed" element={<Feed />} />
       <Route path="/Account/User/:id" element={<ProfilePage />} />
+      <Route path="/Account/User/Edit/:id" element={<EditProfile />} />
+      <Route path="/Modal" element={<Modal />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </BrowserRouter>

@@ -22,7 +22,7 @@ const Offers = () => {
   window.addEventListener("scroll", toggleVisibility);
   return (
     <>
-      <ScrollContainer className="sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-2 2xl:gap-5 p-[4rem]">
+      <ScrollContainer className="sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]">
         <Offer
           company="Accenture"
           location="REMOTE"
@@ -176,7 +176,7 @@ const Offers = () => {
           premium={false}
         />
       </ScrollContainer>
-      <ScrollContainer className="sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-2 2xl:gap-5 p-[4rem]">
+      <ScrollContainer className="sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]">
         <Offer
           company="NAZWA"
           location="REMOTE"
