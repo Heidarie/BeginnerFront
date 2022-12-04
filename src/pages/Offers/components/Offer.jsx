@@ -1,6 +1,7 @@
 import React from "react";
 import { classNames } from "../../../utils/classNames";
 import ScrollContainer from "react-indiana-drag-scroll";
+import { Link } from "react-router-dom";
 
 const Offer = ({
   company,
@@ -13,6 +14,7 @@ const Offer = ({
   info,
   premium,
 }) => {
+  const publicUrl = "1";
   return (
     <div
       className={classNames(
@@ -89,7 +91,7 @@ const Offer = ({
           type="button"
           className="focus:outline-none text-white hover:text-black bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5"
         >
-          Wyświetl ofertę
+          <Link to={`Offer/${publicUrl}`}>Wyświetl ofertę</Link>
         </button>
       </div>
     </div>

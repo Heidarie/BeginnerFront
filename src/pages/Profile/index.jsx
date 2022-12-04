@@ -217,7 +217,7 @@ const Profile = () => {
                     ></path>
                   </svg>
                 </div>
-                <div className="p-6 rounded-lg  flex flex-col w-full z-10 ">
+                <div className="p-6 rounded-lg  flex flex-col w-full z-5">
                   <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
                     Loremipsum..
                   </h4>
@@ -293,7 +293,7 @@ const Profile = () => {
                     ></path>
                   </svg>
                 </div>
-                <div className="p-5 rounded-lg  flex flex-col w-full z-10 ">
+                <div className="p-5 rounded-lg  flex flex-col w-full z-5 ">
                   <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
                     Loremipsum..
                   </h4>

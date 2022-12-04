@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/Login/index";
 import RegisterPage from "./pages/Register/index";
 import OffersPage from "./pages/Offers";
+import OfferPage from "./pages/Offer";
 import NotFoundPage from "./pages/NotFound/index";
 import Navbar from "./components/Navbar";
 import ProfilePage from "./pages/Profile/index";
@@ -21,6 +22,7 @@ root.render(
       <Route path="/Login" element={<LoginPage />} />
       <Route path="/Register" element={<RegisterPage />} />
       <Route path="/Offers" element={<OffersPage />} />
+      <Route path="/Offer/:publicUrl" element={<OfferPage />} />
       <Route path="/Feed" element={<Feed />} />
       <Route path="/Account/User/:id" element={<ProfilePage />} />
       <Route path="/Account/User/Edit/:id" element={<EditProfile />} />

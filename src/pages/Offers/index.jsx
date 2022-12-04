@@ -19,6 +19,7 @@ const Offers = () => {
       behavior: "smooth",
     });
   };
+  // window.innerHeight use to call next page
   window.addEventListener("scroll", toggleVisibility);
   return (
     <>
