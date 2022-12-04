@@ -9,7 +9,7 @@ const CustomInput = ({ className, label, ...props }) => {
         <label className="block text-sm font-medium text-gray-700">
           {label}
         </label>
-        <input
+        <select
           {...field}
           {...props}
           className={

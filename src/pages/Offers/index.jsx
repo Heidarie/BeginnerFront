@@ -3,9 +3,13 @@ import { classNames } from "../../utils";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Offer from "./components/Offer";
+import useOffersFilter from "./components/useOffersFilter";
+import Toast from "./components/Toast";
 
 const Offers = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [filter, setFilter] = useState("");
+  const [pageNumber, setPageNumber] = useState(0);
   const toggleVisibility = () => {
     if (window.pageYOffset > 800) {
       setIsVisible(true);
@@ -21,6 +25,11 @@ const Offers = () => {
   };
   // window.innerHeight use to call next page
   window.addEventListener("scroll", toggleVisibility);
+
+  const { offers, hasMore, loading, error } = useOffersFilter(
+    filter,
+    pageNumber
+  );
   return (
     <>
       <ScrollContainer className="sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]">
@@ -38,266 +47,14 @@ const Offers = () => {
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
 "
-          benefits={[
-            "JS",
-            "REACT",
-            "AWS",
-            "JS",
-            "REACT",
-            "AWS",
-            "JS",
-            "REACT",
-            "AWS",
-            "JS",
-            "REACT",
-            "AWS",
-          ]}
+          benefits={["JS", "REACT", "AWS"]}
           premium={true}
         />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-"
-          benefits={[
-            "JS",
-            "REACT",
-            "AWS",
-            "NODE.JS",
-            "PowerPoint",
-            "VISUALSTUDIO",
-          ]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="Accenture"
-          location="Warsaw"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="Accenture"
-          location="Warsaw"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="Accenture"
-          location="Warsaw"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="Accenture"
-          location="Warsaw"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="Accenture"
-          location="Warsaw"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
       </ScrollContainer>
-      <ScrollContainer className="sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]">
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-"
-          benefits={[
-            "JS",
-            "REACT",
-            "AWS",
-            "JS",
-            "REACT",
-            "AWS",
-            "JS",
-            "REACT",
-            "AWS",
-            "JS",
-            "REACT",
-            "AWS",
-          ]}
-          premium={true}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, tenetur. Culpa minus esse error iusto omnis. Ipsam ipsa aspernatur culpa sit cupiditate, debitis, temporibus ipsum deserunt non corrupti saepe sapiente!
-"
-          benefits={[
-            "JS",
-            "REACT",
-            "AWS",
-            "NODE.JS",
-            "PowerPoint",
-            "VISUALSTUDIO",
-          ]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="NAZWA"
-          location="REMOTE"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-        <Offer
-          company="Accenture"
-          location="Warsaw"
-          level="Senior"
-          profession="JS PROGRAMMER"
-          from="10000"
-          to="15000"
-          info="TEST"
-          benefits={["JS", "REACT", "AWS"]}
-          premium={false}
-        />
-      </ScrollContainer>
+      {error && (
+        <Toast text="Wystąpił bład przy ładowaniu ofert" icon="ERROR" />
+      )}
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
       <div className="fixed bottom-5">
         <div className="w-screen flex flex-col items-center justify-center">
           <button

@@ -9,13 +9,13 @@ const CustomInput = ({ className, label, ...props }) => {
         <label className="block text-sm font-medium text-gray-700">
           {label}
         </label>
-        <input
+        <textarea
           {...field}
           {...props}
           className={
             meta.touched && meta.error
-              ? "mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              : "mt-1 p-2 block w-full rounded-md bg-gray-50 border-red-500 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              ? "mt-1 p-4 block w-full rounded-md bg-gray-50 border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              : "mt-1 p-4 block w-full rounded-md bg-gray-50 border-gray-700 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           }
         />
         {meta.touched && meta.error && (

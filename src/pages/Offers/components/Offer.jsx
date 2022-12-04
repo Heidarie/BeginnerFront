@@ -1,7 +1,7 @@
 import React from "react";
 import { classNames } from "../../../utils/classNames";
 import ScrollContainer from "react-indiana-drag-scroll";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Offer = ({
   company,
@@ -15,6 +15,11 @@ const Offer = ({
   premium,
 }) => {
   const publicUrl = "1";
+  let locationRoute = useLocation();
+  let url = `/Offers/Offer/${publicUrl}`;
+  if (!locationRoute.pathname) {
+    url = `/Offer/${publicUrl}`;
+  }
   return (
     <div
       className={classNames(
@@ -91,7 +96,7 @@ const Offer = ({
           type="button"
           className="focus:outline-none text-white hover:text-black bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5"
         >
-          <Link to={`Offer/${publicUrl}`}>Wyświetl ofertę</Link>
+          <Link to={`${url}`}>Wyświetl ofertę</Link>
         </button>
       </div>
     </div>
