@@ -14,7 +14,8 @@ const RegisterEmployer = () => {
       "/Authentication/RegisterEmployer",
       values
     );
-    if (res.status === 200) {
+    console.log(res);
+    if (res.status === 201) {
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {

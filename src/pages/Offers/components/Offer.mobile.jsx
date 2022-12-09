@@ -2,19 +2,21 @@ import React from "react";
 import { classNames } from "../../../utils/classNames";
 import ScrollContainer from "react-indiana-drag-scroll";
 
-const Offer = ({
-  company,
-  location,
-  level,
-  profession,
-  from,
-  to,
-  benefits,
-  info,
-  premium,
-}) => {
+const Offer = React.forwardRef((props, ref) => {
+  const {
+    company,
+    location,
+    level,
+    profession,
+    from,
+    to,
+    requirements,
+    info,
+    premium,
+  } = props;
   return (
     <div
+      ref={ref}
       className={classNames(
         premium ? "col-span-1 border-4 border-blue-200" : "col-span-1",
         `group flex flex-col justify-betweenoverflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
@@ -47,19 +49,19 @@ const Offer = ({
             horizontal="true"
             nativeMobileScroll="true"
             className={classNames(
-              benefits.length < 6 ? "justify-center" : "justify-start",
+              requirements?.length < 6 ? "justify-center" : "justify-start",
               `group-hover:hidden scroll-container bg-[#00df9881] flex justify-start`
             )}
           >
             <ul className="flex">
-              {benefits &&
-                benefits.map((benefit) => {
+              {requirements &&
+                requirements.map((requirement) => {
                   return (
                     <li
                       className="outline-offset-2 outline-white p-3 text-sm font-semibold text-black"
-                      key={benefit}
+                      key={requirement}
                     >
-                      {benefit}
+                      {requirement}
                     </li>
                   );
                 })}
@@ -86,6 +88,6 @@ const Offer = ({
       </div>
     </div>
   );
-};
+});
 
 export default Offer;

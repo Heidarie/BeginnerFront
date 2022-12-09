@@ -38,6 +38,7 @@ const Navbar = () => {
 
   const setUserData = () => {
     setUser(AuthService.getCurrentUser());
+    if (user) window.location.reload();
   };
 
   useEffect(() => {

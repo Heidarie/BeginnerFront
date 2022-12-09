@@ -8,23 +8,34 @@ const getProfile = () => {
   return axios.get(API_URL + "/Account/Profile");
 };
 
-const getUserBoard = () => {
-  return axios.get(API_URL + "user");
+const getOfferDetails = async (publicUrl) => {
+  try {
+    const response = await axios.get(API_URL + `/Offers/${publicUrl}`);
+    if (response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 };
 
-const getModeratorBoard = () => {
-  return axios.get(API_URL + "mod");
-};
-
-const getAdminBoard = () => {
-  return axios.get(API_URL + "admin");
+const applyOffer = async (publicUrl) => {
+  try {
+    const response = await axios.post(API_URL + `/Apply/${publicUrl}`);
+    if (response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 };
 
 const UserService = {
   getProfile,
-  getUserBoard,
-  getModeratorBoard,
-  getAdminBoard,
+  getOfferDetails,
+  applyOffer,
 };
 
 export default UserService;

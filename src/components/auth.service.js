@@ -20,7 +20,7 @@ const login = async (values) => {
       values
     );
     console.log(response);
-    if (response.status === 200 || response.status === 201) {
+    if (response.status === 200) {
       axios.get(API_URL + "/Account/Profile").then((res) => {
         console.log(res);
         localStorage.setItem("user", JSON.stringify(res.data));
@@ -46,6 +46,9 @@ const getUser = async (userPublicUrl) => {
       API_URL + `/Account/User/${userPublicUrl}`
     );
     if (response.data.isLoggedInUserAccount) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    if (localStorage.getItem("user") !== response.data) {
       localStorage.setItem("user", JSON.stringify(response.data));
     }
     return response;

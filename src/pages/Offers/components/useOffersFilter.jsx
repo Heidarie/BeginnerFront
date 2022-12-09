@@ -7,6 +7,10 @@ export default function useOffersFilter(filter, pageNumber) {
   const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
+    setOffers([]);
+  }, [filter]);
+
+  useEffect(() => {
     setLoading(true);
     setError(false);
     let cancel;
@@ -18,7 +22,7 @@ export default function useOffersFilter(filter, pageNumber) {
     })
       .then((res) => {
         setOffers((prevOffers) => {
-          return [...new Set([...prevOffers, res.data])];
+          return [...new Set([...prevOffers, ...res.data])];
         });
         setHasMore(res.data);
         setLoading(false);
@@ -26,6 +30,7 @@ export default function useOffersFilter(filter, pageNumber) {
       })
       .catch((error) => {
         if (axios.isCancel(error)) return;
+        setLoading(false);
         setError(true);
       });
     return () => cancel();

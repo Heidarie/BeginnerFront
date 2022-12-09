@@ -13,7 +13,7 @@ const RegisterEmployee = () => {
 
   const onSubmit = async (values, actions) => {
     const res = await AuthService.register("/Authentication/Register", values);
-    if (res.status === 200) {
+    if (res.status === 201) {
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {

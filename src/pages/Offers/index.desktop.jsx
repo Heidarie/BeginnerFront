@@ -2,11 +2,11 @@ import React, { useState, useRef, useCallback } from "react";
 import { classNames } from "../../utils";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import ScrollContainer from "react-indiana-drag-scroll";
-import OfferMobile from "./components/Offer.mobile";
+import Offer from "./components/Offer";
 import useOffersFilter from "./components/useOffersFilter";
 import Toast from "./components/Toast";
 
-const OffersMobile = () => {
+const Offers = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [filter, setFilter] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
@@ -50,12 +50,12 @@ const OffersMobile = () => {
   window.addEventListener("scroll", toggleVisibility);
 
   return (
-    <div className="">
-      <ScrollContainer className="sticky mt-[2rem] top-16 h-screen bg-white text-white grid grid-cols-1 gap-2 p-8">
+    <>
+      <ScrollContainer className="pb-5 mt-[2rem] sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]">
         {offers.map((offer, index) => {
           if (offers.length === index + 1) {
             return (
-              <OfferMobile
+              <Offer
                 key={offer.publicUrl}
                 ref={lastOfferElementRef}
                 company={offer.companyName}
@@ -71,7 +71,7 @@ const OffersMobile = () => {
             );
           } else {
             return (
-              <OfferMobile
+              <Offer
                 key={offer.publicUrl}
                 company={offer.companyName}
                 location={offer.city}
@@ -97,7 +97,7 @@ const OffersMobile = () => {
             type="button"
             onClick={scrollToTop}
             className={classNames(
-              isVisible ? "opacity-100" : "hidden",
+              isVisible ? "animate-bounce opacity-100" : "hidden",
               "bg-[#00df9a] hover:bg-[#073f2e] focus:ring-white inline-flex items-center rounded-full p-3 text-white shadow-sm transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2"
             )}
           >
@@ -105,8 +105,8 @@ const OffersMobile = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default OffersMobile;
+export default Offers;

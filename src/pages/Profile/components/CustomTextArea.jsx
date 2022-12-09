@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-const CustomInput = ({ className, label, ...props }) => {
+const CustomTextArea = ({ className, label, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
@@ -25,4 +25,4 @@ const CustomInput = ({ className, label, ...props }) => {
     </>
   );
 };
-export default CustomInput;
+export default CustomTextArea;

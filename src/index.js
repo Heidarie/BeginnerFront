@@ -4,7 +4,7 @@ import HomePage from "./pages/Homepage/index";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/Login/index";
 import RegisterPage from "./pages/Register/index";
-import OffersPage from "./pages/Offers";
+import OffersPage from "./pages/Offers/index.desktop";
 import OfferPage from "./pages/Offer";
 import NotFoundPage from "./pages/NotFound/index";
 import Navbar from "./components/Navbar";

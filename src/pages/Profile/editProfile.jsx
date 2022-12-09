@@ -4,14 +4,25 @@ import Modal from "../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
 import CustomFile from "./components/CustomFile";
-import CustomSelect from "./components/CustomSelect";
+import CustomMultiSelect from "./components/CustomMultiSelect";
+import CustomDate from "./components/CustomDate";
 import { Form, Formik } from "formik";
+import DatePicker from "react-date-picker";
+import CreatableSelect from "react-select/creatable";
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState("");
+  const [gradDateStart, setGradDateStart] = useState(new Date());
+  const [gradDateEnd, setGradDateEnd] = useState(new Date());
+  const [expDateStart, setExpDateStart] = useState(new Date());
+  const [expDateEnd, setExpDateEnd] = useState(new Date());
+  const [skills, setSkills] = useState([]);
+  const [certificates, setCertificates] = useState([]);
   const navigate = useNavigate();
-
   const onSubmit = async (values, actions) => {
+    console.log(values);
+    console.log(gradDateStart, gradDateEnd, expDateStart, expDateEnd);
+    console.log(skills, certificates);
     // const res = await AuthService.register("/Authentication/Register", values);
     // if (res.status === 200) {
     //   navigate({ pathname: "/Login" });
@@ -33,13 +44,10 @@ const EditProfile = ({ hideModal }) => {
     <Modal hideModal={hideModal}>
       <Formik
         initialValues={{
-          email: "",
-          password: "",
-          confirmPassword: "",
-          phoneNumber: "",
-          name: "",
-          surname: "",
-          profession: "",
+          Name: "",
+          Surname: "",
+          Profession: "",
+          Description: "",
         }}
         onSubmit={onSubmit}
       >
@@ -76,14 +84,14 @@ const EditProfile = ({ hideModal }) => {
                             </svg>
                           </span>
 
-                          <CustomFile name="profilePicture" type="file" />
+                          <CustomFile name="Image" type="file" />
                         </div>
                       </div>
 
                       <CustomTextArea
                         className="mt-1"
                         label="Opis"
-                        name="about"
+                        name="Description"
                         type="text"
                         placeholder="Krótki opis"
                       />
@@ -131,10 +139,10 @@ const EditProfile = ({ hideModal }) => {
                         />
                         <CustomInput
                           className="col-span-6 sm:col-span-4"
-                          label="Email"
-                          name="email"
+                          label="Profesja"
+                          name="Profession"
                           type="email"
-                          placeholder="email@address.pl"
+                          placeholder="AWS Developer"
                         />
                         <CustomInput
                           className="col-span-6 sm:col-span-3"
@@ -189,7 +197,7 @@ const EditProfile = ({ hideModal }) => {
                 <div className="md:col-span-1">
                   <div className="px-4 sm:px-0">
                     <h3 className="text-lg font-medium leading-6 text-gray-900">
-                      Doświadczenie
+                      Wykształcenie
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
                       Uczelnie, które ukończłyeś.
@@ -197,7 +205,7 @@ const EditProfile = ({ hideModal }) => {
                   </div>
                 </div>
                 <div className="mt-5 md:col-span-2 md:mt-0">
-                  <div className="overflow-hidden shadow-md sm:rounded-md">
+                  <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <CustomInput
@@ -221,45 +229,181 @@ const EditProfile = ({ hideModal }) => {
                           type="text"
                           placeholder="Np. Informatyka"
                         />
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data rozpoczęcia
+                          </label>
+                          <DatePicker
+                            name="dateStartSchool"
+                            type="text"
+                            onChange={setGradDateStart}
+                            value={gradDateStart}
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data rozpoczęcia
+                          </label>
+                          <DatePicker
+                            name="dateStartSchool"
+                            type="text"
+                            onChange={setGradDateEnd}
+                            value={gradDateEnd}
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden sm:block" aria-hidden="true">
+              <div className="py-5">
+                <div className="border-t border-gray-200" />
+              </div>
+            </div>
+
+            <div className="mt-10 sm:mt-0">
+              <div className="md:grid md:grid-cols-3 md:gap-6">
+                <div className="md:col-span-1">
+                  <div className="px-4 sm:px-0">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                      Doświadczenie
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600">
+                      Prace w których pracowałeś.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-5 md:col-span-2 md:mt-0">
+                  <div className="shadow-md sm:rounded-md overflow-visible">
+                    <div className="bg-white px-4 py-5 sm:p-6">
+                      <div className="grid grid-cols-6 gap-6">
                         <CustomInput
-                          className="col-span-6 sm:col-span-3"
-                          label="Data rozpoczęcia"
-                          name="dateStart"
+                          className="col-span-6"
+                          label="Nazwa firmy"
+                          name="companyName"
                           type="text"
-                          placeholder="Grudzień"
+                          placeholder="np. Wyższa szkoła Bankowa w Poznaniu"
                         />
                         <CustomInput
-                          className="col-span-6 sm:col-span-3"
-                          label="Data rozpoczęcia rok"
-                          name="dateEnd"
+                          className="col-span-6"
+                          label="Opis"
+                          name="companyDescription"
                           type="text"
-                          placeholder="1998"
+                          placeholder="Np. Inżynieryjskie"
                         />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-3"
-                          label="Data zakończenia miesiąc"
-                          name="dateStart"
-                          type="text"
-                          placeholder="Styczeń"
-                        />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-3"
-                          label="Data zakończenia rok"
-                          name="dateEnd"
-                          type="text"
-                          placeholder="1999"
-                        />
-                        {/* <CustomSelect
-                          label="Job Type"
-                          name="profession"
-                          placeholder="Please select a job"
-                        >
-                          <option value="">Please select a job type</option>
-                          <option value="01">Developer</option>
-                          <option value="02">Designer</option>
-                          <option value="03">Product Manager</option>
-                          <option value="04">Other</option>
-                        </CustomSelect> */}
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data rozpoczęcia
+                          </label>
+                          <DatePicker
+                            name="dateStartJob"
+                            type="text"
+                            onChange={setExpDateStart}
+                            value={expDateStart}
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data rozpoczęcia
+                          </label>
+                          <DatePicker
+                            name="dateEndJob"
+                            type="text"
+                            onChange={setExpDateEnd}
+                            value={expDateEnd}
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden sm:block" aria-hidden="true">
+              <div className="py-5">
+                <div className="border-t border-gray-200" />
+              </div>
+            </div>
+
+            <div className="mt-10 sm:mt-0">
+              <div className="md:grid md:grid-cols-3 md:gap-6">
+                <div className="md:col-span-1">
+                  <div className="px-4 sm:px-0">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                      Umiejętności
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600">
+                      Umiejętności jakie posiadasz.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-5 md:col-span-2 md:mt-0">
+                  <div className="shadow-md sm:rounded-md overflow-visible">
+                    <div className="bg-white px-4 py-5 sm:p-6">
+                      <div className="grid grid-cols-6 gap-6">
+                        <div className="col-span-6">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Umiejętności
+                          </label>
+                          <CreatableSelect
+                            placeholder="np. C#"
+                            onChange={setSkills}
+                            value={skills}
+                            isMulti
+                            name="Skills"
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="hidden sm:block" aria-hidden="true">
+              <div className="py-5">
+                <div className="border-t border-gray-200" />
+              </div>
+            </div>
+
+            <div className="mt-10 sm:mt-0">
+              <div className="md:grid md:grid-cols-3 md:gap-6">
+                <div className="md:col-span-1">
+                  <div className="px-4 sm:px-0">
+                    <h3 className="text-lg font-medium leading-6 text-gray-900">
+                      Certyfikaty
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-600">
+                      Certyfikaty jakie uzyskałeś.
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-5 md:col-span-2 md:mt-0">
+                  <div className="shadow-md sm:rounded-md overflow-visible">
+                    <div className="bg-white px-4 py-5 sm:p-6">
+                      <div className="grid grid-cols-6 gap-6">
+                        <div className="col-span-6">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Certyfikaty
+                          </label>
+                          <CreatableSelect
+                            placeholder="np. AWS Certificate"
+                            onChange={setCertificates}
+                            value={certificates}
+                            isMulti
+                            name="Certificates"
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -453,7 +597,7 @@ const EditProfile = ({ hideModal }) => {
             ) : (
               <div className="mt-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button
-                  type="button"
+                  type="sumbit"
                   className="inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Zapisz

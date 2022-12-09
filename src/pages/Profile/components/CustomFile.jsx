@@ -1,6 +1,6 @@
 import { useField } from "formik";
 
-const CustomInput = ({ ...props }) => {
+const CustomFile = ({ ...props }) => {
   const [field, meta] = useField(props);
 
   return (
@@ -23,4 +23,4 @@ const CustomInput = ({ ...props }) => {
     </>
   );
 };
-export default CustomInput;
+export default CustomFile;

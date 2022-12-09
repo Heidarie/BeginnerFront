@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Feed from "../Feed/index.jsx";
 import FeedMobile from "../Feed/index.mobile.jsx";
-import Offers from "../Offers/index.jsx";
+import Offers from "../Offers/index.desktop.jsx";
 import OffersMobile from "../Offers/index.mobile.jsx";
 
 const HomePage = () => {
@@ -14,6 +14,7 @@ const HomePage = () => {
   useEffect(() => {
     window.addEventListener("resize", handleMobile);
   });
+
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-full grid md:grid-cols-2">
