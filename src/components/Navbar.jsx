@@ -10,6 +10,7 @@ import {
   RiFileList3Line,
   RiMessage3Line,
 } from "react-icons/ri";
+import { FaCameraRetro } from "react-icons/fa";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "../utils";
@@ -207,16 +208,16 @@ const Navbar = () => {
                     <div>
                       <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border border-gray-300 shadow-sm  py-0 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
                         <div className="w-12 -left-2 md:-left-4 relative">
-                          <img
-                            src={`https://localhost:7064/${user.imagePath.substring(
-                              3
-                            )}`}
-                            key={`https://localhost:7064/${user.imagePath.substring(
-                              3
-                            )}`}
-                            alt="ProfilePhoto"
-                            className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
-                          />
+                          {user.imagePath ? (
+                            <img
+                              src={`data:image/png;base64,${user.imagePath}`}
+                              key={`https://localhost:7064/${user.imagePath}`}
+                              alt="ProfilePhoto"
+                              className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
+                            />
+                          ) : (
+                            <FaCameraRetro style={{ fontSize: "50px" }} />
+                          )}
                         </div>
 
                         <div className="pr-3 hidden sm:block">

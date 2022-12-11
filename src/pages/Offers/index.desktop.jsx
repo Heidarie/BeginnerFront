@@ -28,7 +28,6 @@ const Offers = () => {
         }
       });
       if (node) observer.current.observe(node);
-      console.log(node);
     },
     [loading, hasMore]
   );
@@ -58,32 +57,11 @@ const Offers = () => {
               <Offer
                 key={offer.publicUrl}
                 ref={lastOfferElementRef}
-                company={offer.companyName}
-                location={offer.city}
-                level="Senior"
-                profession={offer.profession}
-                from={offer.salaryFrom}
-                to={offer.salaryTo}
-                requirements={offer.requirements}
-                premium={false}
-                publicUrl={offer.publicUrl}
+                offer={offer}
               />
             );
           } else {
-            return (
-              <Offer
-                key={offer.publicUrl}
-                company={offer.companyName}
-                location={offer.city}
-                level="Senior"
-                profession={offer.profession}
-                from={offer.salaryFrom}
-                to={offer.salaryTo}
-                requirements={offer.requirements}
-                premium={false}
-                publicUrl={offer.publicUrl}
-              />
-            );
+            return <Offer key={offer.publicUrl} offer={offer} />;
           }
         })}
       </ScrollContainer>

@@ -6,14 +6,52 @@ import { IoFlame } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditProfile from "./editProfile";
+import { FaCameraRetro } from "react-icons/fa";
+import { ImCross, ImPlus, ImMenu, ImPencil, ImCheckmark } from "react-icons/im";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Moment from "moment";
 
 const Profile = () => {
   let { id } = useParams();
   const [user, setUser] = useState(undefined);
   const [editProfile, setEditProfile] = useState(false);
+  const [editExp, setEditExp] = useState(false);
+  const [editGrad, setEditGrad] = useState(false);
+  const [expList, setExpList] = useState(user?.experience);
+  const [gradList, setGradList] = useState(user?.graduations);
 
   const hideModal = () => {
     setEditProfile(false);
+    setEditExp(false);
+    setEditGrad(false);
+  };
+
+  const handleDropExp = (droppedItem) => {
+    // Ignore drop outside droppable container
+    console.log(droppedItem);
+    if (!droppedItem.destination) {
+      setEditExp(
+        expList.filter((item, index) => index !== droppedItem.source.index)
+      );
+    }
+    var updatedList = [...expList];
+    // Remove dragged item
+    const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+    // Add dropped item
+    updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
+    // Update State
+    setExpList(updatedList);
+  };
+  const handleDropGrad = (droppedItem) => {
+    // Ignore drop outside droppable container
+    if (!droppedItem.destination) return;
+    var updatedList = [...gradList];
+    // Remove dragged item
+    const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+    // Add dropped item
+    updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
+    // Update State
+    setGradList(updatedList);
   };
 
   const getUser = (id) => {
@@ -23,10 +61,11 @@ const Profile = () => {
       });
     }
   };
-
+  console.log(user);
   useEffect(() => {
     getUser(id);
   }, [id]);
+  console.log(expList);
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">
@@ -41,154 +80,223 @@ const Profile = () => {
             )}
             {editProfile && <EditProfile hideModal={hideModal} />}
             <div className="flex flex-col gap-1 text-center items-center">
-              <img
-                className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=2000&amp;q=80"
-                alt=""
-              />
+              {user?.imagePath ? (
+                <img
+                  src={`data:image/png;base64,${user.imagePath}`}
+                  key={`${user.imagePath}`}
+                  alt="ProfilePhoto"
+                  className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
+                />
+              ) : (
+                <FaCameraRetro style={{ fontSize: "50px" }} />
+              )}
               <p className="font-semibold">{`${user?.name} ${user?.surname}`}</p>
               <div className="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <IoFlame />
                 {user?.profession.toUpperCase()}
               </div>
             </div>
-            <div className="flex justify-center items-center gap-2 my-3">
-              <div className="font-semibold text-center mx-4">
+            <div className="flex justify-center items-center text-center gap-3 m-auto my-3">
+              <div className="font-semibold ">
                 <p className="text-black">102</p>
                 <span className="text-gray-400">Posts</span>
               </div>
-              <div className="font-semibold text-center mx-4">
+              <div className="font-semibold  ">
                 <p className="text-black">102</p>
                 <span className="text-gray-400">Followers</span>
               </div>
-              <div className="font-semibold text-center mx-4">
+              <div className="font-semibold  ">
                 <p className="text-black">102</p>
                 <span className="text-gray-400">Folowing</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-white shadow mt-6  rounded-lg p-6">
-            <h3 className="text-gray-600 text-sm font-semibold mb-4">
-              Following
-            </h3>
-            <ul className="flex items-center justify-center space-x-2">
-              <li className="flex flex-col items-center space-y-2">
-                <a className="block bg-white p-1 rounded-full" href="#a">
-                  <img
-                    className="w-16 rounded-full"
-                    alt="x"
-                    src="https://images.unsplash.com/photo-1638612913771-8f00622b96fb?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                  />
-                </a>
-                <span className="text-xs text-gray-500">Sage</span>
-              </li>
+          <div className="bg-white shadow mt-6 rounded-lg p-6">
+            <div className="grid grid-cols-6 gap-6">
+              <h3 className="col-span-3 my-auto">Doświadczenie</h3>
+              <div className="col-span-3 items-end text-end">
+                {!editExp ? (
+                  user?.isLoggedInUserAccount && (
+                    <Link onClick={() => setEditExp(true)}>
+                      <button className="px-4 py-2 col-span-1 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        Edytuj
+                      </button>
+                    </Link>
+                  )
+                ) : (
+                  <div className="my-[0.31rem]">
+                    <Link onClick={() => setEditExp(false)}>
+                      <button className="p-2 border rounded mx-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white">
+                        <ImCross />
+                      </button>
+                    </Link>
+                    <Link onClick={() => setEditExp(true)}>
+                      <button className="p-2 border rounded mx-2 border-yellow-500 hover:bg-yellow-500 text-yellow-500 hover:text-white">
+                        <ImPlus className="" />
+                      </button>
+                    </Link>
+                    <Link onClick={() => setEditExp(true)}>
+                      <button className="p-2 border rounded mx-2 border-green-600 hover:bg-green-600 text-green-600 hover:text-white">
+                        <ImCheckmark className="" />
+                      </button>
+                    </Link>
+                  </div>
+                )}
+                {editProfile && <EditProfile hideModal={hideModal} />}
+              </div>
+            </div>
+            <DragDropContext onDragEnd={handleDropExp}>
+              <Droppable droppableId="list-container">
+                {(provided) => (
+                  <div
+                    className="list-container"
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                  >
+                    {expList?.map((experience, index) => (
+                      <Draggable
+                        key={experience.employerName}
+                        draggableId={experience.employerName}
+                        index={index}
+                      >
+                        {(provided) => (
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.dragHandleProps}
+                            {...provided.draggableProps}
+                            className="item-container my-2 md:col-span-2 md:mt-0"
+                          >
+                            <div className="shadow-md sm:rounded-md overflow-visible">
+                              {editExp && (
+                                <>
+                                  <div className="flex text-start col-span-3 justify-start text-gray-200 -mb-6 ml-2">
+                                    <ImMenu className="cursor-grab h-8 w-8" />
+                                  </div>
 
-              <li className="flex flex-col items-center space-y-2">
-                <a className="block bg-white p-1 rounded-full" href="#a">
-                  <img
-                    className="w-16 rounded-full"
-                    alt="x"
-                    src="https://images.unsplash.com/photo-1638649602320-450b717fa622?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                  />
-                </a>
-
-                <span className="text-xs text-gray-500">Jett</span>
-              </li>
-
-              <li className="flex flex-col items-center space-y-2">
-                <a className="block bg-white p-1 rounded-full" href="#a">
-                  <img
-                    className="w-16 rounded-full"
-                    alt="x"
-                    src="https://images.unsplash.com/photo-1638708644743-2502f38000a0?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                  />
-                </a>
-
-                <span className="text-xs text-gray-500">Sky</span>
-              </li>
-
-              <li className="flex flex-col items-center space-y-2">
-                <a className="block bg-white p-1 rounded-full" href="#a">
-                  <img
-                    className="w-16 rounded-full"
-                    alt="x"
-                    src="https://images.unsplash.com/photo-1638691899851-0e955bceba1f?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                  />
-                </a>
-
-                <span className="text-xs text-gray-500">Olivia</span>
-              </li>
-
-              <li className="flex flex-col items-center space-y-2">
-                <a className="block bg-white p-1 rounded-full" href="#a">
-                  <img
-                    className="w-16 rounded-full"
-                    alt="x"
-                    src="https://images.unsplash.com/photo-1638612913771-8f00622b96fb?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                  />
-                </a>
-
-                <span className="text-xs text-gray-500">Julia</span>
-              </li>
-              <li className="flex flex-col items-center space-y-2">
-                <a className="block bg-white p-1 rounded-full" href="#a">
-                  <img
-                    className="w-16 rounded-full"
-                    alt="x"
-                    src="https://images.unsplash.com/photo-1638649602320-450b717fa622?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=200&amp;h=200&amp;q=80"
-                  />
-                </a>
-
-                <span className="text-xs text-gray-500">Hendrick</span>
-              </li>
-            </ul>
+                                  <div className="flex col-span-3 justify-end text-red-600 -mb-6 mr-4">
+                                    <Link
+                                      onClick={() =>
+                                        setEditExp(
+                                          expList.filter(
+                                            (item) => item !== experience
+                                          )
+                                        )
+                                      }
+                                    >
+                                      <button>
+                                        <ImCross className="h-7 w-7" />
+                                      </button>
+                                    </Link>
+                                  </div>
+                                </>
+                              )}
+                              <div className="bg-white px-4 py-5 sm:p-6">
+                                <div className="grid grid-cols-6 gap-6">
+                                  <h3 className="col-span-6">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                      Nazwa firmy
+                                    </label>
+                                    {experience.employerName}
+                                  </h3>
+                                  <h3 className="col-span-6">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                      Opis
+                                    </label>
+                                    {experience.description}
+                                  </h3>
+                                  <div className="col-span-6 sm:col-span-3">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                      Data rozpoczęcia
+                                    </label>
+                                    <h3 className="col-span-6">
+                                      {Moment(experience.dateFrom).format(
+                                        "DD/MM/YYYY"
+                                      )}
+                                    </h3>
+                                  </div>
+                                  <div className="col-span-6 sm:col-span-3">
+                                    <label className="block text-sm font-medium text-gray-700">
+                                      Data zakończenia
+                                    </label>
+                                    <h3 className="col-span-6">
+                                      {Moment(experience.dateTo).format(
+                                        "DD/MM/YYYY"
+                                      )}
+                                    </h3>
+                                  </div>
+                                </div>
+                                <div className="flex justify-end text-yellow-500 -mb-6 -mr-2">
+                                  <Link onClick={() => setEditExp(true)}>
+                                    <button>
+                                      <ImPencil className="h-7 w-7" />
+                                    </button>
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
           </div>
 
-          <div className="flex bg-white shadow mt-6  rounded-lg p-2">
-            <img
-              src="https://images.unsplash.com/photo-1439130490301-25e322d88054?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1189&amp;q=80"
-              alt="Just a flower"
-              className=" w-16  object-cover  h-16 rounded-xl"
-            />
-            <div className="flex flex-col justify-center w-full px-2 py-1">
-              <div className="flex justify-between items-center ">
-                <div className="flex flex-col">
-                  <h2 className="text-sm font-medium">Massive Dynamic</h2>
-                </div>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-500 hover:text-blue-400 cursor-pointer"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                  ></path>
-                </svg>
-              </div>
-              <div className="flex pt-2  text-sm text-gray-400">
-                <div className="flex items-center mr-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-yellow-500 mr-1"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                  </svg>
-                  <p className="font-normal">4.5</p>
-                </div>
-                <div className="flex items-center font-medium text-gray-900 ">
-                  $1800
-                  <span className="text-gray-400 text-sm font-normal">
-                    {" "}
-                    /wk
-                  </span>
+          <div className="bg-white shadow mt-6 rounded-lg p-6">
+            <div className="grid grid-cols-6 gap-6">
+              <h3 className="col-span-3 my-auto">Wykształcenie</h3>
+              <h3 className="col-span-3 items-end text-end">
+                {!editGrad ? (
+                  user?.isLoggedInUserAccount && (
+                    <Link onClick={() => setEditGrad(true)}>
+                      <button className="px-4 py-2 col-span-1 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
+                        Edytuj
+                      </button>
+                    </Link>
+                  )
+                ) : (
+                  <div className="my-[0.31rem]">
+                    <Link onClick={() => setEditGrad(false)}>
+                      <button className="p-2 border rounded mx-2 border-red-600 hover:bg-red-600 text-red-600 hover:text-white">
+                        <ImCross />
+                      </button>
+                    </Link>
+                    <Link onClick={() => setEditGrad(true)}>
+                      <button className="p-2 border rounded mx-2 border-green-600 hover:bg-green-600 text-green-600 hover:text-white">
+                        <ImPlus className="" />
+                      </button>
+                    </Link>
+                  </div>
+                )}
+                {editProfile && <EditProfile hideModal={hideModal} />}
+              </h3>
+            </div>
+            <div className="my-2 md:col-span-2 md:mt-0">
+              <div className="shadow-md sm:rounded-md overflow-visible">
+                <div className="bg-white px-4 py-5 sm:p-6">
+                  <div className="grid grid-cols-6 gap-6">
+                    <h3 className="col-span-6">Nazwa uczelni</h3>
+                    <h3 className="col-span-6 sm:col-span-3">
+                      Kierunek studiów
+                    </h3>
+                    <h3 className="col-span-6 sm:col-span-3">Tytuł</h3>
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Data rozpoczęcia
+                      </label>
+                      <h3 className="col-span-6">DATA</h3>
+                    </div>
+                    <div className="col-span-6 sm:col-span-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Data zakończenia
+                      </label>
+                      <h3 className="col-span-6">Data</h3>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

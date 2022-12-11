@@ -11,6 +11,27 @@ const getProfile = () => {
 const getOfferDetails = async (publicUrl) => {
   try {
     const response = await axios.get(API_URL + `/Offers/${publicUrl}`);
+    console.log(response);
+    if (response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+const updateUserData = async (publicUrl, values) => {
+  try {
+    const response = await axios.put(
+      API_URL + `/Account/${publicUrl}`,
+      values,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     if (response.status === 200) {
       return response;
     }
@@ -36,6 +57,7 @@ const UserService = {
   getProfile,
   getOfferDetails,
   applyOffer,
+  updateUserData,
 };
 
 export default UserService;

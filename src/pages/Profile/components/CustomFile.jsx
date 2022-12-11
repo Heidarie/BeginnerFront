@@ -7,7 +7,7 @@ const CustomFile = ({ ...props }) => {
     <>
       <button
         type="button"
-        className="ml-5 rounded-md border border-gray-300 bg-gray-50 py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+        className="rounded-md border border-gray-300 bg-gray-50 py-2 px-3 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
       >
         <input
           {...field}

@@ -4,14 +4,15 @@ import Modal from "../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
 import CustomFile from "./components/CustomFile";
-import CustomMultiSelect from "./components/CustomMultiSelect";
-import CustomDate from "./components/CustomDate";
 import { Form, Formik } from "formik";
 import DatePicker from "react-date-picker";
 import CreatableSelect from "react-select/creatable";
+import Toast from "../Offers/components/Toast";
+import UserService from "../../components/user.service";
 
 const EditProfile = ({ hideModal }) => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [gradDateStart, setGradDateStart] = useState(new Date());
   const [gradDateEnd, setGradDateEnd] = useState(new Date());
   const [expDateStart, setExpDateStart] = useState(new Date());
@@ -19,26 +20,53 @@ const EditProfile = ({ hideModal }) => {
   const [skills, setSkills] = useState([]);
   const [certificates, setCertificates] = useState([]);
   const navigate = useNavigate();
+
   const onSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(gradDateStart, gradDateEnd, expDateStart, expDateEnd);
-    console.log(skills, certificates);
-    // const res = await AuthService.register("/Authentication/Register", values);
-    // if (res.status === 200) {
-    //   navigate({ pathname: "/Login" });
-    //   window.location.reload();
-    // } else {
-    //   console.log(
-    //     res.response.data.message || res.response.data.errors.PhoneNumber[0]
-    //   );
-    //   setError(
-    //     res.response.data.message || res.response.data.errors.PhoneNumber[0]
-    //   );
-    //   await new Promise((resolve) => {
-    //     return setTimeout(resolve, 2000);
-    //   });
-    //   setError(false);
-    // }
+    setError(false);
+    setLoading(true);
+
+    const updateValues = {
+      Name: values.Name,
+      Surname: values.Surname,
+      Profession: values.Profession,
+      Image: values.Image,
+      Resumee: values.Resumee,
+      "PersonalDataModel.Description": values.Description,
+      "PersonalDataModel.Certificates": certificates.map(
+        (object) => object.value
+      ),
+      "PersonalDataModel.Graduations": {
+        dateStart: gradDateStart,
+        dateEnd: gradDateEnd,
+        schoolName: values.schoolName,
+        title: values.title,
+        type: values.type,
+      },
+      "PersonalDataModel.Experience": {
+        dateFrom: expDateStart,
+        dateTo: expDateEnd,
+        title: values.companyName,
+        description: values.companyDescription,
+      },
+      "PersonalDataModel.Skills": skills.map((object) => object.value),
+    };
+    console.log(updateValues);
+
+    const res = await UserService.updateUserData(
+      "UpdateUserData",
+      updateValues
+    );
+    if (res.response.status === 200) {
+      setLoading(false);
+      console.log("res", res);
+    } else {
+      setLoading(false);
+      setError(true);
+      await new Promise((resolve) => {
+        return setTimeout(resolve, 2000);
+      });
+      setError(false);
+    }
   };
   return (
     <Modal hideModal={hideModal}>
@@ -48,6 +76,8 @@ const EditProfile = ({ hideModal }) => {
           Surname: "",
           Profession: "",
           Description: "",
+          Image: "",
+          Resume: "",
         }}
         onSubmit={onSubmit}
       >
@@ -74,7 +104,7 @@ const EditProfile = ({ hideModal }) => {
                           Zdjęcie
                         </label>
                         <div className="mt-1 flex items-center">
-                          <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100">
+                          <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100 mr-5">
                             <svg
                               className="h-full w-full text-gray-300"
                               fill="currentColor"
@@ -84,7 +114,23 @@ const EditProfile = ({ hideModal }) => {
                             </svg>
                           </span>
 
-                          <CustomFile name="Image" type="file" />
+                          <CustomFile
+                            name="Image"
+                            type="file"
+                            accept=".jpeg, .png, .jpg"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          CV
+                        </label>
+                        <div className="mt-1 flex items-center">
+                          <CustomFile
+                            name="Resumee"
+                            type="file"
+                            accept=".pdf"
+                          />
                         </div>
                       </div>
 
@@ -126,59 +172,59 @@ const EditProfile = ({ hideModal }) => {
                         <CustomInput
                           className="col-span-6 sm:col-span-3"
                           label="Imię"
-                          name="name"
+                          name="Name"
                           type="text"
                           placeholder="Imię"
                         />
                         <CustomInput
                           className="col-span-6 sm:col-span-3"
                           label="Nazwisko"
-                          name="surname"
+                          name="Surname"
                           type="text"
                           placeholder="Nazwisko"
                         />
                         <CustomInput
-                          className="col-span-6 sm:col-span-4"
+                          className="col-span-6 sm:col-span-6"
                           label="Profesja"
                           name="Profession"
-                          type="email"
+                          type="text"
                           placeholder="AWS Developer"
                         />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-3"
-                          label="Kraj"
-                          name="country"
-                          type="text"
-                          placeholder="Polska"
-                        />
-                        <CustomInput
-                          className="col-span-6"
-                          label="Adres"
-                          name="address"
-                          type="text"
-                          placeholder="Kujawska 12/24"
-                        />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-6 lg:col-span-2"
-                          label="Miasto"
-                          name="city"
-                          type="text"
-                          placeholder="Warszawa"
-                        />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-6 lg:col-span-2"
-                          label="Województwo"
-                          name="state"
-                          type="text"
-                          placeholder="Kujawsko-Pomorskie"
-                        />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-6 lg:col-span-2"
-                          label="Kod Pocztowy"
-                          name="postalCode"
-                          type="text"
-                          placeholder="12-345"
-                        />
+                        {/* // <CustomInput
+                        //   className="col-span-6 sm:col-span-3"
+                        //   label="Kraj"
+                        //   name="country"
+                        //   type="text"
+                        //   placeholder="Polska"
+                        // />
+                        // <CustomInput
+                        //   className="col-span-6"
+                        //   label="Adres"
+                        //   name="address"
+                        //   type="text"
+                        //   placeholder="Kujawska 12/24"
+                        // />
+                        // <CustomInput
+                        //   className="col-span-6 sm:col-span-6 lg:col-span-2"
+                        //   label="Miasto"
+                        //   name="city"
+                        //   type="text"
+                        //   placeholder="Warszawa"
+                        // />
+                        // <CustomInput
+                        //   className="col-span-6 sm:col-span-6 lg:col-span-2"
+                        //   label="Województwo"
+                        //   name="state"
+                        //   type="text"
+                        //   placeholder="Kujawsko-Pomorskie"
+                        // />
+                        // <CustomInput
+                        //   className="col-span-6 sm:col-span-6 lg:col-span-2"
+                        //   label="Kod Pocztowy"
+                        //   name="postalCode"
+                        //   type="text"
+                        //   placeholder="12-345"
+                        // /> */}
                       </div>
                     </div>
                   </div>
@@ -243,7 +289,7 @@ const EditProfile = ({ hideModal }) => {
                         </div>
                         <div className="col-span-6 sm:col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
-                            Data rozpoczęcia
+                            Data Zakończenia
                           </label>
                           <DatePicker
                             name="dateStartSchool"
@@ -310,7 +356,7 @@ const EditProfile = ({ hideModal }) => {
                         </div>
                         <div className="col-span-6 sm:col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
-                            Data rozpoczęcia
+                            Data zakończenia
                           </label>
                           <DatePicker
                             name="dateEndJob"
@@ -566,33 +612,29 @@ const EditProfile = ({ hideModal }) => {
                 </div>
               </div>
             </div>
-            {error ? (
-              <div className="md:grid md:grid-cols-3 md:gap-6">
-                <div className="md:col-span-1">
-                  <div className="px-4 sm:px-0 md:ml-10">
-                    <h3 className="text-lg mt-7 text-center font-medium leading-6 text-gray-900">
-                      ERROR
-                    </h3>
-                  </div>
-                </div>
-                <div className="mt-5 md:col-span-2 md:mt-0">
-                  <div className="mt-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                    <button
-                      type="button"
-                      disabled={isSubmitting && error}
-                      className="cursor-not-allowed inline-flex w-full justify-center rounded-md border border-transparent opacity-50 bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
-                      Zapisz
-                    </button>
-                    <button
-                      type="button"
-                      disabled={isSubmitting && error}
-                      className="cursor-not-allowed mt-3 inline-flex w-full justify-center rounded-md border opacity-50 border-red-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    >
-                      Anuluj
-                    </button>
-                  </div>
-                </div>
+            {loading && <Toast text="Ładowanie" icon="LOADING" />}
+
+            {error && (
+              <Toast
+                text="Wystąpił bład przy aktualizacji danych"
+                icon="ERROR"
+              />
+            )}
+            {loading || error ? (
+              <div className="mt-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button
+                  type="sumbit"
+                  className="disabled inline-flex w-full justify-center rounded-md border border-transparent bg-green-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Zapisz
+                </button>
+                <button
+                  type="button"
+                  onClick={() => hideModal(true)}
+                  className="disabled mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Anuluj
+                </button>
               </div>
             ) : (
               <div className="mt-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">

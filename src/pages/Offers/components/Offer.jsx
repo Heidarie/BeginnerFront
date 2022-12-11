@@ -2,19 +2,22 @@ import React from "react";
 import { classNames } from "../../../utils/classNames";
 import ScrollContainer from "react-indiana-drag-scroll";
 import { Link, useLocation } from "react-router-dom";
+import { FaCameraRetro } from "react-icons/fa";
 
 const Offer = React.forwardRef((props, ref) => {
   const {
-    company,
-    location,
+    companyName,
+    city,
     level,
     profession,
-    from,
-    to,
+    logoPath,
+    salaryFrom,
+    salaryTo,
     requirements,
     premium,
     publicUrl,
-  } = props;
+    title,
+  } = props?.offer;
   let locationRoute = useLocation();
   let url = `/Offers/Offer/${publicUrl}`;
   if (!locationRoute.pathname) {
@@ -33,20 +36,25 @@ const Offer = React.forwardRef((props, ref) => {
       <div className="w-full">
         <div className="text-right w-full -ml-2">
           <h3 className="text-[#00df9a] text-lg 2xl:text-2xl font-extrabold">
-            {location}
+            {city}
           </h3>
         </div>
         <div className="grid grid-cols-6 xl:mb-4 md:grid-cols-1 my-2 justify-start md:justify-items-center items-center">
           <div className="col-span-1 w-full justify-center items-center">
             <div className="flex h-12 w-12 md:h-18 md:w-18 xl:h-28 xl:w-28 justify-start text-center md:justify-center items-center mx-auto">
-              <img
-                className="w-fit h-fit"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                alt="profileIcon"
-              />
+              {logoPath ? (
+                <img
+                  src={`data:image/png;base64,${logoPath}`}
+                  key={`${logoPath}`}
+                  alt="ProfilePhoto"
+                  className="w-fit h-fit"
+                />
+              ) : (
+                <FaCameraRetro style={{ fontSize: "50px" }} />
+              )}
             </div>
-            <p className="mt-1 text-center text-md text-semibold text-black xl:text-2xl">
-              {company}
+            <p className="ml-2 md:ml-0 mt-1 text-center text-md text-semibold text-black xl:text-2xl">
+              {companyName}
             </p>
           </div>
           <div className="ml-2 -mt-5 md:m-0 2xl:mt-4 col-span-5 md:col-span-1 md:w-full">
@@ -88,7 +96,7 @@ const Offer = React.forwardRef((props, ref) => {
       </div>
       <div className="col-span-1 fixed inset-x-0 bottom-0 text-center mt-4 mb-2">
         <p className="w-full text-4xl md:text-2xl  font-extrabold text-gray-700 mb-2 mx-auto">
-          {from} - {to}
+          {salaryFrom} - {salaryTo}
         </p>
         <button
           type="button"

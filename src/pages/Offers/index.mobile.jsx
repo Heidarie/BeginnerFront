@@ -58,32 +58,11 @@ const OffersMobile = () => {
               <OfferMobile
                 key={offer.publicUrl}
                 ref={lastOfferElementRef}
-                company={offer.companyName}
-                location={offer.city}
-                level="Senior"
-                profession={offer.profession}
-                from={offer.salaryFrom}
-                to={offer.salaryTo}
-                requirements={offer.requirements}
-                premium={false}
-                publicUrl={offer.publicUrl}
+                offer={offer}
               />
             );
           } else {
-            return (
-              <OfferMobile
-                key={offer.publicUrl}
-                company={offer.companyName}
-                location={offer.city}
-                level="Senior"
-                profession={offer.profession}
-                from={offer.salaryFrom}
-                to={offer.salaryTo}
-                requirements={offer.requirements}
-                premium={false}
-                publicUrl={offer.publicUrl}
-              />
-            );
+            return <OfferMobile key={offer.publicUrl} offer={offer} />;
           }
         })}
       </ScrollContainer>

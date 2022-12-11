@@ -43,6 +43,8 @@
     "flowbite": "1.5.4",
     "flowbite-react": "0.3.6",
     "formik": "2.2.9",
+    "moment": "2.29.4",
+    "react-beautiful-dnd": "13.1.1",
     "react-date-picker": "9.1.0",
     "react-indiana-drag-scroll": "2.2.0",
     "react-phone-input-2": "2.15.1",

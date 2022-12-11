@@ -1,19 +1,28 @@
 import React from "react";
 import { classNames } from "../../../utils/classNames";
 import ScrollContainer from "react-indiana-drag-scroll";
+import { FaCameraRetro } from "react-icons/fa";
+import { Link, useLocation } from "react-router-dom";
 
 const Offer = React.forwardRef((props, ref) => {
   const {
-    company,
-    location,
+    companyName,
+    city,
     level,
     profession,
-    from,
-    to,
+    logoPath,
+    salaryFrom,
+    salaryTo,
     requirements,
-    info,
     premium,
-  } = props;
+    publicUrl,
+    title,
+  } = props?.offer;
+  let locationRoute = useLocation();
+  let url = `/Offers/Offer/${publicUrl}`;
+  if (!locationRoute.pathname) {
+    url = `/Offer/${publicUrl}`;
+  }
   return (
     <div
       ref={ref}
@@ -24,19 +33,24 @@ const Offer = React.forwardRef((props, ref) => {
     >
       <div className="w-full">
         <div className="text-right w-full -ml-2">
-          <h3 className="text-[#00df9a] text-lg font-extrabold">{location}</h3>
+          <h3 className="text-[#00df9a] text-lg font-extrabold">{city}</h3>
         </div>
         <div className="p-2 grid grid-cols-6 mb-2 justify-start items-center">
           <div className="col-span-1">
             <div className="justify-start text-center items-center">
-              <img
-                className="block"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                alt="profileIcon"
-              />
+              {logoPath ? (
+                <img
+                  src={`data:image/png;base64,${logoPath}`}
+                  key={`${logoPath}`}
+                  alt="ProfilePhoto"
+                  className="w-fit h-fit"
+                />
+              ) : (
+                <FaCameraRetro style={{ fontSize: "50px" }} />
+              )}
             </div>
             <p className="mt-1 text-center text-md text-semibold text-black">
-              {company}
+              {companyName}
             </p>
           </div>
           <div className="ml-2 -mt-5 col-span-5">
@@ -67,23 +81,17 @@ const Offer = React.forwardRef((props, ref) => {
                 })}
             </ul>
           </ScrollContainer>
-
-          <ScrollContainer className="hidden group-hover:block scroll-container h-[6rem]">
-            <div className="flex text-2xl flex-nowrap justify-start text-start text-black p-2 -mt-2">
-              {info}
-            </div>
-          </ScrollContainer>
         </div>
       </div>
       <div className="col-span-1 fixed inset-x-0 bottom-0 text-center mt-4 mb-2">
         <p className="text-4xl font-extrabold text-gray-700 m-2">
-          {from} - {to}
+          {salaryFrom} - {salaryTo}
         </p>
         <button
           type="button"
           className="focus:outline-none text-white hover:text-black bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5"
         >
-          Wyświetl ofertę
+          <Link to={`${url}`}>Wyświetl ofertę</Link>
         </button>
       </div>
     </div>

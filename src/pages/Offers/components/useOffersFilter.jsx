@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 export default function useOffersFilter(filter, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -26,7 +27,6 @@ export default function useOffersFilter(filter, pageNumber) {
         });
         setHasMore(res.data);
         setLoading(false);
-        console.log(res.data);
       })
       .catch((error) => {
         if (axios.isCancel(error)) return;
