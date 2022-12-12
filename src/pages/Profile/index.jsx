@@ -10,29 +10,33 @@ import { FaCameraRetro } from "react-icons/fa";
 import { ImCross, ImPlus, ImMenu, ImPencil, ImCheckmark } from "react-icons/im";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
+import EditExperience from "./editExperience";
+import EditGraduation from "./editGraduation";
 
 const Profile = () => {
   let { id } = useParams();
   const [user, setUser] = useState(undefined);
   const [editProfile, setEditProfile] = useState(false);
+  const [selectExp, setSelectExp] = useState(false);
+  const [selectGrad, setSelectGrad] = useState(false);
   const [editExp, setEditExp] = useState(false);
   const [editGrad, setEditGrad] = useState(false);
-  const [expList, setExpList] = useState(user?.experience);
-  const [gradList, setGradList] = useState(user?.graduations);
+  const [expList, setExpList] = useState([]);
+  const [gradList, setGradList] = useState([]);
 
   const hideModal = () => {
     setEditProfile(false);
-    setEditExp(false);
-    setEditGrad(false);
+    setSelectExp(false);
+    setSelectGrad(false);
   };
 
   const handleDropExp = (droppedItem) => {
     // Ignore drop outside droppable container
-    console.log(droppedItem);
     if (!droppedItem.destination) {
-      setEditExp(
-        expList.filter((item, index) => index !== droppedItem.source.index)
+      setExpList(
+        expList.filter((item) => item.employerName !== droppedItem.draggableId)
       );
+      return;
     }
     var updatedList = [...expList];
     // Remove dragged item
@@ -42,9 +46,18 @@ const Profile = () => {
     // Update State
     setExpList(updatedList);
   };
+  const handleAcceptExp = () => {
+    //CALL TO API
+    //REFRESH PAGE
+  };
   const handleDropGrad = (droppedItem) => {
     // Ignore drop outside droppable container
-    if (!droppedItem.destination) return;
+    if (!droppedItem.destination) {
+      setGradList(
+        gradList.filter((item) => item.schoolName !== droppedItem.draggableId)
+      );
+      return;
+    }
     var updatedList = [...gradList];
     // Remove dragged item
     const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
@@ -52,6 +65,10 @@ const Profile = () => {
     updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
     // Update State
     setGradList(updatedList);
+  };
+  const handleAcceptGrad = () => {
+    //CALL TO API
+    //REFRESH PAGE
   };
 
   const getUser = (id) => {
@@ -61,11 +78,11 @@ const Profile = () => {
       });
     }
   };
-  console.log(user);
+
   useEffect(() => {
     getUser(id);
-  }, [id]);
-  console.log(expList);
+  }, []);
+
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">
@@ -118,7 +135,12 @@ const Profile = () => {
               <div className="col-span-3 items-end text-end">
                 {!editExp ? (
                   user?.isLoggedInUserAccount && (
-                    <Link onClick={() => setEditExp(true)}>
+                    <Link
+                      onClick={() => {
+                        setExpList(user?.personalDataModel?.experience);
+                        setEditExp(true);
+                      }}
+                    >
                       <button className="px-4 py-2 col-span-1 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
                         Edytuj
                       </button>
@@ -131,7 +153,12 @@ const Profile = () => {
                         <ImCross />
                       </button>
                     </Link>
-                    <Link onClick={() => setEditExp(true)}>
+                    <Link
+                      onClick={() => {
+                        setEditExp(true);
+                        setSelectExp(null);
+                      }}
+                    >
                       <button className="p-2 border rounded mx-2 border-yellow-500 hover:bg-yellow-500 text-yellow-500 hover:text-white">
                         <ImPlus className="" />
                       </button>
@@ -141,118 +168,187 @@ const Profile = () => {
                         <ImCheckmark className="" />
                       </button>
                     </Link>
+
+                    {selectExp !== false && (
+                      <EditExperience
+                        hideModal={hideModal}
+                        experience={selectExp}
+                        setExp={setExpList}
+                        expList={expList}
+                      />
+                    )}
                   </div>
                 )}
-                {editProfile && <EditProfile hideModal={hideModal} />}
               </div>
             </div>
-            <DragDropContext onDragEnd={handleDropExp}>
-              <Droppable droppableId="list-container">
-                {(provided) => (
-                  <div
-                    className="list-container"
-                    {...provided.droppableProps}
-                    ref={provided.innerRef}
-                  >
-                    {expList?.map((experience, index) => (
-                      <Draggable
-                        key={experience.employerName}
-                        draggableId={experience.employerName}
-                        index={index}
-                      >
-                        {(provided) => (
-                          <div
-                            ref={provided.innerRef}
-                            {...provided.dragHandleProps}
-                            {...provided.draggableProps}
-                            className="item-container my-2 md:col-span-2 md:mt-0"
-                          >
-                            <div className="shadow-md sm:rounded-md overflow-visible">
-                              {editExp && (
-                                <>
-                                  <div className="flex text-start col-span-3 justify-start text-gray-200 -mb-6 ml-2">
-                                    <ImMenu className="cursor-grab h-8 w-8" />
-                                  </div>
+            {editExp ? (
+              <DragDropContext onDragEnd={handleDropExp}>
+                <Droppable droppableId="list-container">
+                  {(provided) => (
+                    <div
+                      className="list-container"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {expList?.map((experience, index) => (
+                        <Draggable
+                          key={experience.employerName}
+                          draggableId={experience.employerName}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.dragHandleProps}
+                              {...provided.draggableProps}
+                              className="item-container my-2 md:col-span-2 md:mt-0"
+                            >
+                              <div className="shadow-md sm:rounded-md overflow-visible">
+                                {editExp && (
+                                  <>
+                                    <div className="flex text-start col-span-3 justify-start text-gray-200 -mb-6 ml-2">
+                                      <ImMenu className="cursor-grab h-8 w-8" />
+                                    </div>
 
-                                  <div className="flex col-span-3 justify-end text-red-600 -mb-6 mr-4">
-                                    <Link
-                                      onClick={() =>
-                                        setEditExp(
-                                          expList.filter(
-                                            (item) => item !== experience
+                                    <div className="flex col-span-3 justify-end text-red-600 -mb-6 mr-4">
+                                      <Link
+                                        onClick={() =>
+                                          setExpList(
+                                            expList.filter(
+                                              (item) => item !== experience
+                                            )
                                           )
-                                        )
-                                      }
-                                    >
-                                      <button>
+                                        }
+                                      >
                                         <ImCross className="h-7 w-7" />
-                                      </button>
-                                    </Link>
-                                  </div>
-                                </>
-                              )}
-                              <div className="bg-white px-4 py-5 sm:p-6">
-                                <div className="grid grid-cols-6 gap-6">
-                                  <h3 className="col-span-6">
-                                    <label className="block text-sm font-medium text-gray-700">
-                                      Nazwa firmy
-                                    </label>
-                                    {experience.employerName}
-                                  </h3>
-                                  <h3 className="col-span-6">
-                                    <label className="block text-sm font-medium text-gray-700">
-                                      Opis
-                                    </label>
-                                    {experience.description}
-                                  </h3>
-                                  <div className="col-span-6 sm:col-span-3">
-                                    <label className="block text-sm font-medium text-gray-700">
-                                      Data rozpoczęcia
-                                    </label>
-                                    <h3 className="col-span-6">
-                                      {Moment(experience.dateFrom).format(
-                                        "DD/MM/YYYY"
-                                      )}
+                                      </Link>
+                                    </div>
+                                  </>
+                                )}
+                                <div className="bg-white px-4 py-5 sm:p-6">
+                                  <div className="grid grid-cols-6 gap-6">
+                                    <h3 className="col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Nazwa firmy
+                                      </label>
+                                      {experience.employerName}
                                     </h3>
-                                  </div>
-                                  <div className="col-span-6 sm:col-span-3">
-                                    <label className="block text-sm font-medium text-gray-700">
-                                      Data zakończenia
-                                    </label>
-                                    <h3 className="col-span-6">
-                                      {Moment(experience.dateTo).format(
-                                        "DD/MM/YYYY"
-                                      )}
+                                    <h3 className="col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Tytuł
+                                      </label>
+                                      {experience.position}
                                     </h3>
+                                    <h3 className="col-span-6">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Opis
+                                      </label>
+                                      {experience.description}
+                                    </h3>
+                                    <div className="col-span-6 sm:col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Data rozpoczęcia
+                                      </label>
+                                      <h3 className="col-span-6">
+                                        {Moment(experience.dateFrom).format(
+                                          "DD/MM/YYYY"
+                                        )}
+                                      </h3>
+                                    </div>
+                                    <div className="col-span-6 sm:col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Data zakończenia
+                                      </label>
+                                      <h3 className="col-span-6">
+                                        {Moment(experience.dateTo).format(
+                                          "DD/MM/YYYY"
+                                        )}
+                                      </h3>
+                                    </div>
                                   </div>
-                                </div>
-                                <div className="flex justify-end text-yellow-500 -mb-6 -mr-2">
-                                  <Link onClick={() => setEditExp(true)}>
-                                    <button>
-                                      <ImPencil className="h-7 w-7" />
-                                    </button>
-                                  </Link>
+                                  {editExp && (
+                                    <div className="flex justify-end text-yellow-200 -mb-4 -mr-2">
+                                      <Link
+                                        onClick={() => setSelectExp(experience)}
+                                      >
+                                        <ImPencil className="h-7 w-7" />
+                                      </Link>
+
+                                      {selectExp !== false && (
+                                        <EditExperience
+                                          hideModal={hideModal}
+                                          experience={selectExp}
+                                          setExp={setExpList}
+                                          expList={expList}
+                                        />
+                                      )}
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-                      </Draggable>
-                    ))}
-                    {provided.placeholder}
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            ) : (
+              user?.personalDataModel?.experience.map((experience) => (
+                <div className="item-container my-2 md:col-span-2 md:mt-0">
+                  <div className="shadow-md sm:rounded-md overflow-visible">
+                    <div className="bg-white px-4 py-5 sm:p-6">
+                      <div className="grid grid-cols-6 gap-6">
+                        <h3 className="col-span-6">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Nazwa firmy
+                          </label>
+                          {experience.employerName}
+                        </h3>
+                        <h3 className="col-span-6">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Opis
+                          </label>
+                          {experience.description}
+                        </h3>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data rozpoczęcia
+                          </label>
+                          <h3 className="col-span-6">
+                            {Moment(experience.dateFrom).format("DD/MM/YYYY")}
+                          </h3>
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data zakończenia
+                          </label>
+                          <h3 className="col-span-6">
+                            {Moment(experience.dateTo).format("DD/MM/YYYY")}
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                )}
-              </Droppable>
-            </DragDropContext>
+                </div>
+              ))
+            )}
           </div>
 
           <div className="bg-white shadow mt-6 rounded-lg p-6">
             <div className="grid grid-cols-6 gap-6">
               <h3 className="col-span-3 my-auto">Wykształcenie</h3>
-              <h3 className="col-span-3 items-end text-end">
+              <div className="col-span-3 items-end text-end">
                 {!editGrad ? (
                   user?.isLoggedInUserAccount && (
-                    <Link onClick={() => setEditGrad(true)}>
+                    <Link
+                      onClick={() => {
+                        setGradList(user?.personalDataModel?.graduations);
+                        setEditGrad(true);
+                      }}
+                    >
                       <button className="px-4 py-2 col-span-1 bg-transparent outline-none border-2 border-indigo-400 rounded text-indigo-500 font-medium active:scale-95 hover:bg-indigo-600 hover:text-white hover:border-transparent focus:bg-indigo-600 focus:text-white focus:border-transparent focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200">
                         Edytuj
                       </button>
@@ -265,41 +361,197 @@ const Profile = () => {
                         <ImCross />
                       </button>
                     </Link>
-                    <Link onClick={() => setEditGrad(true)}>
-                      <button className="p-2 border rounded mx-2 border-green-600 hover:bg-green-600 text-green-600 hover:text-white">
+                    <Link
+                      onClick={() => {
+                        setEditGrad(true);
+                        setSelectGrad(null);
+                      }}
+                    >
+                      <button className="p-2 border rounded mx-2 border-yellow-500 hover:bg-yellow-500 text-yellow-500 hover:text-white">
                         <ImPlus className="" />
                       </button>
                     </Link>
+                    <Link onClick={() => setEditGrad(true)}>
+                      <button className="p-2 border rounded mx-2 border-green-600 hover:bg-green-600 text-green-600 hover:text-white">
+                        <ImCheckmark className="" />
+                      </button>
+                    </Link>
+
+                    {selectGrad !== false && (
+                      <EditGraduation
+                        hideModal={hideModal}
+                        graduation={selectGrad}
+                        setGrad={setGradList}
+                        gradList={gradList}
+                      />
+                    )}
                   </div>
                 )}
-                {editProfile && <EditProfile hideModal={hideModal} />}
-              </h3>
+              </div>
             </div>
-            <div className="my-2 md:col-span-2 md:mt-0">
-              <div className="shadow-md sm:rounded-md overflow-visible">
-                <div className="bg-white px-4 py-5 sm:p-6">
-                  <div className="grid grid-cols-6 gap-6">
-                    <h3 className="col-span-6">Nazwa uczelni</h3>
-                    <h3 className="col-span-6 sm:col-span-3">
-                      Kierunek studiów
-                    </h3>
-                    <h3 className="col-span-6 sm:col-span-3">Tytuł</h3>
-                    <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Data rozpoczęcia
-                      </label>
-                      <h3 className="col-span-6">DATA</h3>
+            {editGrad ? (
+              <DragDropContext onDragEnd={handleDropGrad}>
+                <Droppable droppableId="list-container">
+                  {(provided) => (
+                    <div
+                      className="list-container"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {gradList?.map((graduation, index) => (
+                        <Draggable
+                          key={graduation.schoolName}
+                          draggableId={graduation.schoolName}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <div
+                              ref={provided.innerRef}
+                              {...provided.dragHandleProps}
+                              {...provided.draggableProps}
+                              className="item-container my-2 md:col-span-2 md:mt-0"
+                            >
+                              <div className="shadow-md sm:rounded-md overflow-visible">
+                                {editGrad && (
+                                  <>
+                                    <div className="flex text-start col-span-3 justify-start text-gray-200 -mb-6 ml-2">
+                                      <ImMenu className="cursor-grab h-8 w-8" />
+                                    </div>
+
+                                    <div className="flex col-span-3 justify-end text-red-600 -mb-6 mr-4">
+                                      <Link
+                                        onClick={() =>
+                                          setGradList(
+                                            gradList.filter(
+                                              (item) => item !== graduation
+                                            )
+                                          )
+                                        }
+                                      >
+                                        <ImCross className="h-7 w-7" />
+                                      </Link>
+                                    </div>
+                                  </>
+                                )}
+                                <div className="bg-white px-4 py-5 sm:p-6">
+                                  <div className="grid grid-cols-6 gap-6">
+                                    <h3 className="col-span-6">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Nazwa uczelni
+                                      </label>
+                                      {graduation?.schoolName}
+                                    </h3>
+
+                                    <h3 className="col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Tytuł
+                                      </label>
+                                      {graduation?.title}
+                                    </h3>
+                                    <h3 className="col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Kierunek studiów
+                                      </label>
+                                      {graduation?.type}
+                                    </h3>
+                                    <div className="col-span-6 sm:col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Data rozpoczęcia
+                                      </label>
+                                      <h3 className="col-span-6">
+                                        {Moment(graduation?.dateStart).format(
+                                          "DD/MM/YYYY"
+                                        )}
+                                      </h3>
+                                    </div>
+                                    <div className="col-span-6 sm:col-span-3">
+                                      <label className="block text-sm font-medium text-gray-700">
+                                        Data zakończenia
+                                      </label>
+                                      <h3 className="col-span-6">
+                                        {Moment(graduation?.dateEnd).format(
+                                          "DD/MM/YYYY"
+                                        )}
+                                      </h3>
+                                    </div>
+                                  </div>
+                                  {editGrad && (
+                                    <div className="flex justify-end text-yellow-200 -mb-4 -mr-2">
+                                      <Link
+                                        onClick={() =>
+                                          setSelectGrad(graduation)
+                                        }
+                                      >
+                                        <ImPencil className="h-7 w-7" />
+                                      </Link>
+
+                                      {selectExp !== false && (
+                                        <EditGraduation
+                                          hideModal={hideModal}
+                                          experience={selectGrad}
+                                          setGrad={setGradList}
+                                          gradList={gradList}
+                                        />
+                                      )}
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
                     </div>
-                    <div className="col-span-6 sm:col-span-3">
-                      <label className="block text-sm font-medium text-gray-700">
-                        Data zakończenia
-                      </label>
-                      <h3 className="col-span-6">Data</h3>
+                  )}
+                </Droppable>
+              </DragDropContext>
+            ) : (
+              user?.personalDataModel?.graduations.map((graduation) => (
+                <div className="item-container my-2 md:col-span-2 md:mt-0">
+                  <div className="shadow-md sm:rounded-md overflow-visible">
+                    <div className="bg-white px-4 py-5 sm:p-6">
+                      <div className="grid grid-cols-6 gap-6">
+                        <h3 className="col-span-6">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Nazwa uczelni
+                          </label>
+                          {graduation?.schoolName}
+                        </h3>
+                        <h3 className="col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Tytuł
+                          </label>
+                          {graduation?.title}
+                        </h3>
+                        <h3 className="col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Kierunek studiów
+                          </label>
+                          {graduation?.type}
+                        </h3>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data rozpoczęcia
+                          </label>
+                          <h3 className="col-span-6">
+                            {Moment(graduation?.dateStart).format("DD/MM/YYYY")}
+                          </h3>
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Data zakończenia
+                          </label>
+                          <h3 className="col-span-6">
+                            {Moment(graduation?.dateEnd).format("DD/MM/YYYY")}
+                          </h3>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              ))
+            )}
           </div>
 
           <div className="grid mt-5 grid-cols-2  space-x-4 overflow-y-scroll justify-center items-center w-full ">

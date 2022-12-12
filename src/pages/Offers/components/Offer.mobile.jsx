@@ -54,7 +54,10 @@ const Offer = React.forwardRef((props, ref) => {
             </p>
           </div>
           <div className="ml-2 -mt-5 col-span-5">
-            <h2 className="font-bold text-xl text-black">{profession}</h2>
+            <h2 className="font-bold text-lg text-black -mt-2 break-words">
+              {title}
+            </h2>
+            <h2 className="font-semibold text-lg text-black">{profession}</h2>
             <h2 className="font-semibold text-md text-black -mt-2">{level}</h2>
           </div>
         </div>
