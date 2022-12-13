@@ -32,10 +32,10 @@ const EditProfile = ({ hideModal }) => {
       Image: values.Image,
       Resumee: values.Resumee,
       "PersonalDataModel.Description": values.Description,
-      "PersonalDataModel.Certificates": certificates.map(
+      "PersonalDataModel.Certificates": certificates?.map(
         (object) => object.value
       ),
-      "PersonalDataModel.Skills": skills.map((object) => object.value),
+      "PersonalDataModel.Skills": skills?.map((object) => object.value),
     };
     console.log(updateValues);
 

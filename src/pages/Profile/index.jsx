@@ -160,7 +160,7 @@ const Profile = () => {
                   className="flex justify-start scroll-container bg-[#00df9881]"
                 >
                   <ul className="flex">
-                    {user?.personalDataModel?.skills.map((skill) => {
+                    {user?.personalDataModel?.skills?.map((skill) => {
                       return (
                         <li
                           className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
@@ -187,7 +187,7 @@ const Profile = () => {
                   className="flex justify-start scroll-container bg-[#00df9881]"
                 >
                   <ul className="flex">
-                    {user?.personalDataModel?.certificates.map(
+                    {user?.personalDataModel?.certificates?.map(
                       (certificate) => {
                         return (
                           <li
@@ -376,7 +376,7 @@ const Profile = () => {
                 </Droppable>
               </DragDropContext>
             ) : (
-              user?.personalDataModel?.experience.map((experience) => (
+              user?.personalDataModel?.experience?.map((experience) => (
                 <div className="item-container my-2 md:col-span-2 md:mt-0">
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
@@ -592,7 +592,7 @@ const Profile = () => {
                 </Droppable>
               </DragDropContext>
             ) : (
-              user?.personalDataModel?.graduations.map((graduation) => (
+              user?.personalDataModel?.graduations?.map((graduation) => (
                 <div className="item-container my-2 md:col-span-2 md:mt-0">
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">

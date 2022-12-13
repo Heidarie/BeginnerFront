@@ -131,7 +131,7 @@ const OfferPage = () => {
                       >
                         <ul className="flex">
                           {offer?.offerDetails?.requirements &&
-                            offer?.offerDetails?.requirements.map(
+                            offer?.offerDetails?.requirements?.map(
                               (requirement) => {
                                 return (
                                   <li
@@ -159,7 +159,7 @@ const OfferPage = () => {
                       >
                         <ul className="flex">
                           {offer?.offerDetails?.languages &&
-                            offer?.offerDetails?.languages.map((language) => {
+                            offer?.offerDetails?.languages?.map((language) => {
                               return (
                                 <li
                                   className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
@@ -181,7 +181,7 @@ const OfferPage = () => {
                       <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9881]">
                         <ul className="flex">
                           {offer?.offerDetails?.duties &&
-                            offer?.offerDetails?.duties.map((duty) => {
+                            offer?.offerDetails?.duties?.map((duty) => {
                               return (
                                 <li
                                   className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
