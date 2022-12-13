@@ -2,17 +2,27 @@ import React, { useState, useEffect } from "react";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
 import AuthService from "../../components/auth.service";
+import UserService from "../../components/user.service";
 import { IoFlame } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditProfile from "./editProfile";
 import { FaCameraRetro } from "react-icons/fa";
-import { ImCross, ImPlus, ImMenu, ImPencil, ImCheckmark } from "react-icons/im";
+import { RiQuillPenFill } from "react-icons/ri";
+import {
+  ImCross,
+  ImPlus,
+  ImMenu,
+  ImPencil,
+  ImCheckmark,
+  ImLocation,
+} from "react-icons/im";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
 import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
-
+import Toast from "../Offers/components/Toast";
+import ScrollContainer from "react-indiana-drag-scroll";
 const Profile = () => {
   let { id } = useParams();
   const [user, setUser] = useState(undefined);
@@ -23,6 +33,8 @@ const Profile = () => {
   const [editGrad, setEditGrad] = useState(false);
   const [expList, setExpList] = useState([]);
   const [gradList, setGradList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const hideModal = () => {
     setEditProfile(false);
@@ -34,7 +46,7 @@ const Profile = () => {
     // Ignore drop outside droppable container
     if (!droppedItem.destination) {
       setExpList(
-        expList.filter((item) => item.employerName !== droppedItem.draggableId)
+        expList.filter((item) => item.description !== droppedItem.draggableId)
       );
       return;
     }
@@ -46,15 +58,11 @@ const Profile = () => {
     // Update State
     setExpList(updatedList);
   };
-  const handleAcceptExp = () => {
-    //CALL TO API
-    //REFRESH PAGE
-  };
   const handleDropGrad = (droppedItem) => {
     // Ignore drop outside droppable container
     if (!droppedItem.destination) {
       setGradList(
-        gradList.filter((item) => item.schoolName !== droppedItem.draggableId)
+        gradList.filter((item) => item.type !== droppedItem.draggableId)
       );
       return;
     }
@@ -66,9 +74,27 @@ const Profile = () => {
     // Update State
     setGradList(updatedList);
   };
-  const handleAcceptGrad = () => {
-    //CALL TO API
-    //REFRESH PAGE
+
+  const handleAccept = async (values, type) => {
+    setLoading(true);
+    const res = await UserService.updateUserDetails(values, type);
+    console.log(res);
+    if (res.status === 200) {
+      if (type === "experience") {
+        setEditExp(false);
+      } else {
+        setEditGrad(false);
+      }
+      getUser(id);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setError(true);
+      await new Promise((resolve) => {
+        return setTimeout(resolve, 2000);
+      });
+      setError(false);
+    }
   };
 
   const getUser = (id) => {
@@ -82,7 +108,7 @@ const Profile = () => {
   useEffect(() => {
     getUser(id);
   }, []);
-
+  console.log(user);
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">
@@ -113,22 +139,71 @@ const Profile = () => {
                 {user?.profession.toUpperCase()}
               </div>
             </div>
-            <div className="flex justify-center items-center text-center gap-3 m-auto my-3">
-              <div className="font-semibold ">
-                <p className="text-black">102</p>
-                <span className="text-gray-400">Posts</span>
-              </div>
-              <div className="font-semibold  ">
-                <p className="text-black">102</p>
-                <span className="text-gray-400">Followers</span>
-              </div>
-              <div className="font-semibold  ">
-                <p className="text-black">102</p>
-                <span className="text-gray-400">Folowing</span>
+            <div className="flex justify-start items-start text-start gap-3 m-auto">
+              <h3 className="col-span-3 text-xl">
+                <label className="block text-lg font-medium text-gray-700">
+                  Opis
+                </label>
+                {user?.personalDataModel?.description}
+              </h3>
+            </div>
+          </div>
+          <div className="bg-white shadow mt-6 rounded-lg p-6">
+            <div className="grid grid-cols-6 gap-6">
+              <div className="col-span-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Umiejętności
+                </label>
+                <ScrollContainer
+                  horizontal="true"
+                  nativeMobileScroll="true"
+                  className="flex justify-start scroll-container bg-[#00df9881]"
+                >
+                  <ul className="flex">
+                    {user?.personalDataModel?.skills.map((skill) => {
+                      return (
+                        <li
+                          className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
+                          key={skill}
+                        >
+                          {skill}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </ScrollContainer>
               </div>
             </div>
           </div>
-
+          <div className="bg-white shadow mt-6 rounded-lg p-6">
+            <div className="grid grid-cols-6 gap-6">
+              <div className="col-span-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Certyfikaty
+                </label>
+                <ScrollContainer
+                  horizontal="true"
+                  nativeMobileScroll="true"
+                  className="flex justify-start scroll-container bg-[#00df9881]"
+                >
+                  <ul className="flex">
+                    {user?.personalDataModel?.certificates.map(
+                      (certificate) => {
+                        return (
+                          <li
+                            className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
+                            key={certificate}
+                          >
+                            {certificate}
+                          </li>
+                        );
+                      }
+                    )}
+                  </ul>
+                </ScrollContainer>
+              </div>
+            </div>
+          </div>
           <div className="bg-white shadow mt-6 rounded-lg p-6">
             <div className="grid grid-cols-6 gap-6">
               <h3 className="col-span-3 my-auto">Doświadczenie</h3>
@@ -163,7 +238,12 @@ const Profile = () => {
                         <ImPlus className="" />
                       </button>
                     </Link>
-                    <Link onClick={() => setEditExp(true)}>
+                    <Link
+                      onClick={() => {
+                        setEditExp(true);
+                        handleAccept(expList, "experience");
+                      }}
+                    >
                       <button className="p-2 border rounded mx-2 border-green-600 hover:bg-green-600 text-green-600 hover:text-white">
                         <ImCheckmark className="" />
                       </button>
@@ -192,8 +272,8 @@ const Profile = () => {
                     >
                       {expList?.map((experience, index) => (
                         <Draggable
-                          key={experience.employerName}
-                          draggableId={experience.employerName}
+                          key={experience.description}
+                          draggableId={experience.description}
                           index={index}
                         >
                           {(provided) => (
@@ -371,7 +451,12 @@ const Profile = () => {
                         <ImPlus className="" />
                       </button>
                     </Link>
-                    <Link onClick={() => setEditGrad(true)}>
+                    <Link
+                      onClick={() => {
+                        setEditGrad(true);
+                        handleAccept(gradList, "graduation");
+                      }}
+                    >
                       <button className="p-2 border rounded mx-2 border-green-600 hover:bg-green-600 text-green-600 hover:text-white">
                         <ImCheckmark className="" />
                       </button>
@@ -400,8 +485,8 @@ const Profile = () => {
                     >
                       {gradList?.map((graduation, index) => (
                         <Draggable
-                          key={graduation.schoolName}
-                          draggableId={graduation.schoolName}
+                          key={graduation.type}
+                          draggableId={graduation.type}
                           index={index}
                         >
                           {(provided) => (
@@ -459,7 +544,7 @@ const Profile = () => {
                                         Data rozpoczęcia
                                       </label>
                                       <h3 className="col-span-6">
-                                        {Moment(graduation?.dateStart).format(
+                                        {Moment(graduation?.dateFrom).format(
                                           "DD/MM/YYYY"
                                         )}
                                       </h3>
@@ -469,7 +554,7 @@ const Profile = () => {
                                         Data zakończenia
                                       </label>
                                       <h3 className="col-span-6">
-                                        {Moment(graduation?.dateEnd).format(
+                                        {Moment(graduation?.dateTo).format(
                                           "DD/MM/YYYY"
                                         )}
                                       </h3>
@@ -535,7 +620,7 @@ const Profile = () => {
                             Data rozpoczęcia
                           </label>
                           <h3 className="col-span-6">
-                            {Moment(graduation?.dateStart).format("DD/MM/YYYY")}
+                            {Moment(graduation?.dateFrom).format("DD/MM/YYYY")}
                           </h3>
                         </div>
                         <div className="col-span-6 sm:col-span-3">
@@ -543,7 +628,7 @@ const Profile = () => {
                             Data zakończenia
                           </label>
                           <h3 className="col-span-6">
-                            {Moment(graduation?.dateEnd).format("DD/MM/YYYY")}
+                            {Moment(graduation?.dateTo).format("DD/MM/YYYY")}
                           </h3>
                         </div>
                       </div>
@@ -553,159 +638,48 @@ const Profile = () => {
               ))
             )}
           </div>
-
-          <div className="grid mt-5 grid-cols-2  space-x-4 overflow-y-scroll justify-center items-center w-full ">
-            <div
-              className="relative flex flex-col justify-between   bg-white shadow-md rounded-3xl  bg-cover text-gray-800  overflow-hidden cursor-pointer w-full object-cover object-center  h-64 my-2"
-              style={{ backgroundImage: `url(${loginBg})` }}
-            >
-              <div className="absolute bg-gradient-to-t from-green-400 to-blue-400  opacity-50 inset-0 z-0"></div>
-              <div className="relative flex flex-row items-end  h-72 w-full ">
-                <div className="absolute right-0 top-0 m-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-9 w-9 p-2 text-gray-200 hover:text-blue-400 rounded-full hover:bg-white transition ease-in duration-200 "
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="p-6 rounded-lg  flex flex-col w-full z-5">
-                  <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
-                    Loremipsum..
-                  </h4>
-                  <div className="flex justify-between items-center ">
-                    <div className="flex flex-col">
-                      <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 mr-1"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                        </svg>
-                        Dubai
-                      </h2>
-                    </div>
-                  </div>
-                  <div className="flex pt-4  text-sm text-gray-300">
-                    <div className="flex items-center mr-auto">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 text-yellow-500 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                      </svg>
-                      <p className="font-normal">4.5</p>
-                    </div>
-                    <div className="flex items-center font-medium text-white ">
-                      $1800
-                      <span className="text-gray-300 text-sm font-normal">
-                        {" "}
-                        /wk
-                      </span>
+          <div className="bg-white shadow mt-6 rounded-lg p-6">
+            <h1>Oferty na które zaaplikowałeś</h1>
+            <div className="grid mt-5 gap-4 grid-cols-2 justify-center items-center w-full">
+              {user?.employeeOfferApplications?.map((application) => (
+                <div
+                  key={application.offerPublicUrl}
+                  className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center h-64"
+                  style={{ backgroundImage: `url(${loginBg})` }}
+                >
+                  <div className="absolute bg-gradient-to-t from-green-200 to-yellow-500  opacity-50 inset-0 z-0"></div>
+                  <div className="relative flex flex-row items-end  h-72 w-full ">
+                    <div className="p-6 rounded-lg  flex flex-col w-full z-5">
+                      <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
+                        {application.offerName}
+                      </h4>
+                      <div className="flex justify-between items-center ">
+                        <div className="flex flex-col">
+                          <h2 className="text-sm flex items-center text-gray-300 font-normal">
+                            <ImLocation className="h-4 w-4 mr-1 text-white" />
+                            LOCATION
+                          </h2>
+                        </div>
+                      </div>
+                      <div className="flex pt-4  text-sm text-gray-300">
+                        <div className="flex items-center mr-auto">
+                          <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
+                          <p className="font-normal">
+                            {Moment(application.applicationDate).fromNow()}
+                          </p>
+                        </div>
+                        <div className="flex items-center font-medium text-white ">
+                          PLN 1800
+                          <span className="text-gray-300 text-sm font-normal">
+                            {" "}
+                            /M
+                          </span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              className="relative flex flex-col justify-between   bg-white  rounded-3xl  bg-cover text-gray-800  overflow-hidden cursor-pointer w-full object-cover object-center shadow-md h-64 my-2"
-              style={{ backgroundImage: `url(${loginBg})` }}
-            >
-              <div className="absolute bg-gradient-to-t from-blue-500 to-yellow-400  opacity-50 inset-0 z-0"></div>
-              <div className="relative flex flex-row items-end  h-72 w-full ">
-                <div className="absolute right-0 top-0 m-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-9 w-9 p-2 text-gray-200 hover:text-blue-400 rounded-full hover:bg-white transition ease-in duration-200 "
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                    ></path>
-                  </svg>
-                </div>
-                <div className="p-5 rounded-lg  flex flex-col w-full z-5 ">
-                  <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
-                    Loremipsum..
-                  </h4>
-                  <div className="flex justify-between items-center ">
-                    <div className="flex flex-col">
-                      <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 mr-1"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          ></path>
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          ></path>
-                        </svg>
-                        India
-                      </h2>
-                    </div>
-                  </div>
-                  <div className="flex pt-4  text-sm text-gray-300">
-                    <div className="flex items-center mr-auto">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5 text-yellow-500 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                      </svg>
-                      <p className="font-normal">4.5</p>
-                    </div>
-                    <div className="flex items-center font-medium text-white ">
-                      $1800
-                      <span className="text-gray-300 text-sm font-normal">
-                        {" "}
-                        /wk
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </aside>
@@ -1340,6 +1314,11 @@ const Profile = () => {
           </div>
         </article>
       </main>
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
+
+      {error && (
+        <Toast text="Wystąpił bład przy aktualizacji danych" icon="ERROR" />
+      )}
       <Footer />
     </div>
   );

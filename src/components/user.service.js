@@ -21,16 +21,37 @@ const getOfferDetails = async (publicUrl) => {
   }
 };
 
-const updateUserData = async (publicUrl, values) => {
+const updateUserData = async (values) => {
   try {
     const response = await axios.put(
-      API_URL + `/Account/${publicUrl}`,
+      API_URL + `/Account/UpdateUserData`,
       values,
       {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       }
+    );
+    if (response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+const updateUserDetails = async (values, type) => {
+  const orderValues = {
+    milestones: values.map((obj, index) => ({
+      ...obj,
+      order: index + 1,
+    })),
+  };
+  try {
+    const response = await axios.put(
+      API_URL + `/Account/UpdateUserDetails?type=${type}`,
+      orderValues
     );
     if (response.status === 200) {
       return response;
@@ -56,6 +77,7 @@ const applyOffer = async (publicUrl) => {
 const UserService = {
   getProfile,
   getOfferDetails,
+  updateUserDetails,
   applyOffer,
   updateUserData,
 };

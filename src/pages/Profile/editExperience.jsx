@@ -8,11 +8,11 @@ import Toast from "../Offers/components/Toast";
 const EditExperience = ({ hideModal, experience, setExp, expList }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [expDateStart, setExpDateStart] = useState(
-    experience?.dateFrom || new Date()
+  const [expDateFrom, setExpDateFrom] = useState(
+    new Date(experience?.dateFrom || new Date())
   );
-  const [expDateEnd, setExpDateEnd] = useState(
-    experience?.dateTo || new Date()
+  const [expDateTo, setExpDateTo] = useState(
+    new Date(experience?.dateTo) || new Date()
   );
 
   const onSubmit = async (values, actions) => {
@@ -20,8 +20,8 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
     setLoading(true);
 
     const updateValues = {
-      dateFrom: expDateStart,
-      dateTo: expDateEnd,
+      dateFrom: expDateFrom,
+      dateTo: expDateTo,
       position: values.position,
       employerName: values.employerName,
       description: values.description,
@@ -91,8 +91,8 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                           <DatePicker
                             name="dateStartJob"
                             type="text"
-                            onChange={setExpDateStart}
-                            value={expDateStart}
+                            onChange={setExpDateFrom}
+                            value={expDateFrom}
                             className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
@@ -103,8 +103,8 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                           <DatePicker
                             name="dateEndJob"
                             type="text"
-                            onChange={setExpDateEnd}
-                            value={expDateEnd}
+                            onChange={setExpDateTo}
+                            value={expDateTo}
                             className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>

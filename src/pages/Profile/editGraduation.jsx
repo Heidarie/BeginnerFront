@@ -8,10 +8,10 @@ import Toast from "../Offers/components/Toast";
 const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [gradDateStart, setGradDateStart] = useState(
+  const [gradDateFrom, setGradDateFrom] = useState(
     graduation?.dateFrom || new Date()
   );
-  const [gradDateEnd, setGradDateEnd] = useState(
+  const [gradDateTo, setGradDateTo] = useState(
     graduation?.dateTo || new Date()
   );
 
@@ -20,8 +20,8 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
     setLoading(true);
 
     const updateValues = {
-      dateStart: gradDateStart,
-      dateEnd: gradDateEnd,
+      dateFrom: gradDateFrom,
+      dateTo: gradDateTo,
       schoolName: values.schoolName,
       title: values.title,
       type: values.type,
@@ -91,8 +91,8 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
                           <DatePicker
                             name="dateStartJob"
                             type="text"
-                            onChange={setGradDateStart}
-                            value={gradDateStart}
+                            onChange={setGradDateFrom}
+                            value={gradDateFrom}
                             className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
@@ -103,8 +103,8 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
                           <DatePicker
                             name="dateEndJob"
                             type="text"
-                            onChange={setGradDateEnd}
-                            value={gradDateEnd}
+                            onChange={setGradDateTo}
+                            value={gradDateTo}
                             className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>

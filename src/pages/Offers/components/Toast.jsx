@@ -48,6 +48,17 @@ const Toast = ({ text, icon }) => {
             <span className="sr-only">Warning icon</span>
           </div>
         )}
+        {icon === "HAPPY" && (
+          <div className="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 rounded-lg ">
+            <img
+              src="https://www.svgrepo.com/show/406848/party-popper.svg"
+              className="w-8 h-8"
+              alt="Party Popper SVG Vector"
+              title="Party Popper SVG Vector"
+            ></img>
+            <span className="sr-only">Warning icon</span>
+          </div>
+        )}
       </div>
       <div className="ml-3 text-sm md:text-xl font-normal">{text}</div>
     </div>

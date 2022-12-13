@@ -39,10 +39,7 @@ const EditProfile = ({ hideModal }) => {
     };
     console.log(updateValues);
 
-    const res = await UserService.updateUserData(
-      "UpdateUserData",
-      updateValues
-    );
+    const res = await UserService.updateUserData(updateValues);
     if (res.response.status === 200) {
       setLoading(false);
       console.log("res", res);
