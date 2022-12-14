@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
 import CustomFile from "./components/CustomFile";
 import { Form, Formik } from "formik";
-import DatePicker from "react-date-picker";
 import CreatableSelect from "react-select/creatable";
 import Toast from "../Offers/components/Toast";
 import UserService from "../../components/user.service";
@@ -13,13 +12,13 @@ import UserService from "../../components/user.service";
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [gradDateStart, setGradDateStart] = useState(new Date());
-  const [gradDateEnd, setGradDateEnd] = useState(new Date());
-  const [expDateStart, setExpDateStart] = useState(new Date());
-  const [expDateEnd, setExpDateEnd] = useState(new Date());
+  // const [gradDateStart, setGradDateStart] = useState(new Date());
+  // const [gradDateEnd, setGradDateEnd] = useState(new Date());
+  // const [expDateStart, setExpDateStart] = useState(new Date());
+  // const [expDateEnd, setExpDateEnd] = useState(new Date());
   const [skills, setSkills] = useState([]);
   const [certificates, setCertificates] = useState([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     setError(false);
@@ -39,17 +38,16 @@ const EditProfile = ({ hideModal }) => {
     };
     console.log(updateValues);
 
-    const res = await UserService.updateUserData(updateValues);
+    let res = await UserService.updateUserData(updateValues);
     if (res.response.status === 200) {
       setLoading(false);
       console.log("res", res);
     } else {
       setLoading(false);
       setError(true);
-      await new Promise((resolve) => {
-        return setTimeout(resolve, 2000);
-      });
-      setError(false);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
   return (

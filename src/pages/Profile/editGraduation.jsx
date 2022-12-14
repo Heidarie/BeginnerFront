@@ -115,7 +115,6 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
               </div>
             </div>
             {loading && <Toast text="Ładowanie" icon="LOADING" />}
-
             {error && (
               <Toast
                 text="Wystąpił bład przy aktualizacji danych"

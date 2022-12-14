@@ -15,10 +15,7 @@ const register = async (link, values) => {
 
 const login = async (values) => {
   try {
-    const response = await axios.post(
-      API_URL + "/Authentication/Login",
-      values
-    );
+    let response = await axios.post(API_URL + "/Authentication/Login", values);
     console.log(response);
     if (response.status === 200) {
       axios.get(API_URL + "/Account/Profile").then((res) => {
@@ -42,9 +39,7 @@ const logout = () => {
 
 const getUser = async (userPublicUrl) => {
   try {
-    const response = await axios.get(
-      API_URL + `/Account/User/${userPublicUrl}`
-    );
+    let response = await axios.get(API_URL + `/Account/User/${userPublicUrl}`);
     if (response.data.isLoggedInUserAccount) {
       localStorage.setItem("user", JSON.stringify(response.data));
     }

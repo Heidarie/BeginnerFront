@@ -5,23 +5,22 @@ import Footer from "../../components/Footer";
 import CustomInput from "../Register/components/CustomInput";
 import { Form, Formik } from "formik";
 import AuthService from "../../components/auth.service";
+import Toast from "../Offers/components/Toast";
 
 const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    const res = await AuthService.login(values);
-    console.log(res);
+    let res = await AuthService.login(values);
     if (res.status === 200) {
       navigate({ pathname: res.request.response });
       window.location.reload();
     } else {
       setError(res.response.data.message);
-      await new Promise((resolve) => {
-        return setTimeout(resolve, 2000);
-      });
-      setError(false);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
   return (
@@ -85,27 +84,15 @@ const Login = () => {
                       />
                     </div>
 
-                    {error ? (
-                      <div className="mt-6">
-                        <button
-                          type="submit"
-                          disabled={isSubmitting && error}
-                          className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-red-600 rounded-md focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                        >
-                          {error}
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="mt-6">
-                        <button
-                          type="submit"
-                          disabled={isSubmitting && error}
-                          className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-[#00df9a] rounded-md hover:bg-green-500 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                        >
-                          Zaloguj się
-                        </button>
-                      </div>
-                    )}
+                    <div className="mt-6">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting || error}
+                        className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-[#00df9a] rounded-md hover:bg-green-500 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                      >
+                        Zaloguj się
+                      </button>
+                    </div>
                   </Form>
                 )}
               </Formik>
@@ -124,6 +111,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {error && (
+        <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
+      )}
       <Footer />
     </div>
   );

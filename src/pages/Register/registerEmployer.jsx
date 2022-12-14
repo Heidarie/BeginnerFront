@@ -5,12 +5,13 @@ import { advancedSchema } from "./schema";
 import CustomInput from "./components/CustomInput";
 import CustomNumber from "./components/CustomNumber";
 import AuthService from "../../components/auth.service";
+import Toast from "../Offers/components/Toast";
 
 const RegisterEmployer = () => {
   const [error, setError] = useState(false);
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
-    const res = await AuthService.register(
+    let res = await AuthService.register(
       "/Authentication/RegisterEmployer",
       values
     );
@@ -20,10 +21,9 @@ const RegisterEmployer = () => {
       window.location.reload();
     } else {
       setError(res.response.data.message);
-      await new Promise((resolve) => {
-        return setTimeout(resolve, 2000);
-      });
-      setError(false);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
   return (
@@ -72,27 +72,15 @@ const RegisterEmployer = () => {
                 type="text"
                 placeholder="Company name"
               />
-              {error ? (
-                <div className="mt-6">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting && error}
-                    className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-red-600 rounded-md focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                  >
-                    {error}
-                  </button>
-                </div>
-              ) : (
-                <div className="mt-6">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting && error}
-                    className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-[#00df9a] rounded-md hover:bg-green-500 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                  >
-                    Zarejestruj się
-                  </button>
-                </div>
-              )}
+              <div className="mt-6">
+                <button
+                  type="submit"
+                  disabled={isSubmitting || error}
+                  className="w-full px-4 py-2 text-xl tracking-wide text-white transition-colors duration-200 transform bg-[#00df9a] rounded-md hover:bg-green-500 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
+                >
+                  Zarejestruj się
+                </button>
+              </div>
             </Form>
           )}
         </Formik>
@@ -107,6 +95,9 @@ const RegisterEmployer = () => {
           .
         </p>
       </div>
+      {error && (
+        <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
+      )}
     </div>
   );
 };

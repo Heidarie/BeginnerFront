@@ -8,12 +8,8 @@ import Toast from "../Offers/components/Toast";
 const EditExperience = ({ hideModal, experience, setExp, expList }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [expDateFrom, setExpDateFrom] = useState(
-    new Date(experience?.dateFrom || new Date())
-  );
-  const [expDateTo, setExpDateTo] = useState(
-    new Date(experience?.dateTo) || new Date()
-  );
+  const [expDateFrom, setExpDateFrom] = useState(experience?.dateFrom || new Date());
+  const [expDateTo, setExpDateTo] = useState(experience?.dateTo || new Date());
 
   const onSubmit = async (values, actions) => {
     setError(false);
@@ -93,7 +89,7 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                             type="text"
                             onChange={setExpDateFrom}
                             value={expDateFrom}
-                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
                           />
                         </div>
                         <div className="col-span-6 sm:col-span-3">
@@ -105,7 +101,7 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                             type="text"
                             onChange={setExpDateTo}
                             value={expDateTo}
-                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
                           />
                         </div>
                       </div>
@@ -115,7 +111,6 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
               </div>
             </div>
             {loading && <Toast text="Ładowanie" icon="LOADING" />}
-
             {error && (
               <Toast
                 text="Wystąpił bład przy aktualizacji danych"

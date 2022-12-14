@@ -23,6 +23,7 @@ import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
 import Toast from "../Offers/components/Toast";
 import ScrollContainer from "react-indiana-drag-scroll";
+
 const Profile = () => {
   let { id } = useParams();
   const [user, setUser] = useState(undefined);
@@ -77,8 +78,7 @@ const Profile = () => {
 
   const handleAccept = async (values, type) => {
     setLoading(true);
-    const res = await UserService.updateUserDetails(values, type);
-    console.log(res);
+    let res = await UserService.updateUserDetails(values, type);
     if (res.status === 200) {
       if (type === "experience") {
         setEditExp(false);
@@ -90,10 +90,9 @@ const Profile = () => {
     } else {
       setLoading(false);
       setError(true);
-      await new Promise((resolve) => {
-        return setTimeout(resolve, 2000);
-      });
-      setError(false);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
     }
   };
 
@@ -1315,7 +1314,6 @@ const Profile = () => {
         </article>
       </main>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-
       {error && (
         <Toast text="Wystąpił bład przy aktualizacji danych" icon="ERROR" />
       )}

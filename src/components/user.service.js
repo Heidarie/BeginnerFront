@@ -10,7 +10,7 @@ const getProfile = () => {
 
 const getOfferDetails = async (publicUrl) => {
   try {
-    const response = await axios.get(API_URL + `/Offers/${publicUrl}`);
+    let response = await axios.get(API_URL + `/Offers/${publicUrl}`);
     console.log(response);
     if (response.status === 200) {
       return response;
@@ -23,7 +23,7 @@ const getOfferDetails = async (publicUrl) => {
 
 const updateUserData = async (values) => {
   try {
-    const response = await axios.put(
+    let response = await axios.put(
       API_URL + `/Account/UpdateUserData`,
       values,
       {
@@ -49,7 +49,7 @@ const updateUserDetails = async (values, type) => {
     })),
   };
   try {
-    const response = await axios.put(
+    let response = await axios.put(
       API_URL + `/Account/UpdateUserDetails?type=${type}`,
       orderValues
     );
@@ -64,7 +64,7 @@ const updateUserDetails = async (values, type) => {
 
 const applyOffer = async (publicUrl) => {
   try {
-    const response = await axios.post(API_URL + `/Apply/${publicUrl}`);
+    let response = await axios.post(API_URL + `/Apply/${publicUrl}`);
     if (response.status === 200) {
       return response;
     }

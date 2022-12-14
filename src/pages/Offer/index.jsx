@@ -30,18 +30,17 @@ const OfferPage = () => {
   const apply = async (publicUrl) => {
     setLoading(true);
     if (publicUrl) {
-      const res = await UserService.applyOffer(publicUrl);
+      let res = await UserService.applyOffer(publicUrl);
       console.log(res);
       if (res.status === 200) {
         setLoading(false);
         setHappyFlow(true);
       } else {
-        setLoading(true);
+        setLoading(false);
         setError(true);
-        await new Promise((resolve) => {
-          return setTimeout(resolve, 2000);
-        });
-        setError(false);
+        setTimeout(() => {
+          setError(false);
+        }, 3000);
       }
     }
   };
@@ -49,7 +48,7 @@ const OfferPage = () => {
   useEffect(() => {
     getOfferDetails(publicUrl);
   }, [publicUrl]);
-  console.log(offer);
+
   return (
     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 mt-14">
       {offer && (
@@ -221,7 +220,7 @@ const OfferPage = () => {
                           disabled
                           className="focus:outline-none cursor-not-allowed text-white bg-gray-700  font-medium text-sm px-5 py-2.5"
                         >
-                          Zaaplikowano
+                          Nie można aplikować
                         </button>
                       )}
                     </div>

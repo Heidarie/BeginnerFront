@@ -1,11 +1,10 @@
 import React from "react";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Toast = ({ text, icon }) => {
   return (
     <div
       id="toast-default"
-      className="absolute left-5 bottom-5 z-10 flex items-center p-4 w-full max-w-fit text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
+      className="fixed left-5 bottom-5 z-10 flex items-center p-4 w-full max-w-fit text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800"
       role="alert"
     >
       <div className="inline-flex flex-shrink-0 justify-center items-center w-8 h-8 text-blue-500 rounded-lg">
