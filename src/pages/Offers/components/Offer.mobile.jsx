@@ -33,7 +33,9 @@ const Offer = React.forwardRef((props, ref) => {
     >
       <div className="w-full">
         <div className="text-right w-full -ml-2">
-          <h3 className="text-[#00df9a] text-lg font-extrabold">{city}</h3>
+          <h3 className="text-[#00df9a] text-lg font-extrabold -mb-4">
+            {city}
+          </h3>
         </div>
         <div className="p-2 grid grid-cols-6 mb-2 justify-start items-center">
           <div className="col-span-1">

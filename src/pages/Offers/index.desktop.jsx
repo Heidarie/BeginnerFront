@@ -5,6 +5,10 @@ import ScrollContainer from "react-indiana-drag-scroll";
 import Offer from "./components/Offer";
 import useOffersFilter from "./components/useOffersFilter";
 import Toast from "./components/Toast";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Mousewheel, Pagination, Grid } from "swiper";
 
 const Offers = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -47,24 +51,40 @@ const Offers = () => {
   };
   // window.innerHeight use to call next page
   window.addEventListener("scroll", toggleVisibility);
-
+  console.log(offers);
   return (
     <>
-      <ScrollContainer className="pb-5 mt-[2rem] sticky top-8 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]">
-        {offers.map((offer, index) => {
-          if (offers.length === index + 1) {
-            return (
-              <Offer
-                key={offer.publicUrl}
-                ref={lastOfferElementRef}
-                offer={offer}
-              />
-            );
-          } else {
-            return <Offer key={offer.publicUrl} offer={offer} />;
-          }
-        })}
-      </ScrollContainer>
+      <Swiper
+        direction={"vertical"}
+        slidesPerView={12}
+        spaceBetween={30}
+        mousewheel={true}
+        pagination={{
+          clickable: true,
+        }}
+        grid={{
+          rows: 2,
+        }}
+        modules={[Mousewheel, Grid, Pagination]}
+        className="mySwiper pb-5 mt-[2rem] sticky top-8  bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 gap-3 md:gap-5 p-[4rem]"
+      >
+        <>
+          {/* DODAC OSOBNY KOMPONENT z swiperSlider */}
+          {offers.map((offer, index) => {
+            if (offers.length === index + 1) {
+              return (
+                <Offer
+                  key={offer.publicUrl}
+                  ref={lastOfferElementRef}
+                  offer={offer}
+                />
+              );
+            } else {
+              return <Offer key={offer.publicUrl} offer={offer} />;
+            }
+          })}
+        </>
+      </Swiper>
       {error && (
         <Toast text="Wystąpił bład przy ładowaniu ofert" icon="ERROR" />
       )}

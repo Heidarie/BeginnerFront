@@ -10,7 +10,7 @@ const CustomInput = ({ label, ...props }) => {
       <div className="mt-6">
         <label
           htmlFor="email"
-          className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
+          className="block text-sm font-medium text-gray-700"
         >
           {label}
         </label>
@@ -21,20 +21,20 @@ const CustomInput = ({ label, ...props }) => {
           value={field.value}
           defaultCountry="pl"
           dropdownStyle={{
-            borderColor: "rgb(55 65 81 / 700)",
-            backgroundColor: "rgb(17 24 39 / 900)",
-            color: "white",
+            borderColor: "white",
+            backgroundColor: "white",
+            color: "black",
           }}
           buttonStyle={{
-            borderColor: "rgb(55 65 81 / 700)",
-            backgroundColor: "rgb(17 24 39 / 900)",
-            color: "black",
+            borderColor: "black",
+            backgroundColor: "white",
+            color: "white",
           }}
           inputStyle={{
             width: "100%",
-            borderColor: "rgb(55 65 81 / 700)",
-            backgroundColor: "rgb(17 24 39 / 900)",
-            color: "white",
+            borderColor: "white",
+            backgroundColor: "white",
+            color: "black",
           }}
           regions={"europe"}
           onChange={(value) => {
@@ -42,8 +42,8 @@ const CustomInput = ({ label, ...props }) => {
           }}
           className={
             meta.touched && meta.error
-              ? "block w-full text-black placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-black dark:border-gray-700 focus:border-red-800 dark:focus:border-red-800 focus:outline-none focus:ring focus:ring-opacity-70"
-              : "block w-full text-black placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-black dark:border-gray-700 focus:border-green-800 dark:focus:border-green-800 focus:outline-none focus:ring focus:ring-opacity-70"
+              ? "mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-red-500 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
+              : "mt-1 p-2 block w-full rounded-md text-black bg-gray-50 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
           }
         />
         {meta.touched && meta.error && (

@@ -22,14 +22,14 @@ function Register() {
                     onClick={() => setView("basic")}
                     style={{ color: view === "basic" ? "#00df9a" : "" }}
                   >
-                    Employee
+                    Pracownik
                   </button>
                   <button
                     className="m-2 text-2xl text-white bg-gray-800 rounded-lg px-3 p-1 "
                     onClick={() => setView("advanced")}
                     style={{ color: view === "advanced" ? "#00df9a" : "" }}
                   >
-                    Employer
+                    Pracodawca
                   </button>
                 </div>
                 <div className="text-center">
@@ -38,7 +38,7 @@ function Register() {
                   </h2>
 
                   <p className="mt-3 text-gray-500 dark:text-gray-300">
-                    Sign up to create account.
+                    Zarejestruj się by utworzyc konto.
                   </p>
                 </div>
                 {view === "basic" ? <RegisterEmployee /> : <RegisterEmployer />}

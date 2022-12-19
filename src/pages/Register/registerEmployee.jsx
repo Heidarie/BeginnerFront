@@ -81,7 +81,7 @@ const RegisterEmployee = () => {
                 placeholder="Surname"
               />
               <CustomSelect
-                label="Job Type"
+                label="Typ pracownika"
                 name="profession"
                 placeholder="Please select a job"
               >

@@ -1,19 +1,21 @@
 import { useField } from "formik";
 
-const CustomSelect = ({ label, ...props }) => {
+const CustomSelect = ({ className, label, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
     <>
-      <div className="mt-6">
-        <label>{label}</label>
+      <div className={className}>
+        <label className="block text-sm font-medium text-gray-700">
+          {label}
+        </label>
         <select
           {...field}
           {...props}
           className={
             meta.touched && meta.error
-              ? "block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-red-800 dark:focus:border-red-800 focus:outline-none focus:ring focus:ring-opacity-70"
-              : "block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-green-800 dark:focus:border-green-800 focus:outline-none focus:ring focus:ring-opacity-70"
+              ? "mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-red-500 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
+              : "mt-1 p-2 block w-full rounded-md text-black bg-gray-50 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
           }
         />
         {meta.touched && meta.error && (
