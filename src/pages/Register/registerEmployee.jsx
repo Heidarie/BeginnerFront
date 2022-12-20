@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { basicSchema } from "./schema";
-import CustomSelect from "./components/CustomSelect";
-import CustomInput from "./components/CustomInput";
-import CustomNumber from "./components/CustomNumber";
+import CustomSelect from "../../components/form/CustomSelect";
+import CustomInput from "../../components/form/CustomInput";
+import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const RegisterEmployee = () => {
   const [error, setError] = useState("");
@@ -51,41 +51,41 @@ const RegisterEmployee = () => {
                 placeholder="example@example.com"
               />
               <CustomInput
-                label="Password"
+                label="Hasło"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Wprowadź hasło"
               />
               <CustomInput
-                label="Confirm Password"
+                label="Potwierdź hasło"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Powtórz hasło"
               />
               <CustomNumber
-                label="Phone Number"
+                label="Numer telefonu"
                 name="phoneNumber"
                 type="number"
-                placeholder="Phone number"
+                placeholder="48 504 544 755"
               />
               <CustomInput
-                label="Name"
+                label="Imię"
                 name="name"
                 type="text"
-                placeholder="Name"
+                placeholder="Imię"
               />
               <CustomInput
-                label="Surname"
+                label="Nazwisko"
                 name="surname"
                 type="text"
-                placeholder="Surname"
+                placeholder="Nazwisko"
               />
               <CustomSelect
                 label="Typ pracownika"
                 name="profession"
-                placeholder="Please select a job"
+                placeholder="Wybierz zawód"
               >
-                <option value="">Please select a job type</option>
+                <option value="">Wybierz zawód</option>
                 <option value="developer">Developer</option>
                 <option value="designer">Designer</option>
                 <option value="manager">Product Manager</option>
@@ -104,12 +104,12 @@ const RegisterEmployee = () => {
           )}
         </Formik>
         <p className="mt-6 text-sm text-center text-gray-400 mb-5">
-          Already have an account?{" "}
+          Posiadasz już konto?{" "}
           <Link
             to="/Login"
             className="text-blue-500 focus:outline-none focus:underline hover:underline"
           >
-            Sign in
+            Zaloguj się
           </Link>
           .
         </p>

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { advancedSchema } from "./schema";
-import CustomInput from "./components/CustomInput";
-import CustomNumber from "./components/CustomNumber";
+import CustomInput from "../../components/form/CustomInput";
+import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const RegisterEmployer = () => {
   const [error, setError] = useState(false);
@@ -43,34 +43,34 @@ const RegisterEmployer = () => {
           {({ isSubmitting }) => (
             <Form>
               <CustomInput
-                label="Email adress"
+                label="Email"
                 name="email"
                 type="email"
                 placeholder="example@example.com"
               />
               <CustomInput
-                label="Password"
+                label="Hasło"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Wprowadź hasło"
               />
               <CustomInput
-                label="Confirm Password"
+                label="Potwierdź hasło"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Powtórz hasło"
               />
               <CustomNumber
-                label="Phone Number"
+                label="Numer telefonu"
                 name="phoneNumber"
                 type="number"
-                placeholder="Phone number"
+                placeholder="48 504 544 755"
               />
               <CustomInput
-                label="Company name"
+                label="Nazwa firmy"
                 name="companyName"
                 type="text"
-                placeholder="Company name"
+                placeholder="Nazwa firmy"
               />
               <div className="mt-6">
                 <button
@@ -85,12 +85,12 @@ const RegisterEmployer = () => {
           )}
         </Formik>
         <p className="mt-6 text-sm text-center text-gray-400 mb-5">
-          Already have an account?{" "}
+          Posiadasz już konto?{" "}
           <Link
             to="/Login"
             className="text-blue-500 focus:outline-none focus:underline hover:underline"
           >
-            Sign in
+            Zaloguj się
           </Link>
           .
         </p>

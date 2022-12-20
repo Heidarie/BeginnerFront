@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Modal from "../../components/Modal";
-import CustomInput from "./components/CustomInput";
+import CustomInput from "../../components/form/CustomInput";
 import { Form, Formik } from "formik";
 import DatePicker from "react-date-picker";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
   const [error, setError] = useState(false);

@@ -21,7 +21,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
 import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 const Profile = () => {

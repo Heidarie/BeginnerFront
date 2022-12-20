@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
-import CustomInput from "../Profile/components/CustomInput";
-import CustomSelect from "../Register/components/CustomSelect";
-import CustomTextArea from "../Profile/components/CustomTextArea";
-import CustomFile from "../Profile/components/CustomFile";
+import CustomInput from "../../components/form/CustomInput";
+import CustomSelect from "../../components/form/CustomSelect";
+import CustomTextArea from "../../components/form/CustomTextArea";
 import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 import UserService from "../../components/user.service";
-import { lang } from "moment";
 
 const CreateOffer = ({ hideModal }) => {
   const [error, setError] = useState(false);

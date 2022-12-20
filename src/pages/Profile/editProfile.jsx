@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
-import CustomInput from "./components/CustomInput";
-import CustomTextArea from "./components/CustomTextArea";
-import CustomFile from "./components/CustomFile";
+import CustomInput from "../../components/form/CustomInput";
+import CustomTextArea from "../../components/form/CustomTextArea";
+import CustomFile from '../../components/form/CustomFile'
 import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 import UserService from "../../components/user.service";
 
 const EditProfile = ({ hideModal }) => {

@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
-import CustomInput from "../Register/components/CustomInput";
+import CustomInput from "../../components/form/CustomInput";
+import CustomLoginInput from "../../components/form/CustomLoginInput";
 import { Form, Formik } from "formik";
 import AuthService from "../../components/auth.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const Login = () => {
   const [error, setError] = useState("");
@@ -67,7 +68,7 @@ const Login = () => {
                   <Form>
                     <div>
                       <CustomInput
-                        label="Email adress"
+                        label="Email"
                         name="email"
                         type="email"
                         placeholder="example@example.com"
@@ -75,12 +76,12 @@ const Login = () => {
                     </div>
 
                     <div className="mt-6">
-                      <CustomInput
-                        label="Password"
+                      <CustomLoginInput
+                        label="Hasło"
                         forgotPassword="true"
                         name="password"
                         type="password"
-                        placeholder="Enter your password"
+                        placeholder="Wprowadź hasło"
                       />
                     </div>
 
@@ -98,12 +99,12 @@ const Login = () => {
               </Formik>
 
               <p className="mt-6 text-sm text-center text-gray-400">
-                Don't have an account yet?{" "}
+                Nie posiadasz jeszcze konta?{" "}
                 <Link
                   to="/Register"
                   className="text-blue-500 focus:outline-none focus:underline hover:underline"
                 >
-                  Sign up
+                  Zarejestruj się
                 </Link>
                 .
               </p>

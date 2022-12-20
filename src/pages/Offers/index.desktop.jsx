@@ -1,10 +1,9 @@
 import React, { useState, useRef, useCallback } from "react";
 import { classNames } from "../../utils";
 import { AiOutlineArrowUp } from "react-icons/ai";
-import ScrollContainer from "react-indiana-drag-scroll";
 import Offer from "./components/Offer";
 import useOffersFilter from "./components/useOffersFilter";
-import Toast from "./components/Toast";
+import Toast from "../../components/Toast";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -73,14 +72,16 @@ const Offers = () => {
           {offers.map((offer, index) => {
             if (offers.length === index + 1) {
               return (
-                <Offer
-                  key={offer.publicUrl}
-                  ref={lastOfferElementRef}
-                  offer={offer}
-                />
+                <SwiperSlide>
+                  <Offer
+                    key={offer.publicUrl}
+                    ref={lastOfferElementRef}
+                    offer={offer}
+                  />
+                </SwiperSlide>
               );
             } else {
-              return <Offer key={offer.publicUrl} offer={offer} />;
+              return <SwiperSlide><Offer key={offer.publicUrl} offer={offer} /></SwiperSlide>;
             }
           })}
         </>
