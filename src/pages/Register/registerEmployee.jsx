@@ -10,17 +10,19 @@ import Toast from "../../components/Toast";
 
 const RegisterEmployee = () => {
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
+    setLoading(true)
     let res = await AuthService.register("/Authentication/Register", values);
     if (res.status === 201) {
+      setLoading(false)
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {
-      setError(
-        res.response.data.message || res.response.data.errors.PhoneNumber[0]
-      );
+      setLoading(false)
+      setError(true)
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -114,6 +116,7 @@ const RegisterEmployee = () => {
           .
         </p>
       </div>
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
       {error && (
         <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
       )}

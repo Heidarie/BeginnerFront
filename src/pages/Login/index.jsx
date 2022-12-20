@@ -9,16 +9,20 @@ import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
 const Login = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
+    setLoading(true)
     let res = await AuthService.login(values);
     if (res.status === 200) {
+      setLoading(false)
       navigate({ pathname: res.request.response });
       window.location.reload();
     } else {
-      setError(res.response.data.message);
+      setError(true);
+      setLoading(false)
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -112,8 +116,9 @@ const Login = () => {
           </div>
         </div>
       </div>
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
       {error && (
-        <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
+        <Toast text="Niepoprawny login lub hasło" icon="ERROR" />
       )}
       <Footer />
     </div>
