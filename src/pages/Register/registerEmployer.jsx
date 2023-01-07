@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { advancedSchema } from "./schema";
-import CustomInput from "./components/CustomInput";
-import CustomNumber from "./components/CustomNumber";
+import CustomInput from "../../components/form/CustomInput";
+import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
@@ -13,19 +13,32 @@ const RegisterEmployer = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
+<<<<<<< HEAD
     setLoading(true);
+=======
+    setLoading(true)
+>>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
     let res = await AuthService.register(
       "/Authentication/RegisterEmployer",
       values
     );
     console.log(res);
     if (res.status === 201) {
+<<<<<<< HEAD
       setLoading(false);
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {
       setLoading(false);
       setError(true);
+=======
+      setLoading(false)
+      navigate({ pathname: "/Login" });
+      window.location.reload();
+    } else {
+      setLoading(false)
+      setError(res.response.data.message);
+>>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -48,34 +61,34 @@ const RegisterEmployer = () => {
           {({ isSubmitting }) => (
             <Form>
               <CustomInput
-                label="Email adress"
+                label="Email"
                 name="email"
                 type="email"
                 placeholder="example@example.com"
               />
               <CustomInput
-                label="Password"
+                label="Hasło"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Wprowadź hasło"
               />
               <CustomInput
-                label="Confirm Password"
+                label="Potwierdź hasło"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Powtórz hasło"
               />
               <CustomNumber
-                label="Phone Number"
+                label="Numer telefonu"
                 name="phoneNumber"
                 type="number"
-                placeholder="Phone number"
+                placeholder="48 504 544 755"
               />
               <CustomInput
-                label="Company name"
+                label="Nazwa firmy"
                 name="companyName"
                 type="text"
-                placeholder="Company name"
+                placeholder="Nazwa firmy"
               />
               <div className="mt-6">
                 <button
@@ -90,16 +103,17 @@ const RegisterEmployer = () => {
           )}
         </Formik>
         <p className="mt-6 text-sm text-center text-gray-400 mb-5">
-          Already have an account?{" "}
+          Posiadasz już konto?{" "}
           <Link
             to="/Login"
             className="text-blue-500 focus:outline-none focus:underline hover:underline"
           >
-            Sign in
+            Zaloguj się
           </Link>
           .
         </p>
       </div>
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
       {error && (
         <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
       )}

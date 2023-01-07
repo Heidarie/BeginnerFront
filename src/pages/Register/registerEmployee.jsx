@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { basicSchema } from "./schema";
-import CustomSelect from "./components/CustomSelect";
-import CustomInput from "./components/CustomInput";
-import CustomNumber from "./components/CustomNumber";
+import CustomSelect from "../../components/form/CustomSelect";
+import CustomInput from "../../components/form/CustomInput";
+import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
 const RegisterEmployee = () => {
+<<<<<<< HEAD
   const [error, setError] = useState(false);
+=======
+  const [error, setError] = useState("");
+>>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
+<<<<<<< HEAD
     setLoading(true);
     let res = await AuthService.register("/Authentication/Register", values);
     if (res.status === 201) {
@@ -23,6 +28,17 @@ const RegisterEmployee = () => {
     } else {
       setLoading(false);
       setError(true);
+=======
+    setLoading(true)
+    let res = await AuthService.register("/Authentication/Register", values);
+    if (res.status === 201) {
+      setLoading(false)
+      navigate({ pathname: "/Login" });
+      window.location.reload();
+    } else {
+      setLoading(false)
+      setError(true)
+>>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -53,41 +69,41 @@ const RegisterEmployee = () => {
                 placeholder="example@example.com"
               />
               <CustomInput
-                label="Password"
+                label="Hasło"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Wprowadź hasło"
               />
               <CustomInput
-                label="Confirm Password"
+                label="Potwierdź hasło"
                 name="confirmPassword"
                 type="password"
-                placeholder="Confirm password"
+                placeholder="Powtórz hasło"
               />
               <CustomNumber
-                label="Phone Number"
+                label="Numer telefonu"
                 name="phoneNumber"
                 type="number"
-                placeholder="Phone number"
+                placeholder="48 504 544 755"
               />
               <CustomInput
-                label="Name"
+                label="Imię"
                 name="name"
                 type="text"
-                placeholder="Name"
+                placeholder="Imię"
               />
               <CustomInput
-                label="Surname"
+                label="Nazwisko"
                 name="surname"
                 type="text"
-                placeholder="Surname"
+                placeholder="Nazwisko"
               />
               <CustomSelect
                 label="Typ pracownika"
                 name="profession"
-                placeholder="Please select a job"
+                placeholder="Wybierz zawód"
               >
-                <option value="">Please select a job type</option>
+                <option value="">Wybierz zawód</option>
                 <option value="developer">Developer</option>
                 <option value="designer">Designer</option>
                 <option value="manager">Product Manager</option>
@@ -106,16 +122,17 @@ const RegisterEmployee = () => {
           )}
         </Formik>
         <p className="mt-6 text-sm text-center text-gray-400 mb-5">
-          Already have an account?{" "}
+          Posiadasz już konto?{" "}
           <Link
             to="/Login"
             className="text-blue-500 focus:outline-none focus:underline hover:underline"
           >
-            Sign in
+            Zaloguj się
           </Link>
           .
         </p>
       </div>
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
       {error && (
         <Toast text="Wystąpił błąd przy tworzeniu konta" icon="ERROR" />
       )}

@@ -54,7 +54,7 @@ const OfferPage = () => {
       {offer && (
         <div className="relative overflow-hidden rounded-lg bg-white text-left shadow-xl mt-8 sm:w-full sm:max-w-5xl ">
           <div className="bg-gray-100 px-2 py-2 sm:p-4 text-gray-500">
-            Participants {offer?.participants}
+            Aplikujących {offer?.participants}
             <div className="overflow-hidden  bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
               <dl>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6 break-words">
@@ -78,7 +78,7 @@ const OfferPage = () => {
                     </p>
                     <div className="mt-1 max-w-full py-1">
                       <p className="text-2xl font-bold w-fit text-white p-2 rounded-lg bg-[#00df9a] py-1 m-auto sm:m-0">
-                        Profession {offer?.profession}
+                        Główny język {offer?.profession}
                       </p>
                     </div>
                   </dd>
@@ -120,7 +120,7 @@ const OfferPage = () => {
                 <dl>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
                     <dt className="text-sm text-left my-auto font-medium text-gray-500">
-                      Requirements
+                      Wymagania
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       <ScrollContainer
@@ -148,7 +148,7 @@ const OfferPage = () => {
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
                     <dt className="text-sm text-left my-auto font-medium text-gray-500">
-                      Languages
+                      Języki
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       <ScrollContainer
@@ -174,7 +174,7 @@ const OfferPage = () => {
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
                     <dt className="text-sm text-left my-auto font-medium text-gray-500">
-                      Duties
+                      Obowiązki
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                       <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9881]">

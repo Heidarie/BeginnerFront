@@ -1,9 +1,17 @@
 import React, { useState } from "react";
+<<<<<<< HEAD:src/pages/Profile/EmployeeProfile/editGraduation.jsx
 import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import { Form, Formik } from "formik";
 import DatePicker from "react-date-picker";
 import Toast from "../../../components/Toast";
+=======
+import Modal from "../../components/Modal";
+import CustomInput from "../../components/form/CustomInput";
+import { Form, Formik } from "formik";
+import DatePicker from "react-date-picker";
+import Toast from "../../components/Toast";
+>>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c:src/pages/Profile/editGraduation.jsx
 
 const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
   const [error, setError] = useState(false);
