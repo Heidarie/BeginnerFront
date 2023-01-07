@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
-<<<<<<< HEAD:src/pages/Profile/EmployeeProfile/editProfile.jsx
 import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
@@ -9,16 +8,6 @@ import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
 import UserService from "../../../components/user.service";
 import Toast from "../../../components/Toast";
-=======
-import Modal from "../../components/Modal";
-import CustomInput from "../../components/form/CustomInput";
-import CustomTextArea from "../../components/form/CustomTextArea";
-import CustomFile from '../../components/form/CustomFile'
-import { Form, Formik } from "formik";
-import CreatableSelect from "react-select/creatable";
-import Toast from "../../components/Toast";
-import UserService from "../../components/user.service";
->>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c:src/pages/Profile/editProfile.jsx
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);

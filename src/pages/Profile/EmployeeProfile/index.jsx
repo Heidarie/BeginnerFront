@@ -21,10 +21,6 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
 import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
-<<<<<<< HEAD:src/pages/Profile/EmployeeProfile/index.jsx
-=======
-import Toast from "../../components/Toast";
->>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c:src/pages/Profile/index.jsx
 import ScrollContainer from "react-indiana-drag-scroll";
 import Toast from "../../../components/Toast";
 

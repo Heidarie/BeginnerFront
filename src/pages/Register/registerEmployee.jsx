@@ -9,16 +9,11 @@ import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
 const RegisterEmployee = () => {
-<<<<<<< HEAD
   const [error, setError] = useState(false);
-=======
-  const [error, setError] = useState("");
->>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-<<<<<<< HEAD
     setLoading(true);
     let res = await AuthService.register("/Authentication/Register", values);
     if (res.status === 201) {
@@ -28,17 +23,6 @@ const RegisterEmployee = () => {
     } else {
       setLoading(false);
       setError(true);
-=======
-    setLoading(true)
-    let res = await AuthService.register("/Authentication/Register", values);
-    if (res.status === 201) {
-      setLoading(false)
-      navigate({ pathname: "/Login" });
-      window.location.reload();
-    } else {
-      setLoading(false)
-      setError(true)
->>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
       setTimeout(() => {
         setError(false);
       }, 3000);

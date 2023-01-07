@@ -13,32 +13,19 @@ const RegisterEmployer = () => {
 
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
-<<<<<<< HEAD
     setLoading(true);
-=======
-    setLoading(true)
->>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
     let res = await AuthService.register(
       "/Authentication/RegisterEmployer",
       values
     );
     console.log(res);
     if (res.status === 201) {
-<<<<<<< HEAD
       setLoading(false);
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {
       setLoading(false);
       setError(true);
-=======
-      setLoading(false)
-      navigate({ pathname: "/Login" });
-      window.location.reload();
-    } else {
-      setLoading(false)
-      setError(res.response.data.message);
->>>>>>> 2c5e776aa43c4403be2cf7cb931d9b91481cf16c
       setTimeout(() => {
         setError(false);
       }, 3000);

@@ -120,10 +120,7 @@ const EmployerProfile = () => {
             </div>
 
             <div className="mt-2 flex flex-row items-center space-x-5">
-              <a
-                href="#"
-                className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80"
-              >
+              <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
                 <div className="flex flex-row items-center justify-center">
                   <svg
                     className="mr-3 fill-gray-500/95"
@@ -140,12 +137,9 @@ const EmployerProfile = () => {
                 </div>
 
                 <div className="mt-2 text-sm text-gray-400">Comments</div>
-              </a>
+              </span>
 
-              <a
-                href="#"
-                className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80"
-              >
+              <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
                 <div className="flex flex-row items-center justify-center">
                   <svg
                     className="mr-3 fill-gray-500/95"
@@ -162,12 +156,9 @@ const EmployerProfile = () => {
                 </div>
 
                 <div className="mt-2 text-sm text-gray-400">Projects</div>
-              </a>
+              </span>
 
-              <a
-                href="#"
-                className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80"
-              >
+              <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
                 <div className="flex flex-row items-center justify-center">
                   <svg
                     className="mr-3 fill-gray-500/95"
@@ -184,7 +175,7 @@ const EmployerProfile = () => {
                 </div>
 
                 <div className="mt-2 text-sm text-gray-400">Downloads</div>
-              </a>
+              </span>
             </div>
           </div>
 
