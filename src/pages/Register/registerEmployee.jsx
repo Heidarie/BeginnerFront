@@ -6,21 +6,23 @@ import CustomSelect from "./components/CustomSelect";
 import CustomInput from "./components/CustomInput";
 import CustomNumber from "./components/CustomNumber";
 import AuthService from "../../components/auth.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const RegisterEmployee = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
+    setLoading(true);
     let res = await AuthService.register("/Authentication/Register", values);
     if (res.status === 201) {
+      setLoading(false);
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {
-      setError(
-        res.response.data.message || res.response.data.errors.PhoneNumber[0]
-      );
+      setLoading(false);
+      setError(true);
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -115,8 +117,9 @@ const RegisterEmployee = () => {
         </p>
       </div>
       {error && (
-        <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
+        <Toast text="Wystąpił błąd przy tworzeniu konta" icon="ERROR" />
       )}
+      {loading && <Toast text="Ładowanie oferty" icon="LOADING" />}
     </div>
   );
 };

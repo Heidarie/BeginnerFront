@@ -8,12 +8,13 @@ import OffersPage from "./pages/Offers/index.desktop";
 import OfferPage from "./pages/Offer";
 import NotFoundPage from "./pages/NotFound/index";
 import Navbar from "./components/Navbar";
-import ProfilePage from "./pages/Profile/index";
-import EditProfile from "./pages/Profile/editProfile";
+import EmployeeProfile from "./pages/Profile/EmployeeProfile/index";
+import EmployerProfile from "./pages/Profile/EmployerProfile/index";
+import EditProfile from "./pages/Profile/EmployeeProfile/editProfile";
 import Feed from "./pages/Feed";
 import Modal from "./components/Modal";
-import CreateOffer from "./pages/CreateOffer/index";
 import Applications from "./pages/Applications/index";
+import ConfirmAccount from "./pages/ConfirmAccount";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -26,11 +27,12 @@ root.render(
       <Route path="/Offers" element={<OffersPage />} />
       <Route path="/Offers/Offer/:publicUrl" element={<OfferPage />} />
       <Route path="/Feed" element={<Feed />} />
-      <Route path="/Account/User/:id" element={<ProfilePage />} />
+      <Route path="/Account/User/:id" element={<EmployeeProfile />} />
+      <Route path="/Company/:id" element={<EmployerProfile />} />
       <Route path="/Account/User/Edit/:id" element={<EditProfile />} />
       <Route path="/Modal" element={<Modal />} />
-      <Route path="/CreateOffer" element={<CreateOffer />} />
       <Route path="/Applications" element={<Applications />} />
+      <Route path="/ConfirmAccount" element={<ConfirmAccount />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   </BrowserRouter>

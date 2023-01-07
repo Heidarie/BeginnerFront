@@ -5,22 +5,27 @@ import { advancedSchema } from "./schema";
 import CustomInput from "./components/CustomInput";
 import CustomNumber from "./components/CustomNumber";
 import AuthService from "../../components/auth.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const RegisterEmployer = () => {
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
+    setLoading(true);
     let res = await AuthService.register(
       "/Authentication/RegisterEmployer",
       values
     );
     console.log(res);
     if (res.status === 201) {
+      setLoading(false);
       navigate({ pathname: "/Login" });
       window.location.reload();
     } else {
-      setError(res.response.data.message);
+      setLoading(false);
+      setError(true);
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -98,6 +103,7 @@ const RegisterEmployer = () => {
       {error && (
         <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
       )}
+      {loading && <Toast text="Próba tworzenia konta" icon="LOADING" />}
     </div>
   );
 };

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../components/Modal";
-import CustomInput from "../Profile/components/CustomInput";
+import CustomInput from "../Profile/EmployeeProfile/components/CustomInput";
 import CustomSelect from "../Register/components/CustomSelect";
-import CustomTextArea from "../Profile/components/CustomTextArea";
-import CustomFile from "../Profile/components/CustomFile";
+import CustomTextArea from "../Profile/EmployeeProfile/components/CustomTextArea";
+import CustomFile from "../Profile/EmployeeProfile/components/CustomFile";
 import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 import UserService from "../../components/user.service";
 import { lang } from "moment";
 
@@ -67,6 +67,7 @@ const CreateOffer = ({ hideModal }) => {
       <Formik
         initialValues={{
           title: "",
+          description: "",
           salaryFrom: 0,
           salaryTo: 0,
           isPremium: false,
@@ -75,7 +76,6 @@ const CreateOffer = ({ hideModal }) => {
           jobType: "",
           postalCode: "",
           street: "",
-          description: "",
           companySize: 0,
           duties: [],
           languages: [],
@@ -119,10 +119,10 @@ const CreateOffer = ({ hideModal }) => {
                       <div className="grid grid-cols-6 gap-6">
                         <CustomInput
                           className="col-span-3"
-                          label="Główny cel stanowiska"
+                          label="Wodząca technologia"
                           name="profession"
                           type="text"
-                          placeholder="Np. Node JS Developer"
+                          placeholder="Np. Javascript"
                         />
                         <CustomSelect
                           className="col-span-3 bg-white"
@@ -130,10 +130,10 @@ const CreateOffer = ({ hideModal }) => {
                           name="jobType"
                           placeholder="Wybierz rodzaj pracy"
                         >
-                          <option value="">Please select a job type</option>
-                          <option value="LOCAL">LOCAL</option>
-                          <option value="REMOTE">REMOTE</option>
-                          <option value="LOCAL/REMOTE">LOCAL/REMOTE</option>
+                          <option value="">Wybierz tryb pracy</option>
+                          <option value="LOCAL">LOKALNIE</option>
+                          <option value="REMOTE">ZDALNIE</option>
+                          <option value="LOCAL/REMOTE">LOKALNIE&ZDALNIE</option>
                         </CustomSelect>
                       </div>
                     </div>
@@ -213,7 +213,8 @@ const CreateOffer = ({ hideModal }) => {
                       Obowiązki
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
-                      Obowiązki wymagane od przyszłego pracownika.
+                      Zakres obowiązków wymaganych od przyszłego pracownika na
+                      tym stanowisku.
                     </p>
                   </div>
                 </div>
@@ -245,10 +246,11 @@ const CreateOffer = ({ hideModal }) => {
                 <div className="md:col-span-1">
                   <div className="px-4 sm:px-0">
                     <h3 className="text-lg font-medium leading-6 text-gray-900">
-                      Języki
+                      Inne technologie
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
-                      Języki programistyczne wymagane od przyszłego pracownika.
+                      Znajomość innych technologii mile widzianych na tym
+                      stanowisku.
                     </p>
                   </div>
                 </div>
@@ -283,7 +285,7 @@ const CreateOffer = ({ hideModal }) => {
                       Wymagania
                     </h3>
                     <p className="mt-1 text-sm text-gray-600">
-                      Wymagania od przyszłego pracownika.
+                      Wymagania od przyszłego pracownika na tym stanowisku.
                     </p>
                   </div>
                 </div>

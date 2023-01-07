@@ -4,7 +4,7 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Offer from "./components/Offer";
 import useOffersFilter from "./components/useOffersFilter";
-import Toast from "./components/Toast";
+import Toast from "../../components/Toast";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";

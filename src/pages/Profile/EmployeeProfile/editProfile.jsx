@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
-import Modal from "../../components/Modal";
+import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
 import CustomFile from "./components/CustomFile";
 import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
-import Toast from "../Offers/components/Toast";
-import UserService from "../../components/user.service";
+import UserService from "../../../components/user.service";
+import Toast from "../../../components/Toast";
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);
@@ -41,7 +41,7 @@ const EditProfile = ({ hideModal }) => {
     let res = await UserService.updateUserData(updateValues);
     if (res.response.status === 200) {
       setLoading(false);
-      console.log("res", res);
+      hideModal(true);
     } else {
       setLoading(false);
       setError(true);

@@ -4,7 +4,7 @@ import { AiOutlineArrowUp } from "react-icons/ai";
 import ScrollContainer from "react-indiana-drag-scroll";
 import OfferMobile from "./components/Offer.mobile";
 import useOffersFilter from "./components/useOffersFilter";
-import Toast from "./components/Toast";
+import Toast from "../../components/Toast";
 
 const OffersMobile = () => {
   const [isVisible, setIsVisible] = useState(false);

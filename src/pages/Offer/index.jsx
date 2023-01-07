@@ -5,7 +5,7 @@ import { FaMoneyBill } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import UserService from "../../components/user.service";
 import ScrollContainer from "react-indiana-drag-scroll";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const OfferPage = () => {
   let { publicUrl } = useParams();

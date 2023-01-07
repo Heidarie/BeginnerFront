@@ -1,32 +1,36 @@
 import React, { useState } from "react";
-import Modal from "../../components/Modal";
+import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import { Form, Formik } from "formik";
 import DatePicker from "react-date-picker";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../../components/Toast";
 
-const EditExperience = ({ hideModal, experience, setExp, expList }) => {
+const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [expDateFrom, setExpDateFrom] = useState(experience?.dateFrom || new Date());
-  const [expDateTo, setExpDateTo] = useState(experience?.dateTo || new Date());
+  const [gradDateFrom, setGradDateFrom] = useState(
+    graduation?.dateFrom || new Date()
+  );
+  const [gradDateTo, setGradDateTo] = useState(
+    graduation?.dateTo || new Date()
+  );
 
   const onSubmit = async (values, actions) => {
     setError(false);
     setLoading(true);
 
     const updateValues = {
-      dateFrom: expDateFrom,
-      dateTo: expDateTo,
-      position: values.position,
-      employerName: values.employerName,
-      description: values.description,
+      dateFrom: gradDateFrom,
+      dateTo: gradDateTo,
+      schoolName: values.schoolName,
+      title: values.title,
+      type: values.type,
     };
 
-    var newList = expList.filter((item) => item !== experience);
+    var newList = gradList.filter((item) => item !== graduation);
     console.log(newList);
     newList.push(updateValues);
-    setExp(newList);
+    setGrad(newList);
 
     setLoading(false);
     hideModal(true);
@@ -35,9 +39,9 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
     <Modal hideModal={hideModal}>
       <Formik
         initialValues={{
-          employerName: experience?.employerName || "",
-          position: experience?.position || "",
-          description: experience?.description || "",
+          schoolName: graduation?.schoolName || "",
+          title: graduation?.title || "",
+          type: graduation?.type || "",
         }}
         onSubmit={onSubmit}
       >
@@ -60,25 +64,25 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <CustomInput
-                          className="col-span-3"
-                          label="Nazwa firmy"
-                          name="employerName"
+                          className="col-span-6"
+                          label="Nazwa uczelni"
+                          name="schoolName"
                           type="text"
                           placeholder="np. Wyższa szkoła Bankowa w Poznaniu"
+                        />
+                        <CustomInput
+                          className="col-span-3"
+                          label="Kierunek studiów"
+                          name="type"
+                          type="text"
+                          placeholder="Np. Inżynieryjskie"
                         />
                         <CustomInput
                           className="col-span-3"
                           label="Tytuł"
-                          name="position"
+                          name="title"
                           type="text"
                           placeholder="np. Wyższa szkoła Bankowa w Poznaniu"
-                        />
-                        <CustomInput
-                          className="col-span-6"
-                          label="Opis"
-                          name="description"
-                          type="text"
-                          placeholder="Np. Inżynieryjskie"
                         />
                         <div className="col-span-6 sm:col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
@@ -87,9 +91,9 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                           <DatePicker
                             name="dateStartJob"
                             type="text"
-                            onChange={setExpDateFrom}
-                            value={expDateFrom}
-                            className="mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
+                            onChange={setGradDateFrom}
+                            value={gradDateFrom}
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
                         <div className="col-span-6 sm:col-span-3">
@@ -99,9 +103,9 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                           <DatePicker
                             name="dateEndJob"
                             type="text"
-                            onChange={setExpDateTo}
-                            value={expDateTo}
-                            className="mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-[#00df9a] focus:ring-[#00df9a] sm:text-sm"
+                            onChange={setGradDateTo}
+                            value={gradDateTo}
+                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
                       </div>

@@ -17,8 +17,8 @@ import { classNames } from "../utils";
 import AuthService from "./auth.service";
 
 const Navbar = () => {
+  const userLocalStorage = localStorage.getItem("user");
   const navigate = useNavigate();
-
   const [navMenu, setNavMenu] = useState(false);
   const [hover, setHover] = useState([false, false, false, false, false]);
   const [user, setUser] = useState(undefined);
@@ -37,15 +37,12 @@ const Navbar = () => {
     );
   };
 
-  const setUserData = () => {
-    setUser(AuthService.getCurrentUser());
-    if (user) window.location.reload();
-  };
-
   useEffect(() => {
-    setUserData();
-  }, []);
-
+    if (userLocalStorage) {
+      setUser(AuthService.getCurrentUser());
+    }
+  }, [userLocalStorage]);
+  console.log(user);
   return (
     <nav className="bg-gray-800 fixed w-full top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 z-[100]">
@@ -221,7 +218,7 @@ const Navbar = () => {
                         </div>
 
                         <div className="pr-3 hidden sm:block">
-                          <p>{user.name}</p>
+                          <p>{user.name || user.companyName}</p>
                         </div>
                         <div>
                           <AiFillCaretDown
@@ -244,19 +241,33 @@ const Navbar = () => {
                       <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
                         <div className="py-1">
                           <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                to={`/Account/User/${user?.name}.${user.surname}`}
-                                className={classNames(
-                                  active
-                                    ? "bg-gray-100 text-gray-900"
-                                    : "text-gray-700",
-                                  "block px-4 py-2 text-sm"
-                                )}
-                              >
-                                Profil
-                              </Link>
-                            )}
+                            {({ active }) =>
+                              user.companyName !== undefined ? (
+                                <Link
+                                  to={`/Company/${user?.companyName}`}
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}
+                                >
+                                  Profil
+                                </Link>
+                              ) : (
+                                <Link
+                                  to={`/Account/User/${user?.name}.${user.surname}`}
+                                  className={classNames(
+                                    active
+                                      ? "bg-gray-100 text-gray-900"
+                                      : "text-gray-700",
+                                    "block px-4 py-2 text-sm"
+                                  )}
+                                >
+                                  Profil
+                                </Link>
+                              )
+                            }
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (

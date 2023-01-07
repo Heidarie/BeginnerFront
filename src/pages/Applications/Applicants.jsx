@@ -28,7 +28,7 @@ const Applicants = ({ applicants }) => {
               <div className="overflow-hidden bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
                 <div className="px-4 py-5 sm:px-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900">
-                    Applicant Information
+                    ZDJECIE Applicant Information
                   </h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">
                     Personal details and application.
@@ -38,7 +38,7 @@ const Applicants = ({ applicants }) => {
                   <dl>
                     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Full name
+                        Imię i nazwisko
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Margot Foster
@@ -46,7 +46,7 @@ const Applicants = ({ applicants }) => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Application for
+                        Zawód
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Backend Developer
@@ -60,17 +60,9 @@ const Applicants = ({ applicants }) => {
                         margotfoster@example.com
                       </dd>
                     </div>
-                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Salary expectation
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        $120,000
-                      </dd>
-                    </div>
                     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        About
+                        Opis
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
@@ -82,7 +74,7 @@ const Applicants = ({ applicants }) => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Attachments
+                        Załączniki
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
@@ -139,7 +131,7 @@ const Applicants = ({ applicants }) => {
               <div className="overflow-hidden bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
                 <div className="px-4 py-5 sm:px-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900">
-                    Applicant Information
+                    ZDJECIE Applicant Information
                   </h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">
                     Personal details and application.
@@ -149,7 +141,7 @@ const Applicants = ({ applicants }) => {
                   <dl>
                     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Full name
+                        Imię i nazwisko
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Margot Foster
@@ -157,7 +149,7 @@ const Applicants = ({ applicants }) => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Application for
+                        Zawód
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Backend Developer
@@ -171,17 +163,9 @@ const Applicants = ({ applicants }) => {
                         margotfoster@example.com
                       </dd>
                     </div>
-                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        Salary expectation
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        $120,000
-                      </dd>
-                    </div>
                     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        About
+                        Opis
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
@@ -193,7 +177,7 @@ const Applicants = ({ applicants }) => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Attachments
+                        Załączniki
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
@@ -250,7 +234,7 @@ const Applicants = ({ applicants }) => {
               <div className="overflow-hidden bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
                 <div className="px-4 py-5 sm:px-6">
                   <h3 className="text-lg font-medium leading-6 text-gray-900">
-                    Applicant Information
+                    ZDJECIE Applicant Information
                   </h3>
                   <p className="mt-1 max-w-2xl text-sm text-gray-500">
                     Personal details and application.
@@ -260,7 +244,7 @@ const Applicants = ({ applicants }) => {
                   <dl>
                     <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Full name
+                        Imię i nazwisko
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Margot Foster
@@ -268,7 +252,7 @@ const Applicants = ({ applicants }) => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Application for
+                        Zawód
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Backend Developer
@@ -284,15 +268,7 @@ const Applicants = ({ applicants }) => {
                     </div>
                     <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Salary expectation
-                      </dt>
-                      <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        $120,000
-                      </dd>
-                    </div>
-                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt className="text-sm font-medium text-gray-500">
-                        About
+                        Opis
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         Fugiat ipsum ipsum deserunt culpa aute sint do nostrud
@@ -302,9 +278,9 @@ const Applicants = ({ applicants }) => {
                         mollit ad adipisicing reprehenderit deserunt qui eu.
                       </dd>
                     </div>
-                    <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt className="text-sm font-medium text-gray-500">
-                        Attachments
+                        Załączniki
                       </dt>
                       <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                         <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">

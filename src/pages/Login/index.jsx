@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import CustomInput from "../Register/components/CustomInput";
 import { Form, Formik } from "formik";
 import AuthService from "../../components/auth.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 
 const Login = () => {
   const [error, setError] = useState("");

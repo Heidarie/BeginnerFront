@@ -18,10 +18,17 @@ const login = async (values) => {
     let response = await axios.post(API_URL + "/Authentication/Login", values);
     console.log(response);
     if (response.status === 200) {
-      axios.get(API_URL + "/Account/Profile").then((res) => {
-        console.log(res);
-        localStorage.setItem("user", JSON.stringify(res.data));
-      });
+      if (response.data.includes("/Company/")) {
+        axios.get(API_URL + response.data).then((res) => {
+          console.log(res);
+          localStorage.setItem("user", JSON.stringify(res.data));
+        });
+      } else {
+        axios.get(API_URL + "/Account/Profile").then((res) => {
+          console.log(res);
+          localStorage.setItem("user", JSON.stringify(res.data));
+        });
+      }
     }
     return response;
   } catch (error) {
@@ -52,6 +59,23 @@ const getUser = async (userPublicUrl) => {
     return error;
   }
 };
+
+const getCompany = async (companyPublicUrl) => {
+  try {
+    let response = await axios.get(API_URL + `/Company/${companyPublicUrl}`);
+    if (response.data.isLoggedInUserAccount) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    if (localStorage.getItem("user") !== response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 const getCurrentUser = () => {
   return JSON.parse(localStorage.getItem("user"));
 };
@@ -62,6 +86,7 @@ const AuthService = {
   logout,
   getCurrentUser,
   getUser,
+  getCompany,
 };
 
 export default AuthService;

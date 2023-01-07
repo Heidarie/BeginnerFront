@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import EmployerService from "../../components/employer.service";
-import Toast from "../Offers/components/Toast";
+import Toast from "../../components/Toast";
 import EmployerOffers from "./EmployerOffers";
 
 const Applications = () => {

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import loginBg from "../../assets/loginBg.png";
-import Footer from "../../components/Footer";
-import AuthService from "../../components/auth.service";
-import UserService from "../../components/user.service";
+import loginBg from "../../../assets/loginBg.png";
+import Footer from "../../../components/Footer";
+import AuthService from "../../../components/auth.service";
+import UserService from "../../../components/user.service";
 import { IoFlame } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -21,10 +21,10 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
 import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
-import Toast from "../Offers/components/Toast";
 import ScrollContainer from "react-indiana-drag-scroll";
+import Toast from "../../../components/Toast";
 
-const Profile = () => {
+const EmployeeProfile = () => {
   let { id } = useParams();
   const [user, setUser] = useState(undefined);
   const [editProfile, setEditProfile] = useState(false);
@@ -135,7 +135,7 @@ const Profile = () => {
               <p className="font-semibold">{`${user?.name} ${user?.surname}`}</p>
               <div className="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <IoFlame />
-                {user?.profession.toUpperCase()}
+                {user?.profession?.toUpperCase()}
               </div>
             </div>
             <div className="flex justify-start items-start text-start gap-3 m-auto">
@@ -1322,4 +1322,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default EmployeeProfile;
