@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi";
 import { MdOutlineModeEditOutline } from "react-icons/md";
 import { BiMessageDetail } from "react-icons/bi";
+import { RiFileList3Line } from "react-icons/ri";
 import EditProfile from "./editProfile";
 import CreateOffer from "../../CreateOffer/index";
 
@@ -96,8 +97,9 @@ const EmployerProfile = () => {
                 </svg>
 
                 <div className="text-xs text-gray-400/80 hover:text-gray-400">
-                  {`${company?.employerPersonalData?.mainCity}, ${company?.employerPersonalData?.mainCountry}` ||
-                    "MIASTO"}
+                  {company?.mainCity !== null && company?.mainCountry !== null
+                    ? `${company?.employerPersonalData?.mainCity}, ${company?.employerPersonalData?.mainCountry}`
+                    : "MIASTO"}
                 </div>
               </div>
 
@@ -122,21 +124,11 @@ const EmployerProfile = () => {
             <div className="mt-2 flex flex-row items-center space-x-5">
               <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
                 <div className="flex flex-row items-center justify-center">
-                  <svg
-                    className="mr-3 fill-gray-500/95"
-                    xmlns="http://www.w3.org/2000/svg"
-                    version="1.1"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7A2,2 0 0,1 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.89 12.76,23 12.5,23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15M9,9H19V11H9V9M9,13H17V15H9V13Z" />
-                  </svg>
-
-                  <span className="font-bold text-gray-600"> 4.6K </span>
+                  <RiFileList3Line className="h-6 w-6 mr-3 fill-gray-500/95" />
+                  <span className="font-bold text-gray-600"> NUMBER </span>
                 </div>
 
-                <div className="mt-2 text-sm text-gray-400">Comments</div>
+                <div className="mt-2 text-sm text-gray-400">Oferty</div>
               </span>
 
               <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
@@ -211,6 +203,7 @@ const EmployerProfile = () => {
           </div>
         </div>
         <div className="flex flex-col">
+          <h2 class="my-2 text-2xl font-bold">STATYSTKI</h2>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             <div className="flex items-start rounded-xl bg-white p-4 shadow-lg">
               <div className="flex h-12 w-12 items-center justify-center rounded-full border border-blue-100 bg-blue-50">

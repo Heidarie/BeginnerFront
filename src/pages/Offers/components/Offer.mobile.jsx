@@ -74,11 +74,11 @@ const Offer = React.forwardRef((props, ref) => {
           >
             <ul className="flex">
               {requirements &&
-                requirements?.map((requirement) => {
+                requirements?.map((requirement, id) => {
                   return (
                     <li
                       className="outline-offset-2 outline-white p-3 text-sm font-semibold text-black"
-                      key={requirement}
+                      key={requirement + id}
                     >
                       {requirement}
                     </li>

@@ -35,13 +35,13 @@ const Offer = React.forwardRef((props, ref) => {
     >
       <div className="w-full">
         <div className="text-right w-full -ml-2">
-          <h3 className="text-[#00df9a] text-lg 2xl:text-2xl font-extrabold -mb-4">
+          <h3 className="text-[#00df9a] text-lg 2xl:text-2xl font-extrabold">
             {city}
           </h3>
         </div>
-        <div className="grid grid-cols-6 xl:mb-4 md:grid-cols-1 my-2 justify-start md:justify-items-center items-center">
+        <div className="grid grid-cols-6 xl:mb-4 md:grid-cols-1 my-4 justify-start md:justify-items-center items-center">
           <div className="col-span-1 w-full justify-center items-center">
-            <div className="flex h-12 w-12 md:h-18 md:w-18 xl:h-28 xl:w-28 justify-start text-center md:justify-center items-center mx-auto">
+            <div className="flex h-12 w-12 md:h-16 md:w-16 xl:h-24 xl:w-24 justify-start text-center md:justify-center items-center mx-auto">
               {logoPath ? (
                 <img
                   src={`data:image/png;base64,${logoPath}`}
@@ -77,11 +77,11 @@ const Offer = React.forwardRef((props, ref) => {
           >
             <ul className="flex">
               {requirements &&
-                requirements?.map((requirement) => {
+                requirements?.map((requirement, id) => {
                   return (
                     <li
                       className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                      key={requirement}
+                      key={requirement + id}
                     >
                       {requirement}
                     </li>

@@ -159,11 +159,11 @@ const EmployeeProfile = () => {
                   className="flex justify-start scroll-container bg-[#00df9881]"
                 >
                   <ul className="flex">
-                    {user?.personalDataModel?.skills?.map((skill) => {
+                    {user?.personalDataModel?.skills?.map((skill, id) => {
                       return (
                         <li
                           className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
-                          key={skill}
+                          key={skill + id}
                         >
                           {skill}
                         </li>
@@ -187,11 +187,11 @@ const EmployeeProfile = () => {
                 >
                   <ul className="flex">
                     {user?.personalDataModel?.certificates?.map(
-                      (certificate) => {
+                      (certificate, id) => {
                         return (
                           <li
                             className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
-                            key={certificate}
+                            key={certificate + id}
                           >
                             {certificate}
                           </li>
@@ -271,7 +271,7 @@ const EmployeeProfile = () => {
                     >
                       {expList?.map((experience, index) => (
                         <Draggable
-                          key={experience.description}
+                          key={experience.description + index}
                           draggableId={experience.description}
                           index={index}
                         >
@@ -484,7 +484,7 @@ const EmployeeProfile = () => {
                     >
                       {gradList?.map((graduation, index) => (
                         <Draggable
-                          key={graduation.type}
+                          key={graduation.type + index}
                           draggableId={graduation.type}
                           index={index}
                         >

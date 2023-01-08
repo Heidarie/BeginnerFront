@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function useOffersFilter(filter, pageNumber) {
+export default function useOffersFilter(query, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [offers, setOffers] = useState([]);
@@ -9,7 +9,7 @@ export default function useOffersFilter(filter, pageNumber) {
 
   useEffect(() => {
     setOffers([]);
-  }, [filter]);
+  }, [query]);
 
   useEffect(() => {
     setLoading(true);
@@ -18,14 +18,14 @@ export default function useOffersFilter(filter, pageNumber) {
     axios({
       method: "GET",
       url: `https://localhost:7064/Offers`,
-      params: { page: pageNumber },
+      params: { q: query, page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
         setOffers((prevOffers) => {
           return [...new Set([...prevOffers, ...res.data])];
         });
-        setHasMore(res.data);
+        setHasMore(res.data.length > 0);
         setLoading(false);
       })
       .catch((error) => {
@@ -34,7 +34,7 @@ export default function useOffersFilter(filter, pageNumber) {
         setError(true);
       });
     return () => cancel();
-  }, [filter, pageNumber]);
+  }, [query, pageNumber]);
 
   return { loading, error, offers, hasMore };
 }

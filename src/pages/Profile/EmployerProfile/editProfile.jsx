@@ -38,7 +38,7 @@ const EditProfile = ({ hideModal }) => {
     }
   };
   return (
-    <Modal hideModal={hideModal}>
+    <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
       <Formik
         initialValues={{
           Name: "",

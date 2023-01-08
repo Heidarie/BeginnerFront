@@ -36,7 +36,7 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
     hideModal(true);
   };
   return (
-    <Modal hideModal={hideModal}>
+    <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
       <Formik
         initialValues={{
           schoolName: graduation?.schoolName || "",

@@ -60,7 +60,7 @@ const CreateOffer = ({ hideModal }) => {
     // }
   };
   return (
-    <Modal hideModal={hideModal}>
+    <Modal hideModal={hideModal} className="sm:max-w-6xl p-4">
       <Formik
         initialValues={{
           title: "",

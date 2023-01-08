@@ -131,11 +131,11 @@ const OfferPage = () => {
                         <ul className="flex">
                           {offer?.offerDetails?.requirements &&
                             offer?.offerDetails?.requirements?.map(
-                              (requirement) => {
+                              (requirement, id) => {
                                 return (
                                   <li
                                     className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                                    key={requirement}
+                                    key={requirement + id}
                                   >
                                     {requirement}
                                   </li>
