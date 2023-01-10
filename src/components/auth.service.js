@@ -21,11 +21,13 @@ const login = async (values) => {
       if (response.data.includes("/Company/")) {
         axios.get(API_URL + response.data).then((res) => {
           console.log(res);
+          res.data.saveLogin = values.saveLogin;
           localStorage.setItem("user", JSON.stringify(res.data));
         });
       } else {
         axios.get(API_URL + "/Account/Profile").then((res) => {
           console.log(res);
+          res.data.saveLogin = values.saveLogin;
           localStorage.setItem("user", JSON.stringify(res.data));
         });
       }

@@ -4,7 +4,7 @@ import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
 import CustomInput from "../../components/form/CustomInput";
 import CustomLoginInput from "../../components/form/CustomLoginInput";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
@@ -14,15 +14,14 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    setLoading(true)
     let res = await AuthService.login(values);
     if (res.status === 200) {
-      setLoading(false)
+      setLoading(false);
       navigate({ pathname: res.request.response });
       window.location.reload();
     } else {
       setError(true);
-      setLoading(false)
+      setLoading(false);
       setTimeout(() => {
         setError(false);
       }, 3000);
@@ -65,6 +64,7 @@ const Login = () => {
                 initialValues={{
                   email: "",
                   password: "",
+                  saveLogin: false,
                 }}
                 onSubmit={onSubmit}
               >
@@ -72,6 +72,7 @@ const Login = () => {
                   <Form>
                     <div>
                       <CustomInput
+                        textColor="text-gray-200"
                         label="Email"
                         name="email"
                         type="email"
@@ -86,6 +87,20 @@ const Login = () => {
                         name="password"
                         type="password"
                         placeholder="Wprowadź hasło"
+                      />
+                    </div>
+
+                    <div className="flex items-center mt-2 -mb-2">
+                      <label
+                        htmlFor="push-everything"
+                        className="block text-sm font-medium text-gray-400"
+                      >
+                        Nie wylogowywuj mnie
+                      </label>
+                      <Field
+                        type="checkbox"
+                        name="saveLogin"
+                        className="mx-2 h-4 w-4 border-gray-300 text-[#00df9a] focus:ring-[#00df9a]"
                       />
                     </div>
 
@@ -117,9 +132,7 @@ const Login = () => {
         </div>
       </div>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && (
-        <Toast text="Niepoprawny login lub hasło" icon="ERROR" />
-      )}
+      {error && <Toast text="Niepoprawny login lub hasło" icon="ERROR" />}
       <Footer />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { basicSchema } from "./schema";
@@ -6,14 +6,68 @@ import CustomSelect from "../../components/form/CustomSelect";
 import CustomInput from "../../components/form/CustomInput";
 import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
+import UserService from "../../components/user.service";
 import Toast from "../../components/Toast";
+import Select from "react-select";
 
 const RegisterEmployee = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [filtersData, setFiltersData] = useState([]);
+  const [occupation, setOccupation] = useState(null);
+  const [profession, setProfession] = useState([]);
   const navigate = useNavigate();
 
+  async function loadFilters() {
+    setLoading(true);
+    let res = await UserService.getFilters("category=occupation");
+    if (res.status === 200) {
+      const occupationFilter = res?.data?.occupationFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      const newObject = { occupationFilter };
+      setLoading(false);
+      setFiltersData(newObject);
+    } else {
+      setLoading(false);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  }
+
+  async function loadProfession(value) {
+    setLoading(true);
+    const occupationId = value.id;
+    let res = await UserService.getFilters(
+      `category=profession&occupationIds=${occupationId}`
+    );
+    if (res.status === 200) {
+      const professionFilter = res.data.professionFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      setFiltersData({ ...filtersData, professionFilter: professionFilter });
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  }
+
   const onSubmit = async (values, actions) => {
+    const newValues = {
+      ...values,
+      occupation: occupation.id.toString(),
+      profession: profession.id.toString(),
+      regionCode: parseInt(values.regionCode),
+    };
+    console.log(newValues);
     setLoading(true);
     let res = await AuthService.register("/Authentication/Register", values);
     if (res.status === 201) {
@@ -28,6 +82,19 @@ const RegisterEmployee = () => {
       }, 3000);
     }
   };
+  useEffect(() => {
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    if (occupation) {
+      loadProfession(occupation);
+    } else {
+      delete filtersData?.professionFilter;
+      setProfession([]);
+    }
+  }, [occupation]);
+
   return (
     <div className="flex-1">
       <div className="mt-8">
@@ -36,10 +103,12 @@ const RegisterEmployee = () => {
             email: "",
             password: "",
             confirmPassword: "",
-            phoneNumber: "",
+            phoneNumber: 0,
             name: "",
             surname: "",
             profession: "",
+            city: "",
+            regionCode: 0,
           }}
           validationSchema={basicSchema}
           onSubmit={onSubmit}
@@ -47,18 +116,23 @@ const RegisterEmployee = () => {
           {({ isSubmitting }) => (
             <Form>
               <CustomInput
-                label="Email adress"
+                className="my-2"
+                textColor="text-gray-200"
+                label="Email"
                 name="email"
                 type="email"
                 placeholder="example@example.com"
               />
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Hasło"
                 name="password"
                 type="password"
                 placeholder="Wprowadź hasło"
               />
               <CustomInput
+                textColor="text-gray-200"
                 label="Potwierdź hasło"
                 name="confirmPassword"
                 type="password"
@@ -66,33 +140,98 @@ const RegisterEmployee = () => {
               />
               <CustomNumber
                 label="Numer telefonu"
+                id="phoneNumber"
                 name="phoneNumber"
                 type="number"
-                placeholder="48 504 544 755"
+                placeholder="48 123 456 789"
               />
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Imię"
                 name="name"
                 type="text"
                 placeholder="Imię"
               />
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Nazwisko"
                 name="surname"
                 type="text"
                 placeholder="Nazwisko"
               />
+              <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
+                label="Miasto"
+                name="city"
+                type="text"
+                placeholder="Miasto"
+              />
               <CustomSelect
-                label="Typ pracownika"
-                name="profession"
-                placeholder="Wybierz zawód"
+                label="Województwo"
+                name="regionCode"
+                placeholder="Wybierz województwo"
+                type="number"
               >
-                <option value="">Wybierz zawód</option>
-                <option value="developer">Developer</option>
-                <option value="designer">Designer</option>
-                <option value="manager">Product Manager</option>
-                <option value="other">Other</option>
+                <option value="" disabled>
+                  Wybierz województwo
+                </option>
+                <option value="0">Wielkopolskie</option>
+                <option value="1">Lubelskie</option>
+                <option value="2">Mazowieckie</option>
+                <option value="3">Warmińsko-mazurskie</option>
+                <option value="4">Dolnośląskie</option>
+                <option value="5">Śląskie</option>
+                <option value="6">Małopolskie</option>
+                <option value="7">Zachodniopomorskie</option>
+                <option value="8">Pomorskie</option>
+                <option value="9">Lubuskie</option>
+                <option value="10">Kujawsko-pomorskie</option>
+                <option value="11">Podlaskie</option>
+                <option value="12">Świętokrzyskie</option>
+                <option value="13">Łódzkie</option>
+                <option value="14">Opolskie</option>
+                <option value="15">Podkarpackie</option>
               </CustomSelect>
+              <label className="block text-sm font-medium text-gray-200">
+                Główny zawód
+              </label>
+              <Select
+                onChange={setOccupation}
+                value={occupation}
+                options={filtersData?.occupationFilter}
+                isClearable={true}
+                placeholder="Wybierz zawód"
+                name="occupation"
+                className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              />
+              <label className="block text-sm font-medium text-gray-200">
+                Główny język
+              </label>
+              {occupation !== null ? (
+                <Select
+                  onChange={setProfession}
+                  value={profession}
+                  options={filtersData?.professionFilter}
+                  placeholder="Wybierz język"
+                  isClearable={true}
+                  name="occupation"
+                  className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              ) : (
+                <Select
+                  isDisabled={true}
+                  onChange={setProfession}
+                  value={profession}
+                  options={filtersData?.professionFilter}
+                  placeholder="Wybierz język"
+                  isClearable={true}
+                  name="occupation"
+                  className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                />
+              )}
               <div className="mt-6">
                 <button
                   type="submit"
@@ -120,7 +259,7 @@ const RegisterEmployee = () => {
       {error && (
         <Toast text="Wystąpił błąd przy tworzeniu konta" icon="ERROR" />
       )}
-      {loading && <Toast text="Ładowanie oferty" icon="LOADING" />}
+      {loading && <Toast text="Ładowanie" icon="LOADING" />}
     </div>
   );
 };

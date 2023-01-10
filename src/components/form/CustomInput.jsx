@@ -1,12 +1,16 @@
 import { useField } from "formik";
 
-const CustomInput = ({ className, label, ...props }) => {
+const CustomInput = ({ className, textColor, label, ...props }) => {
   const [field, meta] = useField(props);
 
   return (
     <>
       <div className={className}>
-        <label className="block text-sm font-medium text-gray-500">
+        <label
+          className={`block text-sm font-medium ${
+            textColor ? textColor : "text-gray-700"
+          }`}
+        >
           {label}
         </label>
         <input

@@ -172,41 +172,6 @@ const EditProfile = ({ hideModal }) => {
                           type="text"
                           placeholder="AWS Developer"
                         />
-                        {/* // <CustomInput
-                        //   className="col-span-6 sm:col-span-3"
-                        //   label="Kraj"
-                        //   name="country"
-                        //   type="text"
-                        //   placeholder="Polska"
-                        // />
-                        // <CustomInput
-                        //   className="col-span-6"
-                        //   label="Adres"
-                        //   name="address"
-                        //   type="text"
-                        //   placeholder="Kujawska 12/24"
-                        // />
-                        // <CustomInput
-                        //   className="col-span-6 sm:col-span-6 lg:col-span-2"
-                        //   label="Miasto"
-                        //   name="city"
-                        //   type="text"
-                        //   placeholder="Warszawa"
-                        // />
-                        // <CustomInput
-                        //   className="col-span-6 sm:col-span-6 lg:col-span-2"
-                        //   label="Województwo"
-                        //   name="state"
-                        //   type="text"
-                        //   placeholder="Kujawsko-Pomorskie"
-                        // />
-                        // <CustomInput
-                        //   className="col-span-6 sm:col-span-6 lg:col-span-2"
-                        //   label="Kod Pocztowy"
-                        //   name="postalCode"
-                        //   type="text"
-                        //   placeholder="12-345"
-                        // /> */}
                       </div>
                     </div>
                   </div>

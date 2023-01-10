@@ -87,7 +87,7 @@ const Offers = () => {
             onClick={() => setFilters(true)}
             className="bg-[#00df9a] hover:bg-[#073f2e] focus:ring-white inline-flex items-center rounded-full p-3 text-white shadow-sm transition-opacity focus:outline-none focus:ring-2 focus:ring-offset-2"
           >
-            <BsFilter className="h-8 w-8 m-auto" aria-hidden="true" />
+            FILTRY
           </button>
         </div>
       </div>

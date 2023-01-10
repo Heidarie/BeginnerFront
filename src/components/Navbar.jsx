@@ -41,7 +41,12 @@ const Navbar = () => {
     if (userLocalStorage) {
       setUser(AuthService.getCurrentUser());
     }
-  }, [userLocalStorage]);
+    if (user?.isLoggedInUserAccount === false) {
+      AuthService.logout();
+      window.location.reload();
+      navigate("/Login");
+    }
+  }, [userLocalStorage, user]);
   console.log(user);
   return (
     <nav className="bg-gray-800 fixed w-full top-0 z-[100]">

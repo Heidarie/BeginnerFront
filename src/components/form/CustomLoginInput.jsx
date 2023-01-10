@@ -11,7 +11,7 @@ const CustomInput = ({ label, forgotPassword, ...props }) => {
           <div className="flex justify-between mb-2">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-200"
             >
               {label}
             </label>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { advancedSchema } from "./schema";
 import CustomInput from "../../components/form/CustomInput";
+import CustomSelect from "../../components/form/CustomSelect";
 import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
@@ -41,6 +42,7 @@ const RegisterEmployer = () => {
             confirmPassword: "",
             phoneNumber: "",
             companyName: "",
+            regionCode: "",
           }}
           validationSchema={advancedSchema}
           onSubmit={onSubmit}
@@ -48,18 +50,24 @@ const RegisterEmployer = () => {
           {({ isSubmitting }) => (
             <Form>
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Email"
                 name="email"
                 type="email"
                 placeholder="example@example.com"
               />
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Hasło"
                 name="password"
                 type="password"
                 placeholder="Wprowadź hasło"
               />
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Potwierdź hasło"
                 name="confirmPassword"
                 type="password"
@@ -69,14 +77,49 @@ const RegisterEmployer = () => {
                 label="Numer telefonu"
                 name="phoneNumber"
                 type="number"
-                placeholder="48 504 544 755"
+                placeholder="48 123 456 789"
               />
               <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
                 label="Nazwa firmy"
                 name="companyName"
                 type="text"
                 placeholder="Nazwa firmy"
               />
+              <CustomInput
+                className="my-2"
+                textColor="text-gray-200"
+                label="Miasto"
+                name="city"
+                type="text"
+                placeholder="Miasto"
+              />
+              <CustomSelect
+                label="Województwo"
+                name="regionCode"
+                placeholder="Wybierz województwo"
+              >
+                <option value="" disabled>
+                  Wybierz województwo
+                </option>
+                <option value="0">Wielkopolskie</option>
+                <option value="1">Lubelskie</option>
+                <option value="2">Mazowieckie</option>
+                <option value="3">Warmińsko-mazurskie</option>
+                <option value="4">Dolnośląskie</option>
+                <option value="5">Śląskie</option>
+                <option value="6">Małopolskie</option>
+                <option value="7">Zachodniopomorskie</option>
+                <option value="8">Pomorskie</option>
+                <option value="9">Lubuskie</option>
+                <option value="10">Kujawsko-pomorskie</option>
+                <option value="11">Podlaskie</option>
+                <option value="12">Świętokrzyskie</option>
+                <option value="13">Łódzkie</option>
+                <option value="14">Opolskie</option>
+                <option value="15">Podkarpackie</option>
+              </CustomSelect>
               <div className="mt-6">
                 <button
                   type="submit"
