@@ -25,6 +25,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     AuthService.logout();
+    window.location.reload();
     navigate("/");
   };
   const handleNavMenu = () => {
@@ -38,16 +39,13 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (userLocalStorage) {
-      setUser(AuthService.getCurrentUser());
+    if (user === undefined && userLocalStorage) {
+      setUser(AuthService.getLocalUser());
     }
     if (user?.isLoggedInUserAccount === false) {
-      AuthService.logout();
-      window.location.reload();
-      navigate("/Login");
+      handleLogout();
     }
-  }, [userLocalStorage, user]);
-  console.log(user);
+  }, []);
   return (
     <nav className="bg-gray-800 fixed w-full top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 z-[100]">

@@ -67,9 +67,8 @@ const RegisterEmployee = () => {
       profession: profession.id.toString(),
       regionCode: parseInt(values.regionCode),
     };
-    console.log(newValues);
     setLoading(true);
-    let res = await AuthService.register("/Authentication/Register", values);
+    let res = await AuthService.register("/Authentication/Register", newValues);
     if (res.status === 201) {
       setLoading(false);
       navigate({ pathname: "/Login" });

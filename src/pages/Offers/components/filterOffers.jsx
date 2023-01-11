@@ -132,7 +132,7 @@ const FilterOffers = ({ hideModal }) => {
                   options={filtersData?.occupationFilter}
                   isMulti
                   name="jobTypes"
-                  className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -155,7 +155,7 @@ const FilterOffers = ({ hideModal }) => {
                     options={filtersData?.jobTypeFilter}
                     isMulti
                     name="jobTypes"
-                    className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -171,7 +171,7 @@ const FilterOffers = ({ hideModal }) => {
                     options={filtersData?.levelFilter}
                     isMulti
                     name="jobTypes"
-                    className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -195,7 +195,7 @@ const FilterOffers = ({ hideModal }) => {
                     options={filtersData?.professionFilter}
                     isMulti
                     name="jobTypes"
-                    className="mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
@@ -219,7 +219,7 @@ const FilterOffers = ({ hideModal }) => {
                     isMulti
                     isDisabled={true}
                     name="jobTypes"
-                    className="mt-1 p-2 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>

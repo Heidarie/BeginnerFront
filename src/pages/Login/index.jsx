@@ -14,7 +14,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
+    console.log(values);
     let res = await AuthService.login(values);
+    console.log("LOGIN", res);
     if (res.status === 200) {
       setLoading(false);
       navigate({ pathname: res.request.response });

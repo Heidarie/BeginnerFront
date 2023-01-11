@@ -98,7 +98,7 @@ const EmployeeProfile = () => {
 
   const getUser = (id) => {
     if (id) {
-      AuthService.getUser(id).then((res) => {
+      AuthService.getUserData(id, "user").then((res) => {
         setUser(res.data);
       });
     }
@@ -107,7 +107,6 @@ const EmployeeProfile = () => {
   useEffect(() => {
     getUser(id);
   }, []);
-  console.log(user);
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">

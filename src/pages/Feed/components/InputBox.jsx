@@ -11,7 +11,7 @@ const InputBox = () => {
   //   e.preventDefault();
   // };
   const setUserData = () => {
-    setUser(AuthService.getCurrentUser());
+    setUser(AuthService.getLocalUser());
   };
 
   useEffect(() => {
