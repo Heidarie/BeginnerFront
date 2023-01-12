@@ -211,7 +211,7 @@ const Navbar = () => {
                           {user.imagePath ? (
                             <img
                               src={`data:image/png;base64,${user.imagePath}`}
-                              key={`https://localhost:7064/${user.imagePath}`}
+                              key={`${process.env.REACT_APP_BASE_API_URL}/${user.imagePath}`}
                               alt="ProfilePhoto"
                               className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
                             />

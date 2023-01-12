@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://localhost:7064";
+const API_URL = process.env.REACT_APP_BASE_API_URL;
 
 axios.defaults.withCredentials = true;
 

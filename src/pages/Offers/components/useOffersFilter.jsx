@@ -17,7 +17,7 @@ export default function useOffersFilter(query, pageNumber) {
     let cancel;
     axios({
       method: "GET",
-      url: `https://localhost:7064/Offers`,
+      url: `${process.env.REACT_APP_BASE_API_URL}/Offers`,
       params: { q: query, page: pageNumber },
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
