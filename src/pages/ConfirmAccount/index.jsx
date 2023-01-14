@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
@@ -12,15 +11,13 @@ const ConfirmAccount = () => {
   const token = params.get("token") || undefined;
   const mail = params.get("mail") || undefined;
 
-  const navigate = useNavigate();
-
   const ConfirmUserAccount = async (token, mail) => {
     setLoading(true);
     let res = await AuthService.confirmAccount(token, mail);
     if (res.status === 200) {
       setLoading(false);
-      navigate({ pathname: res.request.response });
       window.location.reload();
+      window.location.replace(res.request.response);
     } else {
       setLoading(false);
       console.log(res);
@@ -91,7 +88,16 @@ const ConfirmAccount = () => {
           </div>
         )}
       </div>
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
     </div>
   );
 };

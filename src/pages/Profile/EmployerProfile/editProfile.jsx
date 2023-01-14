@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
-import CustomFile from "./components/CustomFile";
+// import CustomFile from "./components/CustomFile";
 import { Form, Formik } from "formik";
 import EmployerService from "../../../components/employer.service";
 import Toast from "../../../components/Toast";
+import CustomSelect from "../../../components/form/CustomSelect";
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const onSubmit = async (values, actions) => {
     setError(false);
     setLoading(true);
-
     const updateValues = {
-      CompanyName: values.CompanyName,
-      Image: values.Image,
-      "EmployerPersonalData.Description": values.Description,
-      "EmployerPersonalData.MainCity": values.MainCity,
-      "EmployerPersonalData.MainCountry": values.MainCountry,
+      CompanyName: values.companyName,
+      Image: selectedImage,
+      City: values.mainCity,
+      RegionCode: values.regionCode,
+      "EmployerPersonalData.Description": values.description,
+      "EmployerPersonalData.Street": values.street,
+      "EmployerPersonalData.PostalCode": values.postalCode,
     };
     console.log(updateValues);
 
@@ -44,12 +46,12 @@ const EditProfile = ({ hideModal }) => {
     <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
       <Formik
         initialValues={{
-          Name: "",
-          Surname: "",
-          Profession: "",
-          Description: "",
-          Image: "",
-          Resume: "",
+          companyName: "",
+          mainCity: "",
+          mainCountry: "",
+          regionCode: 0,
+          description: "",
+          image: "",
         }}
         onSubmit={onSubmit}
       >
@@ -77,19 +79,31 @@ const EditProfile = ({ hideModal }) => {
                         </label>
                         <div className="mt-1 flex items-center">
                           <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100 mr-5">
-                            <svg
-                              className="h-full w-full text-gray-300"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
+                            {selectedImage ? (
+                              <img
+                                src={URL.createObjectURL(selectedImage)}
+                                alt={selectedImage.name}
+                              />
+                            ) : (
+                              <svg
+                                className="h-full w-full text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            )}
                           </span>
 
-                          <CustomFile
-                            name="Image"
+                          <input
+                            name="image"
                             type="file"
-                            accept=".jpeg, .png, .jpg"
+                            accept=".jpeg, .jpg"
+                            onChange={(event) => {
+                              console.log(event.target.files[0]);
+                              setSelectedImage(event.target.files[0]);
+                              //event.target.files[0]
+                            }}
                           />
                         </div>
                       </div>
@@ -97,7 +111,7 @@ const EditProfile = ({ hideModal }) => {
                       <CustomTextArea
                         className="mt-1"
                         label="Opis"
-                        name="Description"
+                        name="description"
                         type="text"
                         placeholder="Krótki opis"
                       />
@@ -130,26 +144,60 @@ const EditProfile = ({ hideModal }) => {
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <CustomInput
-                          className="col-span-6 sm:col-span-6"
+                          className="col-span-6"
                           label="Nazwa firmy"
-                          name="CompanyName"
+                          name="companyName"
                           type="text"
-                          placeholder="Imię"
+                          placeholder="Nazwa firmy"
+                        />
+                        <CustomInput
+                          className="col-span-3"
+                          label="Ulica"
+                          name="street"
+                          type="text"
+                          placeholder="Ulica"
                         />
                         <CustomInput
                           className="col-span-6 sm:col-span-3"
                           label="Miasto"
-                          name="MainCity"
+                          name="mainCity"
                           type="text"
-                          placeholder="Warszawa"
+                          placeholder="np. Warszawa"
                         />
                         <CustomInput
-                          className="col-span-6 sm:col-span-3"
-                          label="Kraj"
-                          name="MainCountry"
+                          className="col-span-3"
+                          label="Kod pocztowy"
+                          name="postalCode"
                           type="text"
-                          placeholder="Polska"
+                          placeholder="Kod pocztowy"
                         />
+                        <CustomSelect
+                          className="col-span-6 sm:col-span-3"
+                          label="Województwo"
+                          name="regionCode"
+                          placeholder="Wybierz województwo"
+                          type="number"
+                        >
+                          <option value="" disabled>
+                            Wybierz województwo
+                          </option>
+                          <option value="0">Wielkopolskie</option>
+                          <option value="1">Lubelskie</option>
+                          <option value="2">Mazowieckie</option>
+                          <option value="3">Warmińsko-mazurskie</option>
+                          <option value="4">Dolnośląskie</option>
+                          <option value="5">Śląskie</option>
+                          <option value="6">Małopolskie</option>
+                          <option value="7">Zachodniopomorskie</option>
+                          <option value="8">Pomorskie</option>
+                          <option value="9">Lubuskie</option>
+                          <option value="10">Kujawsko-pomorskie</option>
+                          <option value="11">Podlaskie</option>
+                          <option value="12">Świętokrzyskie</option>
+                          <option value="13">Łódzkie</option>
+                          <option value="14">Opolskie</option>
+                          <option value="15">Podkarpackie</option>
+                        </CustomSelect>
                       </div>
                     </div>
                   </div>
@@ -163,7 +211,7 @@ const EditProfile = ({ hideModal }) => {
               </div>
             </div>
 
-            <div className="mt-10 sm:mt-0">
+            {/* <div className="mt-10 sm:mt-0">
               <div className="md:grid md:grid-cols-3 md:gap-6">
                 <div className="md:col-span-1">
                   <div className="px-4 sm:px-0">
@@ -203,7 +251,7 @@ const EditProfile = ({ hideModal }) => {
                               >
                                 Comments
                               </label>
-                              <p className="text-gray-500">
+                              <p className="text-gray-700">
                                 Get notified when someones posts a comment on a
                                 posting.
                               </p>
@@ -225,7 +273,7 @@ const EditProfile = ({ hideModal }) => {
                               >
                                 Candidates
                               </label>
-                              <p className="text-gray-500">
+                              <p className="text-gray-700">
                                 Get notified when a candidate applies for a job.
                               </p>
                             </div>
@@ -246,7 +294,7 @@ const EditProfile = ({ hideModal }) => {
                               >
                                 Offers
                               </label>
-                              <p className="text-gray-500">
+                              <p className="text-gray-700">
                                 Get notified when a candidate accepts or rejects
                                 an offer.
                               </p>
@@ -258,7 +306,7 @@ const EditProfile = ({ hideModal }) => {
                         <legend className="contents text-base font-medium text-gray-900">
                           Push Notifications
                         </legend>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-700">
                           These are delivered via SMS to your mobile phone.
                         </p>
                         <div className="mt-4 space-y-4">
@@ -311,12 +359,16 @@ const EditProfile = ({ hideModal }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {loading && <Toast text="Ładowanie" icon="LOADING" />}
 
             {error && (
               <Toast
-                text="Wystąpił bład przy aktualizacji danych"
+                text={
+                  errorMessage === "" || errorMessage === undefined
+                    ? "Wystąpił nieoczekiwany błąd"
+                    : errorMessage
+                }
                 icon="ERROR"
               />
             )}

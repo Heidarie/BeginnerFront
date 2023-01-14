@@ -57,7 +57,7 @@ const OfferPage = () => {
     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 mt-14">
       {offer && (
         <div className="relative overflow-hidden rounded-lg bg-white text-left shadow-xl mt-8 sm:w-full sm:max-w-5xl ">
-          <div className="bg-gray-100 px-2 py-2 sm:p-4 text-gray-500">
+          <div className="bg-gray-100 px-2 py-2 sm:p-4 text-gray-700">
             Aplikujących {offer?.participants}
             <div className="overflow-hidden  bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
               <dl>
@@ -69,14 +69,14 @@ const OfferPage = () => {
                       src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
                       alt={offer?.employer?.companyPublicUrl}
                     />
-                    <p className="text-2xl font-semibold text-gray-500 py-2">
+                    <p className="text-2xl font-semibold text-gray-700 py-2">
                       {offer?.employer?.companyName}
                     </p>
-                    <p className="text-xl font-semibold text-gray-500">
+                    <p className="text-xl font-semibold text-gray-700">
                       {offer?.jobType}
                     </p>
                   </dt>
-                  <dd className="text-sm col-span-3 text-center sm:text-left max-w-full my-auto font-medium text-gray-500 m-auto">
+                  <dd className="text-sm col-span-3 text-center sm:text-left max-w-full my-auto font-medium text-gray-700 m-auto">
                     <p className="font-medium text-2xl leading-6 text-gray-900  capitalize break-words">
                       {offer?.title}
                     </p>
@@ -90,12 +90,12 @@ const OfferPage = () => {
               </dl>
               <div className="grid grid-cols-3 px-4 py-5 sm:px-6 text-center overflow-hidden ">
                 <div className="bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm m-auto font-medium text-gray-500">
+                  <dt className="text-sm m-auto font-medium text-gray-700">
                     <ImLocation className="w-8 h-8 m-auto" />
                   </dt>
                   <dd className="text-lg text-gray-900 text-center sm:col-span-2 sm:text-left my-auto justify-start break-words">
                     {offer?.city}
-                    <p className="text-gray-500">
+                    <p className="text-gray-700">
                       {offer?.offerDetails?.street}
                     </p>
                     <p className="text-gray-700">
@@ -104,7 +104,7 @@ const OfferPage = () => {
                   </dd>
                 </div>
                 <div className="bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm m-auto font-medium text-gray-500">
+                  <dt className="text-sm m-auto font-medium text-gray-700">
                     <MdOutlinePeopleAlt className="w-8 h-8 m-auto" />
                   </dt>
                   <dd className="text-lg text-gray-900 text-center sm:col-span-2 sm:text-left my-auto justify-start">
@@ -112,7 +112,7 @@ const OfferPage = () => {
                   </dd>
                 </div>
                 <div className="bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm m-auto font-medium text-gray-500">
+                  <dt className="text-sm m-auto font-medium text-gray-700">
                     <FaMoneyBill className="w-8 h-8 m-auto" />
                   </dt>
                   <dd className="text-lg justify-center font-semibold text-[#00df9a] text-center sm:col-span-2 sm:text-left sm:my-auto sm:justify-start">
@@ -123,7 +123,7 @@ const OfferPage = () => {
               <div className="border-t border-gray-200">
                 <dl>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-500">
+                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
                       Wymagania
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -151,7 +151,7 @@ const OfferPage = () => {
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-500">
+                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
                       Języki
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -177,7 +177,7 @@ const OfferPage = () => {
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-500">
+                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
                       Obowiązki
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -199,7 +199,7 @@ const OfferPage = () => {
                     </dd>
                   </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-500">
+                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
                       Opis
                     </dt>
                     <dd className="p-2 mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 break-words">
@@ -235,7 +235,16 @@ const OfferPage = () => {
           </div>
         </div>
       )}
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
       {loading && <Toast text="Ładowanie oferty" icon="LOADING" />}
       {happyFlow && (
         <Toast text="Udało się aplikować na ofertę!" icon="HAPPY" />

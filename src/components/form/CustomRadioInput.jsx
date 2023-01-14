@@ -6,7 +6,7 @@ const CustomInput = ({ className, label, ...props }) => {
   return (
     <>
       <div className={className}>
-        <label className="block text-sm font-medium text-gray-500">
+        <label className="block text-sm font-medium text-gray-700">
           {label}
         </label>
         <input

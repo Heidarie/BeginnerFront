@@ -837,7 +837,7 @@ const EmployeeProfile = () => {
                 </div>
               </div>
             </div>
-            <div className="text-gray-500 text-sm mb-6 mx-3 px-2">
+            <div className="text-gray-700 text-sm mb-6 mx-3 px-2">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500
@@ -949,7 +949,7 @@ const EmployeeProfile = () => {
                     ullamco laboris nisi ut aliquip ex ea commodo consequat.
                   </div>
                 </div>
-                <div className="text-xs  mt-0.5 text-gray-500">14 w</div>
+                <div className="text-xs  mt-0.5 text-gray-700">14 w</div>
                 <div className="bg-white border border-white rounded-full float-right -mt-8 mr-0.5 flex shadow items-center "></div>
               </div>
             </div>
@@ -1023,7 +1023,7 @@ const EmployeeProfile = () => {
             <div className="text-gray-600 font-semibold  mb-2 mx-3 px-2">
               Dummy text of the printing and typesetting industry
             </div>
-            <div className="text-gray-500 text-sm mb-6 mx-3 px-2">
+            <div className="text-gray-700 text-sm mb-6 mx-3 px-2">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500
@@ -1185,7 +1185,7 @@ const EmployeeProfile = () => {
             <div className="text-gray-600 font-semibold  mb-2 mx-3 px-2">
               Dummy text of the printing and typesetting industry
             </div>
-            <div className="text-gray-500 text-sm mb-6 mx-3 px-2">
+            <div className="text-gray-700 text-sm mb-6 mx-3 px-2">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry's standard dummy text
               ever since the 1500
@@ -1316,7 +1316,16 @@ const EmployeeProfile = () => {
         </article>
       </main>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
       <Footer />
     </div>
   );

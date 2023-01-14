@@ -10,37 +10,29 @@ import { Slider } from "antd";
 
 const animatedComponents = makeAnimated();
 
-const FilterOffers = ({ hideModal }) => {
+const FilterOffers = ({
+  hideModal,
+  occupationsQuery,
+  jobTypesQuery,
+  levelsQuery,
+  professionsQuery,
+  salaryRangeQuery,
+}) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const [filtersData, setFiltersData] = useState([]);
   const [occupations, setOccupations] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
   const [levels, setLevels] = useState([]);
   const [professions, setProfessions] = useState([]);
-  const [salaryRange, setSalaryRange] = useState([1000, 10000]);
-  const [range, setRange] = useState([]);
-
-  const rangeMarks = {
-    10: "10KM",
-    20: "20KM",
-    30: "30KM",
-    40: "40KM",
-    50: "50KM",
-    100: {
-      style: {
-        color: "#f50",
-      },
-      label: <strong>Każda</strong>,
-    },
-  };
+  const [salaryRange, setSalaryRange] = useState([0, 5000]);
 
   async function loadFilters() {
     setLoading(true);
     let res = await DataService.getFilters("category=occupation,jobtype,level");
     if (res.status === 200) {
-      console.log(res.data);
       const occupationFilter = res.data.occupationFilter.map((obj) => ({
         ...obj,
         label: obj.value,
@@ -99,6 +91,12 @@ const FilterOffers = ({ hideModal }) => {
     setJobTypes([]);
     setLevels([]);
     setProfessions([]);
+    setSalaryRange([0, 0]);
+    occupationsQuery[1]([]);
+    jobTypesQuery[1]([]);
+    levelsQuery[1]([]);
+    professionsQuery[1]([]);
+    salaryRangeQuery[1]([0, 5000]);
   };
 
   useEffect(() => {
@@ -113,18 +111,30 @@ const FilterOffers = ({ hideModal }) => {
       setProfessions([]);
     }
   }, [occupations]);
-
   return (
     <Modal hideModal={hideModal} className="sm:max-w-2xl p-4">
-      <div className="grid grid-cols-6 gap-6">
-        <h2 className="col-span-3 my-auto">Wybierz filtry ofert</h2>
-        <button
-          onClick={handleClearFilters}
-          className="col-span-3 bg-red-600 rounded-lg w-fit p-2 justify-self-end text-white"
-        >
-          Wyczyść filtry
-        </button>
-      </div>
+      {occupations.length !== 0 ? (
+        <div className="grid grid-cols-6 gap-6 m-2">
+          <h2 className="col-span-3 my-auto">Wybierz filtry ofert</h2>
+          <button
+            onClick={handleClearFilters}
+            className="col-span-3 bg-red-600 rounded-lg w-fit p-2 justify-self-end text-white"
+          >
+            Wyczyść filtry
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-6 gap-6 m-2">
+          <h2 className="col-span-3 my-auto">Wybierz filtry ofert</h2>
+          <button
+            disabled={true}
+            onClick={handleClearFilters}
+            className="invisible col-span-3 bg-red-600 rounded-lg w-fit p-2 justify-self-end text-white"
+          >
+            Wyczyść filtry
+          </button>
+        </div>
+      )}
       <div className="mt-5 md:col-span-2 md:mt-0">
         <div className="shadow-md sm:rounded-md overflow-visible">
           <div className="bg-white px-4 py-5 sm:p-6">
@@ -135,7 +145,10 @@ const FilterOffers = ({ hideModal }) => {
                 </label>
                 <Select
                   components={animatedComponents}
-                  onChange={setOccupations}
+                  onChange={(e) => {
+                    setOccupations(e || []);
+                    occupationsQuery[1](e || []);
+                  }}
                   value={occupations}
                   options={filtersData?.occupationFilter}
                   isMulti
@@ -158,7 +171,10 @@ const FilterOffers = ({ hideModal }) => {
                   </label>
                   <Select
                     components={animatedComponents}
-                    onChange={setJobTypes}
+                    onChange={(e) => {
+                      setJobTypes(e || []);
+                      jobTypesQuery[1](e || []);
+                    }}
                     value={jobTypes}
                     options={filtersData?.jobTypeFilter}
                     isMulti
@@ -174,7 +190,10 @@ const FilterOffers = ({ hideModal }) => {
                   </label>
                   <Select
                     components={animatedComponents}
-                    onChange={setLevels}
+                    onChange={(e) => {
+                      setLevels(e || []);
+                      levelsQuery[1](e || []);
+                    }}
                     value={levels}
                     options={filtersData?.levelFilter}
                     isMulti
@@ -198,7 +217,10 @@ const FilterOffers = ({ hideModal }) => {
                   </label>
                   <Select
                     components={animatedComponents}
-                    onChange={setProfessions}
+                    onChange={(e) => {
+                      setProfessions(e || []);
+                      professionsQuery[1](e || []);
+                    }}
                     value={professions}
                     options={filtersData?.professionFilter}
                     isMulti
@@ -221,7 +243,10 @@ const FilterOffers = ({ hideModal }) => {
                   </label>
                   <Select
                     components={animatedComponents}
-                    onChange={setProfessions}
+                    onChange={(e) => {
+                      setProfessions(e || []);
+                      professionsQuery[1](e || []);
+                    }}
                     value={professions}
                     options={filtersData?.professionFilter}
                     isMulti
@@ -248,36 +273,27 @@ const FilterOffers = ({ hideModal }) => {
                   min={0}
                   max={100000}
                   step={100}
-                  defaultValue={[1000, 10000]}
-                  onChange={setSalaryRange}
+                  defaultValue={[0, 5000]}
+                  onChange={(e) => {
+                    setSalaryRange(e || []);
+                    salaryRangeQuery[1](e || []);
+                  }}
                 />
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-5 md:col-span-2 md:mt-0">
-        <div className="shadow-md sm:rounded-md overflow-visible">
-          <div className="bg-white px-4 py-5 sm:p-6">
-            <div className="grid grid-cols-6 gap-6">
-              <div className="col-span-6">
-                <label className="block text-sm font-medium text-gray-700">
-                  odległość {range === 100 ? "nie ma znaczenia" : `${range} km`}
-                </label>
-
-                <Slider
-                  marks={rangeMarks}
-                  step={10}
-                  defaultValue={37}
-                  min={10}
-                  onChange={setRange}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
       {loading && <Toast text="Ładowanie filtrów" icon="LOADING" />}
     </Modal>
   );

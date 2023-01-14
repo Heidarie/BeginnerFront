@@ -17,6 +17,7 @@ import Applications from "./pages/Applications/index";
 import ConfirmAccount from "./pages/ConfirmAccount";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <BrowserRouter>
     <Navbar />

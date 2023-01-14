@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
 import CustomInput from "../../components/form/CustomInput";
@@ -12,14 +12,13 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
     let res = await AuthService.login(values);
     if (res.status === 200) {
       setLoading(false);
-      navigate({ pathname: res.request.response });
       window.location.reload();
+      window.location.replace(res.request.response);
     } else {
       setLoading(false);
       setError(true);
@@ -57,7 +56,7 @@ const Login = () => {
                 Beginner.
               </h2>
 
-              <p className="mt-3 text-gray-500 dark:text-gray-300">
+              <p className="mt-3 text-gray-700 dark:text-gray-300">
                 Zaloguj się do swojego konta.
               </p>
             </div>
@@ -135,7 +134,16 @@ const Login = () => {
         </div>
       </div>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
       <Footer />
     </div>
   );

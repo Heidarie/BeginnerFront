@@ -46,7 +46,7 @@ const EmployerProfile = () => {
           <div className="relative">
             <img
               className="w-40 h-40 rounded-md object-cover"
-              src="https://api.lorem.space/image/face?w=150&h=150"
+              src={company?.image}
               alt="User"
             />
 
@@ -103,8 +103,9 @@ const EmployerProfile = () => {
                 </svg>
 
                 <div className="text-xs text-gray-400/80 hover:text-gray-400">
-                  {company?.mainCity !== null && company?.mainCountry !== null
-                    ? `${company?.employerPersonalData?.mainCity}, ${company?.employerPersonalData?.mainCountry}`
+                  {company?.city !== null &&
+                  company?.employerPersonalData?.street !== null
+                    ? `${company?.employerPersonalData?.street}, ${company?.city}`
                     : "MIASTO"}
                 </div>
               </div>
@@ -218,7 +219,7 @@ const EmployerProfile = () => {
 
               <div className="ml-4">
                 <h2 className="font-semibold">574 New Messages</h2>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-700">
                   Last message 4 days ago
                 </p>
               </div>
@@ -244,7 +245,7 @@ const EmployerProfile = () => {
 
               <div className="ml-4">
                 <h2 className="font-semibold">1823 Users</h2>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-700">
                   Last checked 3 days ago
                 </p>
               </div>
@@ -269,7 +270,7 @@ const EmployerProfile = () => {
 
               <div className="ml-4">
                 <h2 className="font-semibold">548 Posts</h2>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-700">
                   Last authored 1 day ago
                 </p>
               </div>
@@ -294,7 +295,7 @@ const EmployerProfile = () => {
 
               <div className="ml-4">
                 <h2 className="font-semibold">129 Comments</h2>
-                <p className="mt-2 text-sm text-gray-500">
+                <p className="mt-2 text-sm text-gray-700">
                   Last commented 8 days ago
                 </p>
               </div>

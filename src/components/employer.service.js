@@ -34,9 +34,23 @@ const updateEmployerData = async (values) => {
   }
 };
 
+const createOffer = async (values) => {
+  try {
+    let response = await axios.put(API_URL + `/Offers/CreateOffer`, values);
+    console.log(response);
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 const EmployerService = {
   getEmployerOffers,
   updateEmployerData,
+  createOffer,
 };
 
 export default EmployerService;

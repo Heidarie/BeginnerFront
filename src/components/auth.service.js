@@ -51,7 +51,7 @@ const login = async (values) => {
 const confirmAccount = async (token, mail) => {
   try {
     let response = await axios.post(
-      API_URL + `/ConfirmAccount?token=${token}&mail=${mail}`
+      API_URL + `/Authentication/ConfirmAccount?token=${token}&mail=${mail}`
     );
 
     return response;

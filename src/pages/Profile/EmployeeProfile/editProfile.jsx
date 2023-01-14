@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
@@ -405,7 +404,7 @@ const EditProfile = ({ hideModal }) => {
                               >
                                 Comments
                               </label>
-                              <p className="text-gray-500">
+                              <p className="text-gray-700">
                                 Get notified when someones posts a comment on a
                                 posting.
                               </p>
@@ -427,7 +426,7 @@ const EditProfile = ({ hideModal }) => {
                               >
                                 Candidates
                               </label>
-                              <p className="text-gray-500">
+                              <p className="text-gray-700">
                                 Get notified when a candidate applies for a job.
                               </p>
                             </div>
@@ -448,7 +447,7 @@ const EditProfile = ({ hideModal }) => {
                               >
                                 Offers
                               </label>
-                              <p className="text-gray-500">
+                              <p className="text-gray-700">
                                 Get notified when a candidate accepts or rejects
                                 an offer.
                               </p>
@@ -460,7 +459,7 @@ const EditProfile = ({ hideModal }) => {
                         <legend className="contents text-base font-medium text-gray-900">
                           Push Notifications
                         </legend>
-                        <p className="text-sm text-gray-500">
+                        <p className="text-sm text-gray-700">
                           These are delivered via SMS to your mobile phone.
                         </p>
                         <div className="mt-4 space-y-4">
@@ -516,7 +515,16 @@ const EditProfile = ({ hideModal }) => {
             </div>
             {loading && <Toast text="Ładowanie" icon="LOADING" />}
 
-            {error && <Toast text={errorMessage} icon="ERROR" />}
+            {error && (
+              <Toast
+                text={
+                  errorMessage === "" || errorMessage === undefined
+                    ? "Wystąpił nieoczekiwany błąd"
+                    : errorMessage
+                }
+                icon="ERROR"
+              />
+            )}
             {loading || error ? (
               <div className="mt-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button

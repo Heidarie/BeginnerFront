@@ -259,7 +259,16 @@ const RegisterEmployee = () => {
         </p>
       </div>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
     </div>
   );

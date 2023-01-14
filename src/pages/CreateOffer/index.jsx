@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-// import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Modal from "../../components/Modal";
 import CustomInput from "../Profile/EmployeeProfile/components/CustomInput";
 import CustomSelect from "../../components/form/CustomSelect";
@@ -7,21 +6,78 @@ import CustomTextArea from "../Profile/EmployeeProfile/components/CustomTextArea
 import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
 import Toast from "../../components/Toast";
+import EmployerService from "../../components/employer.service";
+import Select from "react-select";
+import DataService from "../../components/data.service";
 
 const CreateOffer = ({ hideModal }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [gradDateStart, setGradDateStart] = useState(new Date());
-  // const [gradDateEnd, setGradDateEnd] = useState(new Date());
-  // const [expDateStart, setExpDateStart] = useState(new Date());
-  // const [expDateEnd, setExpDateEnd] = useState(new Date());
-  const [skills, setSkills] = useState([]);
+  const [filtersData, setFiltersData] = useState([]);
+  const [occupation, setOccupation] = useState(null);
+  const [profession, setProfession] = useState([]);
+  const [jobType, setJobType] = useState([]);
+  const [level, setLevel] = useState([]);
   const [dutiesList, setDutiesList] = useState([]);
   const [languagesList, setLanguagesList] = useState([]);
   const [requirementsList, setRequirementsList] = useState([]);
   const [benefitsList, setBenefitsList] = useState([]);
+  const [happyFlow, setHappyFlow] = useState(false);
+
   // const navigate = useNavigate();
+
+  async function loadFilters() {
+    setLoading(true);
+    let res = await DataService.getFilters("category=occupation,jobtype,level");
+    if (res.status === 200) {
+      const occupationFilter = res.data.occupationFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      const levelFilter = res.data.levelFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      const jobTypeFilter = res.data.jobTypeFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      const newObject = { occupationFilter, levelFilter, jobTypeFilter };
+      setLoading(false);
+      setFiltersData(newObject);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(res.response.data.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
+  }
+
+  async function loadProfession(value) {
+    setLoading(true);
+    const occupationId = value.id;
+    let res = await DataService.getFilters(
+      `category=profession&occupationIds=${occupationId}`
+    );
+    if (res.status === 200) {
+      const professionFilter = res.data.professionFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      setFiltersData({ ...filtersData, professionFilter: professionFilter });
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
+    }
+  }
 
   const onSubmit = async (values, actions) => {
     setError(false);
@@ -33,8 +89,11 @@ const CreateOffer = ({ hideModal }) => {
       salaryTo: values.salaryTo,
       isPremium: values.isPremium,
       city: values.city,
-      profession: values.profession,
-      jobType: values.jobType,
+      regionCode: parseInt(values.regionCode),
+      occupationId: occupation?.id,
+      professionId: profession?.id,
+      jobType: jobType?.id,
+      jobLevel: level?.id,
       offerDetails: {
         postalCode: values.postalCode,
         street: values.street,
@@ -47,9 +106,42 @@ const CreateOffer = ({ hideModal }) => {
       },
     };
     console.log(updateValues);
+
+    let res = await EmployerService.createOffer(updateValues);
+    console.log(res);
+    if (res.status === 201) {
+      setLoading(false);
+      setHappyFlow(true);
+      setTimeout(() => {
+        setHappyFlow(false);
+        hideModal(true);
+      }, 3000);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(res.response.data.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
   };
+
+  useEffect(() => {
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    if (occupation) {
+      loadProfession(occupation);
+    } else {
+      delete filtersData?.professionFilter;
+      setProfession([]);
+    }
+  }, [occupation]);
+
   return (
-    <Modal hideModal={hideModal} className="sm:max-w-6xl p-4">
+    <Modal hideModal={hideModal} className="sm:max-w-5xl p-4">
       <Formik
         initialValues={{
           title: "",
@@ -61,6 +153,7 @@ const CreateOffer = ({ hideModal }) => {
           profession: "",
           jobType: "",
           postalCode: "",
+          regionCode: 0,
           street: "",
           companySize: 0,
           duties: [],
@@ -86,7 +179,7 @@ const CreateOffer = ({ hideModal }) => {
                   </div>
                 </div>
                 <div className="mt-5 md:col-span-2 md:mt-0">
-                  <div className="shadow-md sm:overflow-hidden sm:rounded-md">
+                  <div className="shadow-md sm:overflow-visible sm:rounded-md">
                     <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                       <CustomInput
                         className="col-span-6"
@@ -103,24 +196,77 @@ const CreateOffer = ({ hideModal }) => {
                         placeholder="Opis oferty"
                       />
                       <div className="grid grid-cols-6 gap-6">
-                        <CustomInput
-                          className="col-span-3"
-                          label="Wodząca technologia"
-                          name="profession"
-                          type="text"
-                          placeholder="Np. Javascript"
-                        />
-                        <CustomSelect
-                          className="col-span-3 bg-white"
-                          label="Rodzaj pracy"
-                          name="jobType"
-                          placeholder="Wybierz rodzaj pracy"
-                        >
-                          <option value="">Wybierz tryb pracy</option>
-                          <option value="LOCAL">LOKALNIE</option>
-                          <option value="REMOTE">ZDALNIE</option>
-                          <option value="LOCAL/REMOTE">LOKALNIE&ZDALNIE</option>
-                        </CustomSelect>
+                        <div className="col-span-3 bg-white">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Poziom oferty
+                          </label>
+                          <Select
+                            onChange={setLevel}
+                            value={level}
+                            options={filtersData?.levelFilter}
+                            isClearable={true}
+                            placeholder="Wybierz technologię"
+                            name="jobLevel"
+                            className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <div className="col-span-3 bg-white">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Typ pracy
+                          </label>
+                          <Select
+                            onChange={setJobType}
+                            value={jobType}
+                            options={filtersData?.jobTypeFilter}
+                            isClearable={true}
+                            placeholder="Wybierz technologię"
+                            name="jobLevel"
+                            className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-6 gap-6">
+                        <div className="col-span-3 bg-white">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Główny zawód
+                          </label>
+                          <Select
+                            onChange={setOccupation}
+                            value={occupation}
+                            options={filtersData?.occupationFilter}
+                            isClearable={true}
+                            placeholder="Wybierz zawód"
+                            name="occupation"
+                            className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <div className="col-span-3 bg-white">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Wodząca technologia
+                          </label>
+                          {occupation !== null ? (
+                            <Select
+                              onChange={setProfession}
+                              value={profession}
+                              options={filtersData?.professionFilter}
+                              placeholder="Wybierz język"
+                              isClearable={true}
+                              name="occupation"
+                              className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                          ) : (
+                            <Select
+                              isDisabled={true}
+                              onChange={setProfession}
+                              value={profession}
+                              options={filtersData?.professionFilter}
+                              placeholder="Wybierz język"
+                              isClearable={true}
+                              name="occupation"
+                              className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -147,7 +293,7 @@ const CreateOffer = ({ hideModal }) => {
                   </div>
                 </div>
                 <div className="mt-5 md:col-span-2 md:mt-0">
-                  <div className="overflow-hidden shadow-md sm:rounded-md">
+                  <div className="overflow-visible shadow-md sm:rounded-md">
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <CustomInput
@@ -171,6 +317,33 @@ const CreateOffer = ({ hideModal }) => {
                           type="text"
                           placeholder="Kod pocztowy"
                         />
+                        <CustomSelect
+                          className="col-span-6 sm:col-span-3"
+                          label="Województwo"
+                          name="regionCode"
+                          placeholder="Wybierz województwo"
+                          type="number"
+                        >
+                          <option value="" disabled>
+                            Wybierz województwo
+                          </option>
+                          <option value="0">Wielkopolskie</option>
+                          <option value="1">Lubelskie</option>
+                          <option value="2">Mazowieckie</option>
+                          <option value="3">Warmińsko-mazurskie</option>
+                          <option value="4">Dolnośląskie</option>
+                          <option value="5">Śląskie</option>
+                          <option value="6">Małopolskie</option>
+                          <option value="7">Zachodniopomorskie</option>
+                          <option value="8">Pomorskie</option>
+                          <option value="9">Lubuskie</option>
+                          <option value="10">Kujawsko-pomorskie</option>
+                          <option value="11">Podlaskie</option>
+                          <option value="12">Świętokrzyskie</option>
+                          <option value="13">Łódzkie</option>
+                          <option value="14">Opolskie</option>
+                          <option value="15">Podkarpackie</option>
+                        </CustomSelect>
                         <CustomInput
                           className="col-span-3"
                           label="Wielkość firmy"
@@ -218,7 +391,7 @@ const CreateOffer = ({ hideModal }) => {
                             value={dutiesList}
                             isMulti
                             name="Skills"
-                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
                       </div>
@@ -254,7 +427,7 @@ const CreateOffer = ({ hideModal }) => {
                             value={languagesList}
                             isMulti
                             name="Certificates"
-                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
                       </div>
@@ -289,7 +462,7 @@ const CreateOffer = ({ hideModal }) => {
                             value={requirementsList}
                             isMulti
                             name="Certificates"
-                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
                       </div>
@@ -324,7 +497,7 @@ const CreateOffer = ({ hideModal }) => {
                             value={benefitsList}
                             isMulti
                             name="Certificates"
-                            className="mt-1 p-2 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>
                       </div>
@@ -426,8 +599,18 @@ const CreateOffer = ({ hideModal }) => {
           </Form>
         )}
       </Formik>
+      {happyFlow && <Toast text="Udało się utworzyć ofertę!" icon="HAPPY" />}
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
     </Modal>
   );
 };

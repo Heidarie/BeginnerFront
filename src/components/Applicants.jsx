@@ -11,14 +11,14 @@ const Applicants = () => {
               <h3 className="text-lg font-medium leading-6 text-gray-900">
                 Applicant Information
               </h3>
-              <p className="mt-1 max-w-2xl text-sm text-gray-500">
+              <p className="mt-1 max-w-2xl text-sm text-gray-700">
                 Personal details and application.
               </p>
             </div>
             <div className="border-t border-gray-200">
               <dl>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="text-sm font-medium text-gray-700">
                     Full name
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -26,7 +26,7 @@ const Applicants = () => {
                   </dd>
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="text-sm font-medium text-gray-700">
                     Application for
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -34,7 +34,7 @@ const Applicants = () => {
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="text-sm font-medium text-gray-700">
                     Email address
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -42,7 +42,7 @@ const Applicants = () => {
                   </dd>
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="text-sm font-medium text-gray-700">
                     Salary expectation
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -50,7 +50,7 @@ const Applicants = () => {
                   </dd>
                 </div>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">About</dt>
+                  <dt className="text-sm font-medium text-gray-700">About</dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                     Fugiat ipsum ipsum deserunt culpa aute sint do nostrud anim
                     incididunt cillum culpa consequat. Excepteur qui ipsum
@@ -60,7 +60,7 @@ const Applicants = () => {
                   </dd>
                 </div>
                 <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
+                  <dt className="text-sm font-medium text-gray-700">
                     Attachments
                   </dt>
                   <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">

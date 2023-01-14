@@ -37,7 +37,7 @@ function Register() {
                     Beginner.
                   </h2>
 
-                  <p className="mt-3 text-gray-500 dark:text-gray-300">
+                  <p className="mt-3 text-gray-700 dark:text-gray-300">
                     Zarejestruj się by utworzyc konto.
                   </p>
                 </div>

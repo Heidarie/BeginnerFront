@@ -42,11 +42,11 @@ const Navbar = () => {
   useEffect(() => {
     if (user === undefined && userLocalStorage) {
       setUser(DataService.getLocalUser());
-    }
-    if (user?.isLoggedInUserAccount === false) {
+    } else if (user?.isLoggedInUserAccount === false) {
       handleLogout();
     }
   }, []);
+  console.log(user);
   return (
     <nav className="bg-gray-800 fixed w-full top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 z-[100]">
@@ -209,10 +209,10 @@ const Navbar = () => {
                     <div>
                       <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border border-gray-300 shadow-sm  py-0 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
                         <div className="w-12 -left-2 md:-left-4 relative">
-                          {user.imagePath ? (
+                          {user.image ? (
                             <img
-                              src={`data:image/png;base64,${user.imagePath}`}
-                              key={`${process.env.REACT_APP_BASE_API_URL}/${user.imagePath}`}
+                              src={user.image}
+                              key={`${process.env.REACT_APP_BASE_API_URL}/${user.image}`}
                               alt="ProfilePhoto"
                               className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
                             />
@@ -325,7 +325,7 @@ const Navbar = () => {
                       <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border shadow-sm py-0 bg-white text-sm font-medium text-gray-700 hover:bg-[#00df9a]  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
                         <Link
                           to="/Login"
-                          className="text-base leading-6 text-gray-500 hover:text-gray-900"
+                          className="text-base leading-6 text-gray-700 hover:text-gray-900"
                         >
                           <div className="p-3">Zaloguj się</div>
                         </Link>
