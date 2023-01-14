@@ -3,21 +3,23 @@ import { ImLocation } from "react-icons/im";
 import { MdOutlinePeopleAlt } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import UserService from "../../components/user.service";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Toast from "../../components/Toast";
+import DataService from "../../components/data.service";
+import EmployeeService from "../../components/employee.service";
 
 const OfferPage = () => {
   let { publicUrl } = useParams();
   const [offer, setOffer] = useState(undefined);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [happyFlow, setHappyFlow] = useState(false);
 
   const getOfferDetails = (publicUrl) => {
     setLoading(true);
     if (publicUrl) {
-      UserService.getOfferDetails(publicUrl).then((res) => {
+      DataService.getOfferDetails(publicUrl).then((res) => {
         setOffer(res.data);
         setLoading(false);
       });
@@ -30,7 +32,7 @@ const OfferPage = () => {
   const apply = async (publicUrl) => {
     setLoading(true);
     if (publicUrl) {
-      let res = await UserService.applyOffer(publicUrl);
+      let res = await EmployeeService.applyOffer(publicUrl);
       console.log(res);
       if (res.status === 200) {
         setLoading(false);
@@ -38,7 +40,9 @@ const OfferPage = () => {
       } else {
         setLoading(false);
         setError(true);
+        setErrorMessage(res.response.data.message);
         setTimeout(() => {
+          setErrorMessage("");
           setError(false);
         }, 3000);
       }
@@ -231,9 +235,7 @@ const OfferPage = () => {
           </div>
         </div>
       )}
-      {error && (
-        <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       {loading && <Toast text="Ładowanie oferty" icon="LOADING" />}
       {happyFlow && (
         <Toast text="Udało się aplikować na ofertę!" icon="HAPPY" />

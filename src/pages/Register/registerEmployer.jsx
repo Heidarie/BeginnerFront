@@ -10,6 +10,7 @@ import Toast from "../../components/Toast";
 
 const RegisterEmployer = () => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -27,7 +28,9 @@ const RegisterEmployer = () => {
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }
@@ -99,6 +102,7 @@ const RegisterEmployer = () => {
                 label="Województwo"
                 name="regionCode"
                 placeholder="Wybierz województwo"
+                type="number"
               >
                 <option value="" disabled>
                   Wybierz województwo
@@ -144,9 +148,7 @@ const RegisterEmployer = () => {
         </p>
       </div>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && (
-        <Toast text="Wystąpił bład przy aplikowaniu na ofertę" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       {loading && <Toast text="Próba tworzenia konta" icon="LOADING" />}
     </div>
   );

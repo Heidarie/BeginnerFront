@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import loginBg from "../../../assets/loginBg.png";
 import Footer from "../../../components/Footer";
-import AuthService from "../../../components/auth.service";
-import UserService from "../../../components/user.service";
 import { IoFlame } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -23,6 +21,8 @@ import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
 import ScrollContainer from "react-indiana-drag-scroll";
 import Toast from "../../../components/Toast";
+import EmployeeService from "../../../components/employee.service";
+import DataService from "../../../components/data.service";
 
 const EmployeeProfile = () => {
   let { id } = useParams();
@@ -36,6 +36,7 @@ const EmployeeProfile = () => {
   const [gradList, setGradList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const hideModal = () => {
     setEditProfile(false);
@@ -78,7 +79,7 @@ const EmployeeProfile = () => {
 
   const handleAccept = async (values, type) => {
     setLoading(true);
-    let res = await UserService.updateUserDetails(values, type);
+    let res = await EmployeeService.updateUserDetails(values, type);
     if (res.status === 200) {
       if (type === "experience") {
         setEditExp(false);
@@ -90,7 +91,9 @@ const EmployeeProfile = () => {
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }
@@ -98,7 +101,7 @@ const EmployeeProfile = () => {
 
   const getUser = (id) => {
     if (id) {
-      AuthService.getUserData(id, "user").then((res) => {
+      DataService.getUserData(id, "user").then((res) => {
         setUser(res.data);
       });
     }
@@ -1313,9 +1316,7 @@ const EmployeeProfile = () => {
         </article>
       </main>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && (
-        <Toast text="Wystąpił bład przy aktualizacji danych" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       <Footer />
     </div>
   );

@@ -10,22 +10,23 @@ import Toast from "../../components/Toast";
 
 const Login = () => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (values, actions) => {
-    console.log(values);
     let res = await AuthService.login(values);
-    console.log("LOGIN", res);
     if (res.status === 200) {
       setLoading(false);
       navigate({ pathname: res.request.response });
       window.location.reload();
     } else {
-      setError(true);
       setLoading(false);
+      setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
         setError(false);
+        setErrorMessage("");
       }, 3000);
     }
   };
@@ -57,7 +58,7 @@ const Login = () => {
               </h2>
 
               <p className="mt-3 text-gray-500 dark:text-gray-300">
-                Sign in to access your account.
+                Zaloguj się do swojego konta.
               </p>
             </div>
 
@@ -134,7 +135,7 @@ const Login = () => {
         </div>
       </div>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && <Toast text="Niepoprawny login lub hasło" icon="ERROR" />}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       <Footer />
     </div>
   );

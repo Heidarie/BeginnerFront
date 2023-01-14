@@ -5,11 +5,12 @@ import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
 import CustomFile from "./components/CustomFile";
 import { Form, Formik } from "formik";
-import CompanyService from "../../../components/company.service";
+import EmployerService from "../../../components/employer.service";
 import Toast from "../../../components/Toast";
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values, actions) => {
@@ -25,14 +26,16 @@ const EditProfile = ({ hideModal }) => {
     };
     console.log(updateValues);
 
-    let res = await CompanyService.updateCompanyData(updateValues);
+    let res = await EmployerService.updateEmployerData(updateValues);
     if (res.status === 201) {
       setLoading(false);
       hideModal(true);
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }

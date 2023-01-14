@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
@@ -6,19 +6,66 @@ import CustomTextArea from "./components/CustomTextArea";
 import CustomFile from "./components/CustomFile";
 import { Form, Formik } from "formik";
 import CreatableSelect from "react-select/creatable";
-import UserService from "../../../components/user.service";
+import EmployeeService from "../../../components/employee.service";
 import Toast from "../../../components/Toast";
+import Select from "react-select";
+import DataService from "../../../components/data.service";
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  // const [gradDateStart, setGradDateStart] = useState(new Date());
-  // const [gradDateEnd, setGradDateEnd] = useState(new Date());
-  // const [expDateStart, setExpDateStart] = useState(new Date());
-  // const [expDateEnd, setExpDateEnd] = useState(new Date());
+  const [filtersData, setFiltersData] = useState([]);
+  const [occupation, setOccupation] = useState(null);
+  const [profession, setProfession] = useState([]);
   const [skills, setSkills] = useState([]);
   const [certificates, setCertificates] = useState([]);
-  // const navigate = useNavigate();
+
+  async function loadFilters() {
+    setLoading(true);
+    let res = await DataService.getFilters("category=occupation");
+    if (res.status === 200) {
+      const occupationFilter = res?.data?.occupationFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      const newObject = { occupationFilter };
+      setLoading(false);
+      setFiltersData(newObject);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(res.response.data.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
+  }
+
+  async function loadProfession(value) {
+    setLoading(true);
+    const occupationId = value.id;
+    let res = await DataService.getFilters(
+      `category=profession&occupationIds=${occupationId}`
+    );
+    if (res.status === 200) {
+      const professionFilter = res.data.professionFilter.map((obj) => ({
+        ...obj,
+        label: obj.value,
+      }));
+      setFiltersData({ ...filtersData, professionFilter: professionFilter });
+      setLoading(false);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(res.response.data.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
+  }
 
   const onSubmit = async (values, actions) => {
     setError(false);
@@ -27,7 +74,8 @@ const EditProfile = ({ hideModal }) => {
     const updateValues = {
       Name: values.Name,
       Surname: values.Surname,
-      Profession: values.Profession,
+      Occupation: occupation?.id,
+      Profession: profession?.id,
       Image: values.Image,
       Resumee: values.Resumee,
       "PersonalDataModel.Description": values.Description,
@@ -36,27 +84,41 @@ const EditProfile = ({ hideModal }) => {
       ),
       "PersonalDataModel.Skills": skills?.map((object) => object.value),
     };
-    console.log(updateValues);
 
-    let res = await UserService.updateUserData(updateValues);
+    let res = await EmployeeService.updateUserData(updateValues);
     if (res.response.status === 200) {
       setLoading(false);
       hideModal(true);
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }
   };
+
+  useEffect(() => {
+    loadFilters();
+  }, []);
+
+  useEffect(() => {
+    if (occupation) {
+      loadProfession(occupation);
+    } else {
+      delete filtersData?.professionFilter;
+      setProfession([]);
+    }
+  }, [occupation]);
+
   return (
     <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
       <Formik
         initialValues={{
           Name: "",
           Surname: "",
-          Profession: "",
           Description: "",
           Image: "",
           Resume: "",
@@ -148,7 +210,7 @@ const EditProfile = ({ hideModal }) => {
                   </div>
                 </div>
                 <div className="mt-5 md:col-span-2 md:mt-0">
-                  <div className="overflow-hidden shadow-md sm:rounded-md">
+                  <div className="overflow-visible shadow-md sm:rounded-md">
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <CustomInput
@@ -165,13 +227,47 @@ const EditProfile = ({ hideModal }) => {
                           type="text"
                           placeholder="Nazwisko"
                         />
-                        <CustomInput
-                          className="col-span-6 sm:col-span-6"
-                          label="Profesja"
-                          name="Profession"
-                          type="text"
-                          placeholder="AWS Developer"
-                        />
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-200">
+                            Główny zawód
+                          </label>
+                          <Select
+                            onChange={setOccupation}
+                            value={occupation}
+                            options={filtersData?.occupationFilter}
+                            isClearable={true}
+                            placeholder="Wybierz zawód"
+                            name="occupation"
+                            className="basic-single text-black mt-1 block rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          />
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label className="block text-sm font-medium text-gray-200">
+                            Główny język
+                          </label>
+                          {occupation !== null ? (
+                            <Select
+                              onChange={setProfession}
+                              value={profession}
+                              options={filtersData?.professionFilter}
+                              placeholder="Wybierz język"
+                              isClearable={true}
+                              name="occupation"
+                              className="basic-single text-black mt-1 block col-span-6 sm:col-span-3 rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                          ) : (
+                            <Select
+                              isDisabled={true}
+                              onChange={setProfession}
+                              value={profession}
+                              options={filtersData?.professionFilter}
+                              placeholder="Wybierz język"
+                              isClearable={true}
+                              name="occupation"
+                              className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            />
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -282,7 +378,7 @@ const EditProfile = ({ hideModal }) => {
                   </div>
                 </div>
                 <div className="mt-5 md:col-span-2 md:mt-0">
-                  <div className="overflow-hidden shadow-md sm:rounded-md">
+                  <div className="overflow-visible shadow-md sm:rounded-md">
                     <div className="space-y-6 bg-white px-4 py-5 sm:p-6">
                       <fieldset>
                         <legend className="sr-only">By Email</legend>
@@ -420,12 +516,7 @@ const EditProfile = ({ hideModal }) => {
             </div>
             {loading && <Toast text="Ładowanie" icon="LOADING" />}
 
-            {error && (
-              <Toast
-                text="Wystąpił bład przy aktualizacji danych"
-                icon="ERROR"
-              />
-            )}
+            {error && <Toast text={errorMessage} icon="ERROR" />}
             {loading || error ? (
               <div className="mt-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                 <button

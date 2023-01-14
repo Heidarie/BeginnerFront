@@ -15,6 +15,7 @@ import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "../utils";
 import AuthService from "./auth.service";
+import DataService from "./data.service";
 
 const Navbar = () => {
   const userLocalStorage = localStorage.getItem("user");
@@ -40,7 +41,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (user === undefined && userLocalStorage) {
-      setUser(AuthService.getLocalUser());
+      setUser(DataService.getLocalUser());
     }
     if (user?.isLoggedInUserAccount === false) {
       handleLogout();

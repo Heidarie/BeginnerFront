@@ -6,12 +6,13 @@ import CustomSelect from "../../components/form/CustomSelect";
 import CustomInput from "../../components/form/CustomInput";
 import CustomNumber from "../../components/form/CustomNumber";
 import AuthService from "../../components/auth.service";
-import UserService from "../../components/user.service";
 import Toast from "../../components/Toast";
 import Select from "react-select";
+import DataService from "../../components/data.service";
 
 const RegisterEmployee = () => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [filtersData, setFiltersData] = useState([]);
   const [occupation, setOccupation] = useState(null);
@@ -20,7 +21,7 @@ const RegisterEmployee = () => {
 
   async function loadFilters() {
     setLoading(true);
-    let res = await UserService.getFilters("category=occupation");
+    let res = await DataService.getFilters("category=occupation");
     if (res.status === 200) {
       const occupationFilter = res?.data?.occupationFilter.map((obj) => ({
         ...obj,
@@ -32,7 +33,9 @@ const RegisterEmployee = () => {
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }
@@ -41,7 +44,7 @@ const RegisterEmployee = () => {
   async function loadProfession(value) {
     setLoading(true);
     const occupationId = value.id;
-    let res = await UserService.getFilters(
+    let res = await DataService.getFilters(
       `category=profession&occupationIds=${occupationId}`
     );
     if (res.status === 200) {
@@ -63,8 +66,8 @@ const RegisterEmployee = () => {
   const onSubmit = async (values, actions) => {
     const newValues = {
       ...values,
-      occupation: occupation.id.toString(),
-      profession: profession.id.toString(),
+      occupation: occupation.id,
+      profession: profession.id,
       regionCode: parseInt(values.regionCode),
     };
     setLoading(true);
@@ -81,6 +84,7 @@ const RegisterEmployee = () => {
       }, 3000);
     }
   };
+
   useEffect(() => {
     loadFilters();
   }, []);
@@ -255,9 +259,7 @@ const RegisterEmployee = () => {
         </p>
       </div>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-      {error && (
-        <Toast text="Wystąpił błąd przy tworzeniu konta" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
     </div>
   );

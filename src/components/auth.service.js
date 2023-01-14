@@ -4,21 +4,6 @@ const API_URL = process.env.REACT_APP_BASE_API_URL;
 
 axios.defaults.withCredentials = true;
 
-function updateLocalstorage(response) {
-  const actualUserLocally = JSON.parse(localStorage.getItem("user"));
-
-  if (
-    response?.data?.isLoggedInUserAccount &&
-    actualUserLocally !== response?.data
-  ) {
-    const saveData = {
-      ...response.data,
-      keepLogged: actualUserLocally?.keepLogged,
-    };
-    localStorage.setItem("user", JSON.stringify(saveData));
-  }
-}
-
 function saveToLocalstorage(response, values) {
   const saveData = { ...response.data, keepLogged: values.saveLogin };
   localStorage.setItem("user", JSON.stringify(saveData));
@@ -63,23 +48,11 @@ const login = async (values) => {
   }
 };
 
-const logout = async () => {
-  removeFromLocalstorage();
-
-  const response = axios.post(API_URL + "/Authentication/Logout");
-  return response.data;
-};
-
-const getUserData = async (publicUrl, flag) => {
+const confirmAccount = async (token, mail) => {
   try {
-    let response;
-    if (flag === "user") {
-      response = await axios.get(API_URL + `/Account/User/${publicUrl}`);
-    } else {
-      response = await axios.get(API_URL + `/Company/${publicUrl}`);
-    }
-
-    updateLocalstorage(response);
+    let response = await axios.post(
+      API_URL + `/ConfirmAccount?token=${token}&mail=${mail}`
+    );
 
     return response;
   } catch (error) {
@@ -88,16 +61,18 @@ const getUserData = async (publicUrl, flag) => {
   }
 };
 
-const getLocalUser = () => {
-  return JSON.parse(localStorage.getItem("user"));
+const logout = async () => {
+  removeFromLocalstorage();
+
+  const response = axios.post(API_URL + "/Authentication/Logout");
+  return response.data;
 };
 
 const AuthService = {
   register,
   login,
   logout,
-  getUserData,
-  getLocalUser,
+  confirmAccount,
 };
 
 export default AuthService;

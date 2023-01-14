@@ -10,6 +10,7 @@ import Toast from "../../components/Toast";
 
 const CreateOffer = ({ hideModal }) => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   // const [gradDateStart, setGradDateStart] = useState(new Date());
   // const [gradDateEnd, setGradDateEnd] = useState(new Date());
@@ -46,18 +47,6 @@ const CreateOffer = ({ hideModal }) => {
       },
     };
     console.log(updateValues);
-
-    // let res = await UserService.updateUserData(updateValues);
-    // if (res.response.status === 200) {
-    //   setLoading(false);
-    //   console.log("res", res);
-    // } else {
-    //   setLoading(false);
-    //   setError(true);
-    //   setTimeout(() => {
-    //     setError(false);
-    //   }, 3000);
-    // }
   };
   return (
     <Modal hideModal={hideModal} className="sm:max-w-6xl p-4">
@@ -438,10 +427,7 @@ const CreateOffer = ({ hideModal }) => {
         )}
       </Formik>
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
-
-      {error && (
-        <Toast text="Wystąpił bład przy aktualizacji danych" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
     </Modal>
   );
 };

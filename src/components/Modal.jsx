@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef } from "react";
 
 const Modal = ({ hideModal, className, children }) => {
   const closeModal = (e) => {
-    if (e.path[0] === divRef.current) {
+    if (e.target === divRef.current) {
       hideModal(true);
     }
   };
-  document.body.addEventListener("click", closeModal, true);
+  useEffect(() => {
+    document.body.addEventListener("click", closeModal, true);
+    return () => {
+      document.body.removeEventListener("click", closeModal, true);
+    };
+  }, []);
 
   const divRef = useRef(null);
 

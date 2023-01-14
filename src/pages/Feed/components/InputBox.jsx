@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { RiImageAddFill } from "react-icons/ri";
-import AuthService from "../../../components/auth.service";
+import DataService from "../../../components/data.service";
 
 const InputBox = () => {
   const [user, setUser] = useState(undefined);
@@ -11,7 +11,7 @@ const InputBox = () => {
   //   e.preventDefault();
   // };
   const setUserData = () => {
-    setUser(AuthService.getLocalUser());
+    setUser(DataService.getLocalUser());
   };
 
   useEffect(() => {

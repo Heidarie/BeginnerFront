@@ -14,7 +14,7 @@ const Offers = () => {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState(0);
 
-  const { offers, hasMore, loading, error } = useOffersFilter(
+  const { offers, hasMore, loading, error, errorMessage } = useOffersFilter(
     query,
     pageNumber
   );
@@ -76,9 +76,7 @@ const Offers = () => {
         })}
       </ScrollContainer>
       {filters && <FilterOffers hideModal={hideModal} />}
-      {error && (
-        <Toast text="Wystąpił bład przy ładowaniu ofert" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
       <div className="absolute bottom-5 left-5">
         <div className="w-fit flex flex-col items-start justify-start">

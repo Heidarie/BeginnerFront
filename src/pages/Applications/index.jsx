@@ -5,6 +5,8 @@ import EmployerOffers from "./EmployerOffers";
 
 const Applications = () => {
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const [loading, setLoading] = useState(false);
   // const [employerOffers, setEmployerOffers] = useState();
   const employerOffers = [
@@ -42,9 +44,7 @@ const Applications = () => {
       {employerOffers.map((offer) => (
         <EmployerOffers key={offer} offerDetails={offer} />
       ))}
-      {error && (
-        <Toast text="Wystąpił bład przy ładowaniu twoich ofert." icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       {loading && <Toast text="Ładowanie twoich ofert." icon="LOADING" />}
     </div>
   );

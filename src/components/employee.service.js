@@ -8,19 +8,6 @@ const getProfile = () => {
   return axios.get(API_URL + "/Account/Profile");
 };
 
-const getOfferDetails = async (publicUrl) => {
-  try {
-    let response = await axios.get(API_URL + `/Offers/${publicUrl}`);
-    console.log(response);
-    if (response.status === 200) {
-      return response;
-    }
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
-
 const updateUserData = async (values) => {
   try {
     let response = await axios.put(
@@ -73,24 +60,12 @@ const applyOffer = async (publicUrl) => {
     return error;
   }
 };
-const getFilters = async (value) => {
-  try {
-    let response = await axios.get(API_URL + `/api/Filter?${value}`);
-    if (response.status === 200) {
-      return response;
-    }
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
-};
+
 const UserService = {
   getProfile,
-  getOfferDetails,
   updateUserDetails,
   applyOffer,
   updateUserData,
-  getFilters,
 };
 
 export default UserService;

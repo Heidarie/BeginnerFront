@@ -4,19 +4,17 @@ import { useState } from "react";
 import Select from "react-select";
 import Modal from "../../../components/Modal";
 import makeAnimated from "react-select/animated";
-import UserService from "../../../components/user.service";
+import DataService from "../../../components/data.service";
 import Toast from "../../../components/Toast";
 import { Slider } from "antd";
 
 const animatedComponents = makeAnimated();
 
 const FilterOffers = ({ hideModal }) => {
-  //READ FIRST FROM LINK IF AVAIABLE
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [filtersData, setFiltersData] = useState([]);
-
   const [occupations, setOccupations] = useState([]);
   const [jobTypes, setJobTypes] = useState([]);
   const [levels, setLevels] = useState([]);
@@ -24,9 +22,23 @@ const FilterOffers = ({ hideModal }) => {
   const [salaryRange, setSalaryRange] = useState([1000, 10000]);
   const [range, setRange] = useState([]);
 
+  const rangeMarks = {
+    10: "10KM",
+    20: "20KM",
+    30: "30KM",
+    40: "40KM",
+    50: "50KM",
+    100: {
+      style: {
+        color: "#f50",
+      },
+      label: <strong>Każda</strong>,
+    },
+  };
+
   async function loadFilters() {
     setLoading(true);
-    let res = await UserService.getFilters("category=occupation,jobtype,level");
+    let res = await DataService.getFilters("category=occupation,jobtype,level");
     if (res.status === 200) {
       console.log(res.data);
       const occupationFilter = res.data.occupationFilter.map((obj) => ({
@@ -47,7 +59,9 @@ const FilterOffers = ({ hideModal }) => {
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }
@@ -55,43 +69,37 @@ const FilterOffers = ({ hideModal }) => {
   async function loadProfession(values) {
     setLoading(true);
     const occupationIds = values.map((obj) => obj.id).join(",");
-    console.log(occupationIds);
-    let res = await UserService.getFilters(
+    let res = await DataService.getFilters(
       `category=profession&occupationIds=${occupationIds}`
     );
     if (res.status === 200) {
-      console.log(res.data);
-      const professionFilter = res.data.professionFilter.map((obj) => ({
+      if (filtersData.professionFilter) {
+        setProfessions([]);
+        setFiltersData({ ...filtersData, professionFilter: [] });
+      }
+      setLoading(false);
+      const professionFilter = res.data?.professionFilter?.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
-      console.log(professionFilter);
       setFiltersData({ ...filtersData, professionFilter: professionFilter });
-      setLoading(false);
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(res.response.data.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }
   }
 
-  const rangeMarks = {
-    10: "10KM",
-    20: "20KM",
-    30: "30KM",
-    40: "40KM",
-    50: "50KM",
-    100: {
-      style: {
-        color: "#f50",
-      },
-      label: <strong>Każda</strong>,
-    },
+  const handleClearFilters = () => {
+    setOccupations([]);
+    setJobTypes([]);
+    setLevels([]);
+    setProfessions([]);
   };
-
-  const handleClearFilters = () => {};
 
   useEffect(() => {
     loadFilters();
@@ -269,9 +277,7 @@ const FilterOffers = ({ hideModal }) => {
           </div>
         </div>
       </div>
-      {error && (
-        <Toast text="Wystąpił błąd przy ładowaniu filtrów" icon="ERROR" />
-      )}
+      {error && <Toast text={errorMessage} icon="ERROR" />}
       {loading && <Toast text="Ładowanie filtrów" icon="LOADING" />}
     </Modal>
   );

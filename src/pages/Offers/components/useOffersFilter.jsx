@@ -4,6 +4,7 @@ import axios from "axios";
 export default function useOffersFilter(query, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [offers, setOffers] = useState([]);
   const [hasMore, setHasMore] = useState(false);
 
@@ -31,10 +32,11 @@ export default function useOffersFilter(query, pageNumber) {
       .catch((error) => {
         if (axios.isCancel(error)) return;
         setLoading(false);
+        setErrorMessage(error);
         setError(true);
       });
     return () => cancel();
   }, [query, pageNumber]);
 
-  return { loading, error, offers, hasMore };
+  return { loading, error, offers, hasMore, errorMessage };
 }

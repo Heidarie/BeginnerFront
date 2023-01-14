@@ -1,7 +1,44 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../../components/auth.service";
+import Toast from "../../components/Toast";
 
 const ConfirmAccount = () => {
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token") || undefined;
+  const mail = params.get("mail") || undefined;
+
+  const navigate = useNavigate();
+
+  const ConfirmUserAccount = async (token, mail) => {
+    setLoading(true);
+    let res = await AuthService.confirmAccount(token, mail);
+    if (res.status === 200) {
+      setLoading(false);
+      navigate({ pathname: res.request.response });
+      window.location.reload();
+    } else {
+      setLoading(false);
+      console.log(res);
+      setError(true);
+      setErrorMessage(res.response.data.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
+  };
+  useEffect(() => {
+    if (token && mail) {
+      ConfirmUserAccount(token, mail);
+    }
+  }, []);
+  console.log(token, mail);
+
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">
       <div className="m-auto">
@@ -54,6 +91,7 @@ const ConfirmAccount = () => {
           </div>
         )}
       </div>
+      {error && <Toast text={errorMessage} icon="ERROR" />}
     </div>
   );
 };

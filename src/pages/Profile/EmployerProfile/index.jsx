@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Toast from "../../../components/Toast";
-import AuthService from "../../../components/auth.service";
 import { useParams } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi";
 import { MdOutlineModeEditOutline } from "react-icons/md";
@@ -8,6 +7,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import { RiFileList3Line } from "react-icons/ri";
 import EditProfile from "./editProfile";
 import CreateOffer from "../../CreateOffer/index";
+import DataService from "../../../components/data.service";
 
 const EmployerProfile = () => {
   let { id } = useParams();
@@ -23,9 +23,16 @@ const EmployerProfile = () => {
   };
   const getCompanyData = (id) => {
     if (id) {
-      AuthService.getUserData(id, "company").then((res) => {
-        setCompany(res.data);
-      });
+      DataService.getUserData(id, "company")
+        .then((res) => {
+          setCompany(res.data);
+        })
+        .catch((error) => {
+          setError(true);
+          setTimeout(() => {
+            setError(false);
+          }, 3000);
+        });
     }
   };
 
