@@ -47,10 +47,26 @@ const createOffer = async (values) => {
   }
 };
 
+const getApplicants = async (publicUrl) => {
+  try {
+    let response = await axios.get(
+      API_URL + `/Employer/ApplicationManagement/${publicUrl}`
+    );
+    console.log(response);
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
 const EmployerService = {
   getEmployerOffers,
   updateEmployerData,
   createOffer,
+  getApplicants,
 };
 
 export default EmployerService;

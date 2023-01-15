@@ -4,10 +4,10 @@ import Toast from "../../components/Toast";
 import EmployerOffers from "./EmployerOffers";
 
 const Applications = () => {
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [loading, setLoading] = useState(false);
   const [employerOffers, setEmployerOffers] = useState([]);
 
   const getEmployerOffers = () => {

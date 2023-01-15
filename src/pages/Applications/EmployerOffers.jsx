@@ -6,10 +6,22 @@ const EmployerOffers = ({ offerDetails }) => {
   const [visible, setVisible] = useState(false);
   console.log(offerDetails);
   const premium = false;
-
+  const test = {
+    title: "TYTUŁ oferty",
+    city: "Włocławek",
+    salaryFrom: 100,
+    salaryTo: 100,
+    profession: "Python",
+    occupation: "Backend Developer",
+    level: "Intern",
+    publicUrl: "TYTUŁ-oferty-MaciejCompany",
+    isActive: true,
+    participants: 1,
+    daysLeft: 29,
+  };
   return (
     <div className="flex flex-col items-center text-center justify-center">
-      <div className="relative  rounded-lg bg-white text-left shadow-xl sm:w-full sm:max-w-7xl mt-[2rem] top-16">
+      <div className="relative rounded-lg bg-white text-left shadow-xl sm:w-full sm:max-w-7xl mt-[2rem] top-16">
         <div
           onClick={() => setVisible(!visible)}
           className={classNames(
@@ -20,12 +32,7 @@ const EmployerOffers = ({ offerDetails }) => {
           )}
         >
           <div className="w-full">
-            <div className="text-right w-full -ml-2">
-              <h3 className="text-[#00df9a] text-lg font-extrabold -mb-4">
-                {offerDetails.jobType}
-              </h3>
-            </div>
-            <div className="p-2 grid grid-cols-6 mb-2 justify-start items-center">
+            <div className="grid grid-cols-6 m-auto justify-start p-4 items-center">
               <div className="col-span-1">
                 <div className="justify-start text-center items-center">
                   <img
@@ -35,21 +42,46 @@ const EmployerOffers = ({ offerDetails }) => {
                   />
                 </div>
               </div>
-              <div className="ml-2 -mt-5 col-span-5">
-                <h2 className="font-bold text-lg text-black -mt-2 break-words">
-                  {offerDetails.title}
+              <div className="ml-2 m-auto col-span-4">
+                <h2 className="font-bold text-2xl text-black break-words">
+                  Tytuł: {offerDetails.title}
+                </h2>
+                <h2 className="font-semibold text-lg text-black break-words">
+                  Widełki: {offerDetails.salaryFrom} - {offerDetails.salaryTo}
                 </h2>
                 <h2 className="font-semibold text-lg text-black">
+                  Zawód/Główny język: {offerDetails.occupation}/
                   {offerDetails.profession}
                 </h2>
-                <h2 className="font-semibold text-md text-black -mt-2">
-                  {offerDetails.level}
+                <h2 className="font-semibold text-md text-black">
+                  Lokalizacja: {offerDetails.city}
                 </h2>
+                <h2 className="font-semibold text-md text-black">
+                  Poziom: {offerDetails.level}
+                </h2>
+              </div>
+              <div className="col-span-1">
+                <div className="justify-end text-center items-center">
+                  <h2 className="font-bold text-lg text-green-500">
+                    Oferta: {offerDetails.isActive ? "Aktywna" : "Zakończona"}
+                  </h2>
+                </div>
+                <div className="justify-end text-center items-center">
+                  <h2 className="font-semibold text-md text-black">
+                    Dni pozostałe do zamknięcia oferty: {offerDetails.daysLeft}
+                  </h2>
+                </div>
+                <div className="justify-end text-center items-center">
+                  <h2 className="font-semibold text-md text-black">
+                    Akutalnie zaaplikowało:
+                    {offerDetails.participants}
+                  </h2>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {visible && <Applicants />}
+        {visible && <Applicants publicUrl={offerDetails.publicUrl} />}
       </div>
     </div>
   );
