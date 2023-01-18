@@ -29,17 +29,19 @@ const CreateOffer = ({ hideModal }) => {
 
   async function loadFilters() {
     setLoading(true);
-    let res = await DataService.getFilters("category=occupation,jobtype,level");
-    if (res.status === 200) {
-      const occupationFilter = res.data.occupationFilter.map((obj) => ({
+    let { status, data, response } = await DataService.getFilters(
+      "category=occupation,jobtype,level"
+    );
+    if (status === 200) {
+      const occupationFilter = data.occupationFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
-      const levelFilter = res.data.levelFilter.map((obj) => ({
+      const levelFilter = data.levelFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
-      const jobTypeFilter = res.data.jobTypeFilter.map((obj) => ({
+      const jobTypeFilter = data.jobTypeFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
@@ -49,7 +51,7 @@ const CreateOffer = ({ hideModal }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -60,11 +62,11 @@ const CreateOffer = ({ hideModal }) => {
   async function loadProfession(value) {
     setLoading(true);
     const occupationId = value.id;
-    let res = await DataService.getFilters(
+    let { status, data } = await DataService.getFilters(
       `category=profession&occupationIds=${occupationId}`
     );
-    if (res.status === 200) {
-      const professionFilter = res.data.professionFilter.map((obj) => ({
+    if (status === 200) {
+      const professionFilter = data.professionFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
@@ -107,9 +109,9 @@ const CreateOffer = ({ hideModal }) => {
     };
     console.log(updateValues);
 
-    let res = await EmployerService.createOffer(updateValues);
-    console.log(res);
-    if (res.status === 201) {
+    let { status, response } = await EmployerService.createOffer(updateValues);
+
+    if (status === 201) {
       setLoading(false);
       setHappyFlow(true);
       setTimeout(() => {
@@ -119,7 +121,7 @@ const CreateOffer = ({ hideModal }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

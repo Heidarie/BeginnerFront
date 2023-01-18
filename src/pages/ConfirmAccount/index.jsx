@@ -13,16 +13,18 @@ const ConfirmAccount = () => {
 
   const ConfirmUserAccount = async (token, mail) => {
     setLoading(true);
-    let res = await AuthService.confirmAccount(token, mail);
-    if (res.status === 200) {
+    let { status, request, response } = await AuthService.confirmAccount(
+      token,
+      mail
+    );
+    if (status === 200) {
       setLoading(false);
       window.location.reload();
-      window.location.replace(res.request.response);
+      window.location.replace(request.response);
     } else {
       setLoading(false);
-      console.log(res);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

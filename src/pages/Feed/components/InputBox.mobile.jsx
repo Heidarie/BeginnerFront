@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { RiImageAddFill } from "react-icons/ri";
-import DataService from "../../../components/data.service";
 
-const InputBoxMobile = () => {
-  const [user, setUser] = useState(undefined);
-
-  // const inputRef = useRef(null);
-
-  // const sendPost = (e) => {
-  //   e.preventDefault();
-  // };
-  const setUserData = () => {
-    setUser(DataService.getLocalUser());
-  };
-
-  useEffect(() => {
-    setUserData();
-  }, []);
+const InputBoxMobile = ({ user }) => {
   return (
     <div className="flex items-center justify-center drop-shadow-2xl mt-[6rem]">
       <div className="border p-5 shadow-md w-full bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
+            <img
+              src={user?.image}
+              className="h-8 w-8 rounded-full bg-slate-400"
+              alt=""
+            />
             <div className="grid-rows-2 grid-flow-col text-lg font-bold text-slate-700">
               CUSTOM INPUT formik
               <div className="flex items-center space-x-8">

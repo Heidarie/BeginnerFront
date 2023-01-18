@@ -1,30 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { RiImageAddFill } from "react-icons/ri";
-import DataService from "../../../components/data.service";
 
-const InputBox = () => {
-  const [user, setUser] = useState(undefined);
-
-  // const inputRef = useRef(null);
-
-  // const sendPost = (e) => {
-  //   e.preventDefault();
-  // };
-  const setUserData = () => {
-    setUser(DataService.getLocalUser());
-  };
-
-  useEffect(() => {
-    setUserData();
-  }, []);
+const InputBox = ({ user }) => {
   return (
     <div className="flex items-center justify-center drop-shadow-2xl mt-[6rem]">
       <div className="md:rounded-xl border p-5 shadow-md w-full md:w-10/12 xl:w-6/12 bg-white">
         <div className="flex w-full items-center justify-between border-b pb-3">
           <div className="flex items-center space-x-3">
-            <div className="h-8 w-8 rounded-full bg-slate-400 bg-[url('https://i.pravatar.cc/32')]"></div>
+            <img
+              src={user?.image}
+              className="h-8 w-8 rounded-full bg-slate-400"
+              alt=""
+            />
             <div className="grid-rows-2 grid-flow-col text-lg font-bold text-slate-700">
-              CUSTOM INPUT formik
+              {user?.name}
               <div className="flex items-center space-x-8">
                 <button className="rounded-2xl border bg-neutral-100 px-3 py-1 text-xs font-semibold">
                   Kategoria

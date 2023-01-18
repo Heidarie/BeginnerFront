@@ -28,14 +28,16 @@ const EditProfile = ({ hideModal }) => {
     };
     console.log(updateValues);
 
-    let res = await EmployerService.updateEmployerData(updateValues);
-    if (res.status === 201) {
+    let { status, response } = await EmployerService.updateEmployerData(
+      updateValues
+    );
+    if (status === 201) {
       setLoading(false);
       hideModal(true);
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

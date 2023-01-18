@@ -1,16 +1,12 @@
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import { classNames } from "../../utils";
 import { AiOutlineArrowUp } from "react-icons/ai";
-import { BsFilter } from "react-icons/bs";
-import Offer from "./components/Offer";
 import useOffersFilter from "./components/useOffersFilter";
 import Toast from "../../components/Toast";
-import ScrollContainer from "react-indiana-drag-scroll";
 import FilterOffers from "./components/filterOffers";
-import { useUIDSeed } from "react-uid";
-import { useInfiniteQuery } from "react-query";
+import OfferScroll from "./components/offerScroll";
 
-const Offers = () => {
+const Offers = ({ flag }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [filters, setFilters] = useState(false);
   const [query, setQuery] = useState("");
@@ -40,7 +36,6 @@ const Offers = () => {
     const professionsList = professions?.map((obj) => obj.id).join(",");
     const jobTypesList = jobTypes?.map((obj) => obj.id).join(",");
     const levelsList = levels?.map((obj) => obj.id).join(",");
-    console.log(occupationsList, professionsList, jobTypesList, levelsList);
     setQuery(
       `Occupation=${occupationsList}&Profession=${professionsList}&SalaryFrom=${salaryRange[0]}&SalaryTo=${salaryRange[1]}&JobType=${jobTypesList}&Level=${levelsList}`
     );
@@ -84,22 +79,8 @@ const Offers = () => {
   }, [occupations, jobTypes, levels, professions, salaryRange]);
 
   return (
-    <div>
-      <ScrollContainer className="pb-5 mt-[2rem] sticky top-16 h-screen bg-white grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 md:grid-rows-2 gap-3 md:gap-5 p-[2rem]">
-        {offers.map((offer, index) => {
-          if (offers.length === index + 1) {
-            return (
-              <Offer
-                key={offer.publicUrl}
-                ref={lastOfferElementRef}
-                offer={offer}
-              />
-            );
-          } else {
-            return <Offer key={offer.publicUrl} offer={offer} />;
-          }
-        })}
-      </ScrollContainer>
+    <>
+      <OfferScroll offers={offers} flag={flag} ref={lastOfferElementRef} />
       {filters && (
         <FilterOffers
           hideModal={hideModal}
@@ -115,7 +96,7 @@ const Offers = () => {
       )}
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
       {window.location.href.includes("/Offers") && (
-        <div className="absolute bottom-5 left-5">
+        <div className="fixed bottom-5 left-5">
           <div className="w-fit flex flex-col items-start justify-start">
             <button
               type="button"
@@ -127,8 +108,8 @@ const Offers = () => {
           </div>
         </div>
       )}
-      <div className="absolute bottom-5">
-        <div className="w-fit flex flex-col items-center justify-center">
+      <div className="fixed bottom-5 w-full">
+        <div className="w-full flex flex-col items-center justify-center">
           <button
             type="button"
             onClick={scrollToTop}
@@ -141,7 +122,7 @@ const Offers = () => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

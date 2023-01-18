@@ -78,9 +78,31 @@ const EmployeeProfile = () => {
   };
 
   const handleAccept = async (values, type) => {
+    console.log(values);
+    if (values === null) {
+      setEditExp(false);
+      setEditGrad(false);
+      return;
+    }
     setLoading(true);
-    let res = await EmployeeService.updateUserDetails(values, type);
-    if (res.status === 200) {
+    // TODO Prepare values to format
+    //     {
+    //   "milestones": [
+    //     {
+    //       "dateFrom": "2023-01-18T23:44:41.405Z",
+    //       "dateTo": "2023-01-18T23:44:41.405Z",
+    //       "firstValue": "string",
+    //       "secondValue": "string",
+    //       "thirdValue": "string",
+    //       "order": 0
+    //     }
+    //   ]
+    // }
+    let { status, response } = await EmployeeService.updateUserDetails(
+      values,
+      type
+    );
+    if (status === 200) {
       if (type === "experience") {
         setEditExp(false);
       } else {
@@ -91,7 +113,7 @@ const EmployeeProfile = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -99,11 +121,11 @@ const EmployeeProfile = () => {
     }
   };
 
-  const getUser = (id) => {
+  const getUser = async (id) => {
     if (id) {
-      DataService.getUserData(id, "user").then((res) => {
-        setUser(res.data);
-      });
+      let { data } = await DataService.getUserProfile(id);
+      setUser(data);
+      console.log(data);
     }
   };
 
@@ -639,50 +661,60 @@ const EmployeeProfile = () => {
               ))
             )}
           </div>
-          <div className="bg-white shadow mt-6 rounded-lg p-6">
-            <h1>Oferty na które zaaplikowałeś</h1>
-            <div className="grid mt-5 gap-4 grid-cols-2 justify-center items-center w-full">
-              {user?.employeeOfferApplications?.map((application) => (
-                <div
-                  key={application.offerPublicUrl}
-                  className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center h-64"
-                  style={{ backgroundImage: `url(${loginBg})` }}
-                >
-                  <div className="absolute bg-gradient-to-t from-green-200 to-yellow-500  opacity-50 inset-0 z-0"></div>
-                  <div className="relative flex flex-row items-end  h-72 w-full ">
-                    <div className="p-6 rounded-lg  flex flex-col w-full z-5">
-                      <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
-                        {application.offerName}
-                      </h4>
-                      <div className="flex justify-between items-center ">
-                        <div className="flex flex-col">
-                          <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                            <ImLocation className="h-4 w-4 mr-1 text-white" />
-                            LOCATION
-                          </h2>
+          {user?.isLoggedInUserAccount && (
+            <div className="bg-white shadow mt-6 rounded-lg p-6">
+              <h1>Oferty na które zaaplikowałeś</h1>
+              <div className="grid mt-5 gap-4 grid-cols-2 justify-center items-center w-full">
+                {user?.employeeOfferApplications?.map((application) => (
+                  <div
+                    key={application.offerPublicUrl}
+                    className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center h-64"
+                    style={{ backgroundImage: `url(${loginBg})` }}
+                  >
+                    <div className="absolute bg-gradient-to-t from-green-200 to-yellow-500  opacity-50 inset-0 z-0"></div>
+                    <div className="relative flex flex-row items-end  h-72 w-full ">
+                      <div className="p-6 rounded-lg  flex flex-col w-full z-5">
+                        <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
+                          {application.offerName}
+                        </h4>
+                        <h2 className="text-sm flex items-center text-gray-300 font-normal">
+                          {application.isOpened
+                            ? "Wyświetlona"
+                            : "Nie wyświetlona"}
+                        </h2>
+                        <h2 className="text-sm flex items-center text-gray-300 font-normal">
+                          Status: {application.status.toUpperCase()}
+                        </h2>
+                        <div className="flex justify-between items-center">
+                          <div className="flex flex-col">
+                            <h2 className="text-sm flex items-center text-gray-300 font-normal">
+                              <ImLocation className="h-4 w-4 mr-1 text-white" />
+                              LOCATION
+                            </h2>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex pt-4  text-sm text-gray-300">
-                        <div className="flex items-center mr-auto">
-                          <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
-                          <p className="font-normal">
-                            {Moment(application.applicationDate).fromNow()}
-                          </p>
-                        </div>
-                        <div className="flex items-center font-medium text-white ">
-                          PLN 1800
-                          <span className="text-gray-300 text-sm font-normal">
-                            {" "}
-                            /M
-                          </span>
+                        <div className="flex pt-4  text-sm text-gray-300">
+                          <div className="flex items-center mr-auto">
+                            <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
+                            <p className="font-normal">
+                              {Moment(application.applicationDate).fromNow()}
+                            </p>
+                          </div>
+                          <div className="flex items-center font-medium text-white ">
+                            PLN 1800
+                            <span className="text-gray-300 text-sm font-normal">
+                              {" "}
+                              /M
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </aside>
 
         <article className="my-10">

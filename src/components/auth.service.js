@@ -1,21 +1,14 @@
 import axios from "axios";
+import DataService from "./data.service";
 
 const API_URL = process.env.REACT_APP_BASE_API_URL;
 
 axios.defaults.withCredentials = true;
-
-function saveToLocalstorage(response, values) {
-  const saveData = { ...response.data, keepLogged: values.saveLogin };
-  localStorage.setItem("user", JSON.stringify(saveData));
-}
-
-function removeFromLocalstorage() {
-  const actualUserLocally = localStorage.getItem("user");
-
-  if (actualUserLocally && !actualUserLocally?.keepLogged) {
-    localStorage.removeItem("user");
-  }
-}
+const config = {
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+  },
+};
 
 const register = async (link, values) => {
   try {
@@ -28,20 +21,14 @@ const register = async (link, values) => {
 
 const login = async (values) => {
   try {
-    let response = await axios.post(API_URL + "/Authentication/Login", values);
-
+    let response = await axios.post(
+      API_URL + "/Authentication/Login",
+      values,
+      config
+    );
     if (response.status === 200 || 201) {
-      if (response.data.includes("/Company/")) {
-        axios.get(API_URL + response.data).then((response) => {
-          saveToLocalstorage(response, values);
-        });
-      } else {
-        axios.get(API_URL + "/Account/Profile").then((response) => {
-          saveToLocalstorage(response, values);
-        });
-      }
+      return response;
     }
-    return response;
   } catch (error) {
     console.log(error);
     return error;
@@ -62,10 +49,9 @@ const confirmAccount = async (token, mail) => {
 };
 
 const logout = async () => {
-  removeFromLocalstorage();
-
-  const response = axios.post(API_URL + "/Authentication/Logout");
-  return response.data;
+  const response = await axios.post(API_URL + "/Authentication/Logout");
+  DataService.deleteCookieAuthState("AuthState");
+  return response;
 };
 
 const AuthService = {

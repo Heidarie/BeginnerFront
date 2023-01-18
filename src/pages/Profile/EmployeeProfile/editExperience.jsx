@@ -24,8 +24,10 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
       employerName: values.employerName,
       description: values.description,
     };
-
-    var newList = expList.filter((item) => item !== experience);
+    var newList = [];
+    if (expList) {
+      newList = expList?.filter((item) => item !== experience);
+    }
     console.log(newList);
     newList.push(updateValues);
     setExp(newList);

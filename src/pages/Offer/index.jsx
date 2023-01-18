@@ -32,15 +32,14 @@ const OfferPage = () => {
   const apply = async (publicUrl) => {
     setLoading(true);
     if (publicUrl) {
-      let res = await EmployeeService.applyOffer(publicUrl);
-      console.log(res);
-      if (res.status === 200) {
+      let { status, response } = await EmployeeService.applyOffer(publicUrl);
+      if (status === 200) {
         setLoading(false);
         setHappyFlow(true);
       } else {
         setLoading(false);
         setError(true);
-        setErrorMessage(res.response.data.message);
+        setErrorMessage(response.data.message);
         setTimeout(() => {
           setErrorMessage("");
           setError(false);

@@ -10,15 +10,11 @@ const getProfile = () => {
 
 const updateUserData = async (values) => {
   try {
-    let response = await axios.put(
-      API_URL + `/Account/UpdateUserData`,
-      values,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    let response = await axios.put(API_URL + `/Account/UpdateUser`, values, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     if (response.status === 200) {
       return response;
     }
@@ -37,7 +33,7 @@ const updateUserDetails = async (values, type) => {
   };
   try {
     let response = await axios.put(
-      API_URL + `/Account/UpdateUserDetails?type=${type}`,
+      API_URL + `/Account/Update?type=${type}`,
       orderValues
     );
     if (response.status === 200) {

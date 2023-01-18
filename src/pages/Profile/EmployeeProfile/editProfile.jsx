@@ -9,6 +9,7 @@ import EmployeeService from "../../../components/employee.service";
 import Toast from "../../../components/Toast";
 import Select from "react-select";
 import DataService from "../../../components/data.service";
+import CustomSelect from "../../../components/form/CustomSelect";
 
 const EditProfile = ({ hideModal }) => {
   const [error, setError] = useState(false);
@@ -22,9 +23,11 @@ const EditProfile = ({ hideModal }) => {
 
   async function loadFilters() {
     setLoading(true);
-    let res = await DataService.getFilters("category=occupation");
-    if (res.status === 200) {
-      const occupationFilter = res?.data?.occupationFilter.map((obj) => ({
+    let { status, data, response } = await DataService.getFilters(
+      "category=occupation"
+    );
+    if (status === 200) {
+      const occupationFilter = data?.occupationFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
@@ -34,7 +37,7 @@ const EditProfile = ({ hideModal }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -45,11 +48,11 @@ const EditProfile = ({ hideModal }) => {
   async function loadProfession(value) {
     setLoading(true);
     const occupationId = value.id;
-    let res = await DataService.getFilters(
+    let { status, data, response } = await DataService.getFilters(
       `category=profession&occupationIds=${occupationId}`
     );
-    if (res.status === 200) {
-      const professionFilter = res.data.professionFilter.map((obj) => ({
+    if (status === 200) {
+      const professionFilter = data.professionFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
@@ -58,7 +61,7 @@ const EditProfile = ({ hideModal }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -75,6 +78,7 @@ const EditProfile = ({ hideModal }) => {
       Surname: values.Surname,
       Occupation: occupation?.id,
       Profession: profession?.id,
+      City: values.City,
       Image: values.Image,
       Resumee: values.Resumee,
       "PersonalDataModel.Description": values.Description,
@@ -84,14 +88,17 @@ const EditProfile = ({ hideModal }) => {
       "PersonalDataModel.Skills": skills?.map((object) => object.value),
     };
 
-    let res = await EmployeeService.updateUserData(updateValues);
-    if (res.response.status === 200) {
+    let { status, response } = await EmployeeService.updateUserData(
+      updateValues
+    );
+    if (status === 200) {
       setLoading(false);
+      window.location.reload();
       hideModal(true);
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -121,6 +128,7 @@ const EditProfile = ({ hideModal }) => {
           Description: "",
           Image: "",
           Resume: "",
+          City: "",
         }}
         onSubmit={onSubmit}
       >
@@ -226,6 +234,40 @@ const EditProfile = ({ hideModal }) => {
                           type="text"
                           placeholder="Nazwisko"
                         />
+                        <CustomInput
+                          className="col-span-6 sm:col-span-3"
+                          label="Miasto"
+                          name="City"
+                          type="text"
+                          placeholder="Miasto"
+                        />
+                        <CustomSelect
+                          className="col-span-6 sm:col-span-3"
+                          label="Województwo"
+                          name="regionCode"
+                          placeholder="Wybierz województwo"
+                          type="number"
+                        >
+                          <option value="" disabled>
+                            Wybierz województwo
+                          </option>
+                          <option value="0">Wielkopolskie</option>
+                          <option value="1">Lubelskie</option>
+                          <option value="2">Mazowieckie</option>
+                          <option value="3">Warmińsko-mazurskie</option>
+                          <option value="4">Dolnośląskie</option>
+                          <option value="5">Śląskie</option>
+                          <option value="6">Małopolskie</option>
+                          <option value="7">Zachodniopomorskie</option>
+                          <option value="8">Pomorskie</option>
+                          <option value="9">Lubuskie</option>
+                          <option value="10">Kujawsko-pomorskie</option>
+                          <option value="11">Podlaskie</option>
+                          <option value="12">Świętokrzyskie</option>
+                          <option value="13">Łódzkie</option>
+                          <option value="14">Opolskie</option>
+                          <option value="15">Podkarpackie</option>
+                        </CustomSelect>
                         <div className="col-span-6 sm:col-span-3">
                           <label className="block text-sm font-medium text-gray-200">
                             Główny zawód

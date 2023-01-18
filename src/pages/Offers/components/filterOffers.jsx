@@ -31,17 +31,19 @@ const FilterOffers = ({
 
   async function loadFilters() {
     setLoading(true);
-    let res = await DataService.getFilters("category=occupation,jobtype,level");
-    if (res.status === 200) {
-      const occupationFilter = res.data.occupationFilter.map((obj) => ({
+    let { status, data, response } = await DataService.getFilters(
+      "category=occupation,jobtype,level"
+    );
+    if (status === 200) {
+      const occupationFilter = data.occupationFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
-      const levelFilter = res.data.levelFilter.map((obj) => ({
+      const levelFilter = data.levelFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
-      const jobTypeFilter = res.data.jobTypeFilter.map((obj) => ({
+      const jobTypeFilter = data.jobTypeFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
@@ -51,7 +53,7 @@ const FilterOffers = ({
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -61,16 +63,16 @@ const FilterOffers = ({
   async function loadProfession(values) {
     setLoading(true);
     const occupationIds = values.map((obj) => obj.id).join(",");
-    let res = await DataService.getFilters(
+    let { status, data, response } = await DataService.getFilters(
       `category=profession&occupationIds=${occupationIds}`
     );
-    if (res.status === 200) {
+    if (status === 200) {
       if (filtersData.professionFilter) {
         setProfessions([]);
         setFiltersData({ ...filtersData, professionFilter: [] });
       }
       setLoading(false);
-      const professionFilter = res.data?.professionFilter?.map((obj) => ({
+      const professionFilter = data?.professionFilter?.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
@@ -78,7 +80,7 @@ const FilterOffers = ({
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

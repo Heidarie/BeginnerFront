@@ -14,15 +14,15 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values, actions) => {
-    let res = await AuthService.login(values);
-    if (res.status === 200) {
+    let { status, request, response } = await AuthService.login(values);
+    if (status === 200) {
       setLoading(false);
       window.location.reload();
-      window.location.replace(res.request.response);
+      window.location.redirect(request.response);
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(res.response.data.message);
+      setErrorMessage(response.data.message);
       setTimeout(() => {
         setError(false);
         setErrorMessage("");
@@ -66,7 +66,7 @@ const Login = () => {
                 initialValues={{
                   email: "",
                   password: "",
-                  saveLogin: false,
+                  isPersistent: false,
                 }}
                 onSubmit={onSubmit}
               >
@@ -101,7 +101,7 @@ const Login = () => {
                       </label>
                       <Field
                         type="checkbox"
-                        name="saveLogin"
+                        name="isPersistent"
                         className="mx-2 h-4 w-4 border-gray-300 text-[#00df9a] focus:ring-[#00df9a]"
                       />
                     </div>

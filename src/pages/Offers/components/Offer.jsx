@@ -30,9 +30,10 @@ const Offer = React.forwardRef((props, ref) => {
         premium
           ? "col-span-1 md:col-span-2 border-4 border-blue-200"
           : "col-span-1",
-        `group flex flex-col justify-between 2xl:block lg:justify-center overflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
+        `group w-full shadow-md  rounded-xl bg-white drop-shadow-2xl`
       )}
     >
+      <div className="w-full bg-white rounded-md shadow-md"></div>
       <div className="w-full">
         <div className="text-right w-full -ml-2">
           <h3 className="text-[#00df9a] text-lg 2xl:text-2xl font-extrabold">
@@ -44,7 +45,7 @@ const Offer = React.forwardRef((props, ref) => {
             <div className="flex h-12 w-12 md:h-16 md:w-16 xl:h-24 xl:w-24 justify-start text-center md:justify-center items-center mx-auto">
               {logoPath ? (
                 <img
-                  src={`data:image/png;base64,${logoPath}`}
+                  src={logoPath}
                   key={`${logoPath}`}
                   alt="ProfilePhoto"
                   className="w-fit h-fit"

@@ -23,7 +23,7 @@ const EmployerProfile = () => {
   };
   const getCompanyData = (id) => {
     if (id) {
-      DataService.getUserData(id, "user")
+      DataService.getUserData()
         .then((res) => {
           setCompany(res.data);
         })
@@ -39,6 +39,7 @@ const EmployerProfile = () => {
   useEffect(() => {
     getCompanyData(id);
   }, [id]);
+  console.log(company);
   return (
     <div>
       <div className="mx-auto grid mt-20 max-w-8xl">

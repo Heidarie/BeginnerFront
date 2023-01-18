@@ -3,13 +3,19 @@ import axios from "axios";
 import DataService from "../../../components/data.service";
 import { useUIDSeed } from "react-uid";
 import { useInfiniteQuery } from "react-query";
+import axiosRetry from "axios-retry";
 
 export default function useOffersFilter(query, pageNumber) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [offers, setOffers] = useState([]);
   const [hasMore, setHasMore] = useState(false);
-
+  const client = axios.create();
+  axiosRetry(client, {
+    retries: 5,
+    retryDelay: () => 3000,
+    retryCondition: () => true,
+  });
   useEffect(() => {
     setOffers([]);
   }, [query]);
@@ -18,14 +24,13 @@ export default function useOffersFilter(query, pageNumber) {
     setLoading(true);
     setError(false);
     let cancel;
-    axios({
+    client({
       method: "GET",
       url: `${process.env.REACT_APP_BASE_API_URL}/Offers?page=${pageNumber}&${query}`,
       cancelToken: new axios.CancelToken((c) => (cancel = c)),
     })
       .then((res) => {
         setOffers((prevOffers) => {
-          console.log("TUTAJ", prevOffers);
           return [...new Set([...prevOffers, ...res.data])];
         });
         setHasMore(res.data.length > 0);
