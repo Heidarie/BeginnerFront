@@ -58,215 +58,217 @@ const OfferPage = () => {
         <div className="relative overflow-hidden rounded-lg bg-white text-left shadow-xl mt-8 sm:w-full sm:max-w-5xl ">
           <div className="bg-gray-100 px-2 py-2 sm:p-4 text-gray-700">
             Aplikujących {offer?.participants}
-            <div className="overflow-hidden  bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
-              <dl>
-                <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6 break-words">
-                  <dt className="mt-1 text-sm text-gray-900 sm:col-span-1 my-auto text-center">
-                    {offer.employer.companyImagePath ? (
-                      <img
-                        src={offer.employer.companyImagePath}
-                        key={`${offer.employer.companyImagePath}`}
-                        alt="ProfilePhoto"
-                        className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
-                      />
-                    ) : (
-                      <img
-                        className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
-                        //src={offer?.employer?.companyImagePath}
-                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                        alt={offer?.employer?.companyPublicUrl}
-                      />
-                    )}
-                    <p className="text-lg sm:text-md font-semibold text-gray-700">
-                      {offer?.employer?.companyName}
+            <div className="overflow-hidden bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
+              <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6 break-words">
+                <div className="mt-1 text-sm text-gray-900 sm:col-span-1 my-auto text-center">
+                  {offer.employer.companyImagePath ? (
+                    <img
+                      src={offer.employer.companyImagePath}
+                      key={`${offer.employer.companyImagePath}`}
+                      alt="ProfilePhoto"
+                      className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
+                    />
+                  ) : (
+                    <img
+                      className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
+                      //src={offer?.employer?.companyImagePath}
+                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                      alt={offer?.employer?.companyPublicUrl}
+                    />
+                  )}
+                  <p className="text-lg sm:text-md font-semibold text-gray-700">
+                    {offer?.employer?.companyName}
+                  </p>
+                  <div className="flex text-xl bg-[#00df9a] rounded-2xl max-w-[10rem] mx-auto font-semibold text-black mt-2">
+                    <MdOutlineHomeWork className="m-auto h-8 w-8" />
+                    <p className="max-w-[7rem] text-start m-auto -ml-4">
+                      {offer?.jobType}
                     </p>
-                    <div className="flex text-xl bg-[#00df9a] rounded-2xl max-w-[10rem] mx-auto font-semibold text-black mt-2">
-                      <MdOutlineHomeWork className="m-auto h-8 w-8" />
-                      <p className="max-w-[7rem] text-start m-auto -ml-4">
-                        {offer?.jobType}
-                      </p>
-                    </div>
-                  </dt>
-                  <dd className="text-sm col-span-3 text-center sm:text-left max-w-full my-auto font-medium text-gray-700">
-                    <p className="font-medium text-2xl leading-6 text-gray-900 capitalize break-words mt-5">
-                      {offer?.title}
-                    </p>
-                    <div className="mt-5 max-w-full ">
-                      <p className="text-xl font-bold w-fit text-white p-2 rounded-lg bg-[#00df9a] m-auto sm:m-0">
-                        {offer?.development} / {offer?.profession}
-                      </p>
-                    </div>
-                  </dd>
+                  </div>
                 </div>
-              </dl>
-              <div className="grid grid-cols-3 shadow-2xl bg-gray-100 p-2 sm:p-5 text-center overflow-hidden">
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm m-auto font-medium text-gray-700">
-                    <ImLocation className="w-8 h-8 m-auto" />
-                  </dt>
-                  <dd className="text-lg text-gray-900 text-center sm:col-span-2 sm:text-left my-auto justify-start break-words">
-                    {offer?.city}
-                    <p className="text-gray-700">
-                      {offer?.offerDetails?.street}
+                <div className="text-sm col-span-3 text-center sm:text-left max-w-full my-auto font-medium text-gray-700">
+                  <p className="font-medium text-2xl leading-6 text-gray-900 capitalize break-words mt-5">
+                    {offer?.title}
+                  </p>
+                  <div className="mt-5 max-w-full ">
+                    <p className="text-xl font-bold w-fit text-white p-2 rounded-lg bg-[#00df9a] m-auto sm:m-0">
+                      {offer?.development} / {offer?.profession}
                     </p>
-                    <p className="text-gray-700">
-                      {offer?.offerDetails?.postalCode}
-                    </p>
-                  </dd>
-                </div>
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm m-auto font-medium text-gray-700">
-                    <MdOutlinePeopleAlt className="w-8 h-8 m-auto" />
-                  </dt>
-                  <dd className="text-lg text-gray-900 text-center sm:col-span-2 sm:text-left my-auto justify-start">
-                    {offer?.offerDetails?.companySize}
-                  </dd>
-                </div>
-                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm m-auto font-medium text-gray-700">
-                    <FaMoneyBill className="w-8 h-8 m-auto" />
-                  </dt>
-                  <dd className="text-lg justify-center font-semibold text-[#00df9a] text-center sm:col-span-2 sm:text-left sm:my-auto sm:justify-start">
-                    {offer?.salaryFrom} - {offer?.salaryTo} PLN
-                  </dd>
+                  </div>
                 </div>
               </div>
-              <div className="border-t border-gray-200">
-                <dl>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
-                      Opis
-                    </dt>
-                    <dd className="p-2 mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 break-words">
-                      {offer?.offerDetails?.description}
-                    </dd>
+              <div className="grid grid-cols-1 md:grid-cols-4">
+                <div className="col-span-1 flex p-5 md:p-0 md:grid md:grid-rows-3 shadow-2xl bg-gray-100 gap-4 text-center overflow-hidden">
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-2 sm:px-6">
+                    <div className="text-sm m-auto font-medium text-gray-700">
+                      <ImLocation className="w-8 h-8 m-auto" />
+                    </div>
+                    <div className="text-lg text-gray-900 text-center sm:col-span-2 sm:text-left my-auto justify-start break-words">
+                      {offer?.city}
+                      <p className="text-gray-700">
+                        {offer?.offerDetails?.street}
+                      </p>
+                      <p className="text-gray-700">
+                        {offer?.offerDetails?.postalCode}
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
-                      Wymagania
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      <ScrollContainer
-                        horizontal="true"
-                        nativeMobileScroll="true"
-                        className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
-                      >
-                        <ul className="flex">
-                          {offer?.offerDetails?.requirements &&
-                            offer?.offerDetails?.requirements?.map(
-                              (requirement, id) => {
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="text-sm m-auto font-medium text-gray-700">
+                      <MdOutlinePeopleAlt className="w-8 h-8 m-auto" />
+                    </div>
+                    <div className="text-lg text-gray-900 text-center sm:col-span-2 sm:text-left my-auto justify-start">
+                      {offer?.offerDetails?.companySize}
+                    </div>
+                  </div>
+                  <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <div className="text-sm m-auto font-medium text-gray-700">
+                      <FaMoneyBill className="w-8 h-8 m-auto" />
+                    </div>
+                    <div className="text-lg justify-center font-semibold text-[#00df9a] text-center sm:col-span-2 sm:text-left sm:my-auto sm:justify-start">
+                      {offer?.salaryFrom} - {offer?.salaryTo} PLN
+                    </div>
+                  </div>
+                </div>
+                <div className="col-span-3 border-t border-gray-200">
+                  <div>
+                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                      <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
+                        Opis
+                      </div>
+                      <div className="p-2 mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 break-words">
+                        {offer?.offerDetails?.description}
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 sm:grid sm:grid-rows-2 sm:px-6">
+                      <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
+                        Wymagania
+                      </div>
+                      <div className="text-sm text-gray-900 sm:col-span-2 my-auto">
+                        <ScrollContainer
+                          horizontal="true"
+                          nativeMobileScroll="true"
+                          className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
+                        >
+                          <ul className="flex">
+                            {offer?.offerDetails?.requirements &&
+                              offer?.offerDetails?.requirements?.map(
+                                (requirement, id) => {
+                                  return (
+                                    <li
+                                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                                      key={requirement + id}
+                                    >
+                                      {requirement}
+                                    </li>
+                                  );
+                                }
+                              )}
+                          </ul>
+                        </ScrollContainer>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                      <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
+                        Języki
+                      </div>
+                      <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <ScrollContainer
+                          horizontal="true"
+                          nativeMobileScroll="true"
+                          className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
+                        >
+                          <ul className="flex">
+                            {offer?.offerDetails?.languages &&
+                              offer?.offerDetails?.languages?.map(
+                                (language) => {
+                                  return (
+                                    <li
+                                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                                      key={language}
+                                    >
+                                      {language}
+                                    </li>
+                                  );
+                                }
+                              )}
+                          </ul>
+                        </ScrollContainer>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                      <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
+                        Obowiązki
+                      </div>
+                      <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9a]">
+                          <ul className="flex">
+                            {offer?.offerDetails?.duties &&
+                              offer?.offerDetails?.duties?.map((duty) => {
                                 return (
                                   <li
                                     className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                                    key={requirement + id}
+                                    key={duty}
                                   >
-                                    {requirement}
+                                    {duty}
                                   </li>
                                 );
-                              }
-                            )}
-                        </ul>
-                      </ScrollContainer>
-                    </dd>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
-                      Języki
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      <ScrollContainer
-                        horizontal="true"
-                        nativeMobileScroll="true"
-                        className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
-                      >
-                        <ul className="flex">
-                          {offer?.offerDetails?.languages &&
-                            offer?.offerDetails?.languages?.map((language) => {
-                              return (
-                                <li
-                                  className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                                  key={language}
-                                >
-                                  {language}
-                                </li>
-                              );
-                            })}
-                        </ul>
-                      </ScrollContainer>
-                    </dd>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
-                      Obowiązki
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9a]">
-                        <ul className="flex">
-                          {offer?.offerDetails?.duties &&
-                            offer?.offerDetails?.duties?.map((duty) => {
-                              return (
-                                <li
-                                  className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                                  key={duty}
-                                >
-                                  {duty}
-                                </li>
-                              );
-                            })}
-                        </ul>
-                      </ScrollContainer>
-                    </dd>
-                  </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
-                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
-                      Benefity
-                    </dt>
-                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      <ScrollContainer
-                        horizontal="true"
-                        nativeMobileScroll="true"
-                        className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
-                      >
-                        <ul className="flex">
-                          {offer?.offerDetails?.benefits &&
-                            offer?.offerDetails?.benefits?.map((benefit) => {
-                              return (
-                                <li
-                                  className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
-                                  key={benefit}
-                                >
-                                  {benefit}
-                                </li>
-                              );
-                            })}
-                        </ul>
-                      </ScrollContainer>
-                    </dd>
-                  </div>
-                  <div className="bg-gray-100 shadow-2xl px-4 py-5 sm:gap-4 sm:px-6">
-                    <div className="col-span-1 bottom-0 text-center m-auto">
-                      {offer.canApply && !happyFlow ? (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            apply(publicUrl);
-                          }}
-                          className="focus:outline-none text-white hover:text-black bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5"
+                              })}
+                          </ul>
+                        </ScrollContainer>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                      <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
+                        Benefity
+                      </div>
+                      <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                        <ScrollContainer
+                          horizontal="true"
+                          nativeMobileScroll="true"
+                          className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
                         >
-                          APLIKUJ
-                        </button>
-                      ) : (
-                        <button
-                          type="button"
-                          disabled
-                          className="focus:outline-none cursor-not-allowed text-white bg-gray-700  font-medium text-sm px-5 py-2.5"
-                        >
-                          Nie można aplikować
-                        </button>
-                      )}
+                          <ul className="flex">
+                            {offer?.offerDetails?.benefits &&
+                              offer?.offerDetails?.benefits?.map((benefit) => {
+                                return (
+                                  <li
+                                    className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                                    key={benefit}
+                                  >
+                                    {benefit}
+                                  </li>
+                                );
+                              })}
+                          </ul>
+                        </ScrollContainer>
+                      </div>
+                    </div>
+                    <div className="bg-gray-100 shadow-2xl px-4 py-5 sm:gap-4 sm:px-6">
+                      <div className="col-span-1 bottom-0 text-center m-auto">
+                        {offer.canApply && !happyFlow ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              apply(publicUrl);
+                            }}
+                            className="focus:outline-none text-white hover:text-black bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5"
+                          >
+                            APLIKUJ
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            disabled
+                            className="focus:outline-none cursor-not-allowed text-white bg-gray-700  font-medium text-sm px-5 py-2.5"
+                          >
+                            Nie można aplikować
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </dl>
+                </div>
               </div>
             </div>
           </div>
