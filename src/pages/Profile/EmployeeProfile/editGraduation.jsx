@@ -9,10 +9,10 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [gradDateFrom, setGradDateFrom] = useState(
-    graduation?.dateFrom || new Date()
+    graduation?.dateFrom ? new Date(graduation?.dateFrom) : new Date()
   );
   const [gradDateTo, setGradDateTo] = useState(
-    graduation?.dateTo || new Date()
+    graduation?.dateTo ? new Date(graduation?.dateTo) : new Date()
   );
 
   const onSubmit = async (values, actions) => {

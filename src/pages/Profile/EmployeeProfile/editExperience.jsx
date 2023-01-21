@@ -6,12 +6,15 @@ import DatePicker from "react-date-picker";
 import Toast from "../../../components/Toast";
 
 const EditExperience = ({ hideModal, experience, setExp, expList }) => {
+  console.log(experience?.dateFrom);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [expDateFrom, setExpDateFrom] = useState(
-    experience?.dateFrom || new Date()
+    experience?.dateFrom ? new Date(experience?.dateFrom) : new Date()
   );
-  const [expDateTo, setExpDateTo] = useState(experience?.dateTo || new Date());
+  const [expDateTo, setExpDateTo] = useState(
+    experience?.dateTo ? new Date(experience?.dateTo) : new Date()
+  );
 
   const onSubmit = async (values, actions) => {
     setError(false);
@@ -28,7 +31,6 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
     if (expList) {
       newList = expList?.filter((item) => item !== experience);
     }
-    console.log(newList);
     newList.push(updateValues);
     setExp(newList);
 

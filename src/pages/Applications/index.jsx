@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import DataService from "../../components/data.service";
 import EmployerService from "../../components/employer.service";
 import Toast from "../../components/Toast";
 import EmployerOffers from "./EmployerOffers";
@@ -7,7 +8,7 @@ const Applications = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const [user, setUser] = useState(undefined);
   const [employerOffers, setEmployerOffers] = useState([]);
 
   const getEmployerOffers = () => {
@@ -28,9 +29,16 @@ const Applications = () => {
       }
     });
   };
-
+  const handleUserData = async () => {
+    const { data } = await DataService.getUserData();
+    console.log(data);
+    setUser(data);
+  };
   useEffect(() => {
-    getEmployerOffers();
+    handleUserData();
+    if (user?.role === "Employer") {
+      getEmployerOffers();
+    }
   }, []);
   return (
     <div>
@@ -38,11 +46,19 @@ const Applications = () => {
         employerOffers.map((offer) => (
           <EmployerOffers key={offer} offerDetails={offer} />
         ))
-      ) : (
+      ) : user?.role === "Employer" ? (
         <div className="flex h-screen justify-center items-center bg-gray-100">
           <div className="m-auto p-4">
             <h2 className="m-auto text-gray-600 font-extrabold text-6xl">
               Niestety, ale nie posiadasz żadnych ofert na swoim koncie.
+            </h2>
+          </div>
+        </div>
+      ) : (
+        <div className="flex h-screen justify-center items-center bg-gray-100">
+          <div className="m-auto p-4">
+            <h2 className="m-auto text-gray-600 font-extrabold text-6xl">
+              Niestety, ale tylko pracodawca może wystawić ofertę.
             </h2>
           </div>
         </div>

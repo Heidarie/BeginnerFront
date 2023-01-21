@@ -11,12 +11,12 @@ import Select from "react-select";
 import DataService from "../../../components/data.service";
 import CustomSelect from "../../../components/form/CustomSelect";
 
-const EditProfile = ({ hideModal }) => {
+const EditProfile = ({ hideModal, editProfileData }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [filtersData, setFiltersData] = useState([]);
-  const [occupation, setOccupation] = useState(null);
+  const [occupation, setOccupation] = useState([]);
   const [profession, setProfession] = useState([]);
   const [skills, setSkills] = useState([]);
   const [certificates, setCertificates] = useState([]);
@@ -34,6 +34,11 @@ const EditProfile = ({ hideModal }) => {
       const newObject = { occupationFilter };
       setLoading(false);
       setFiltersData(newObject);
+      const occupationPrev =
+        occupationFilter.find(
+          (obj) => obj.label === editProfileData.occupation
+        ) || [];
+      setOccupation(occupationPrev);
     } else {
       setLoading(false);
       setError(true);
@@ -51,21 +56,28 @@ const EditProfile = ({ hideModal }) => {
     let { status, data, response } = await DataService.getFilters(
       `category=profession&occupationIds=${occupationId}`
     );
-    if (status === 200) {
+    if (status === 200 && data.professionFilter) {
       const professionFilter = data.professionFilter.map((obj) => ({
         ...obj,
         label: obj.value,
       }));
       setFiltersData({ ...filtersData, professionFilter: professionFilter });
+      const professionPrev =
+        professionFilter.find(
+          (obj) => obj.label === editProfileData.profession
+        ) || [];
+      setProfession(professionPrev);
       setLoading(false);
     } else {
-      setLoading(false);
-      setError(true);
-      setErrorMessage(response.data.message);
-      setTimeout(() => {
-        setErrorMessage("");
-        setError(false);
-      }, 3000);
+      if (response) {
+        setLoading(false);
+        setError(true);
+        setErrorMessage(response.data.message);
+        setTimeout(() => {
+          setErrorMessage("");
+          setError(false);
+        }, 3000);
+      }
     }
   }
 
@@ -81,6 +93,7 @@ const EditProfile = ({ hideModal }) => {
       City: values.City,
       Image: values.Image,
       Resumee: values.Resumee,
+      RegionCode: values.RegionCode,
       "PersonalDataModel.Description": values.Description,
       "PersonalDataModel.Certificates": certificates?.map(
         (object) => object.value
@@ -105,9 +118,26 @@ const EditProfile = ({ hideModal }) => {
       }, 3000);
     }
   };
+  const setPreviousData = async () => {
+    const prevSkills = [
+      ...(editProfileData.personalDataModel.skills.map((skillName) => {
+        return { label: skillName, value: skillName };
+      }) || []),
+    ];
+    const prevCertificates = [
+      ...(editProfileData.personalDataModel.certificates.map(
+        (certificateName) => {
+          return { label: certificateName, value: certificateName };
+        }
+      ) || []),
+    ];
+    setSkills(prevSkills);
+    setCertificates(prevCertificates);
+  };
 
   useEffect(() => {
     loadFilters();
+    setPreviousData();
   }, []);
 
   useEffect(() => {
@@ -123,12 +153,13 @@ const EditProfile = ({ hideModal }) => {
     <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
       <Formik
         initialValues={{
-          Name: "",
-          Surname: "",
-          Description: "",
+          Name: editProfileData?.name || "",
+          Surname: editProfileData?.surname || "",
+          Description: editProfileData?.personalDataModel?.description || "",
           Image: "",
           Resume: "",
-          City: "",
+          RegionCode: editProfileData?.regionCode || 0,
+          City: editProfileData?.city || "",
         }}
         onSubmit={onSubmit}
       >
@@ -244,7 +275,7 @@ const EditProfile = ({ hideModal }) => {
                         <CustomSelect
                           className="col-span-6 sm:col-span-3"
                           label="Województwo"
-                          name="regionCode"
+                          name="RegionCode"
                           placeholder="Wybierz województwo"
                           type="number"
                         >
@@ -406,7 +437,7 @@ const EditProfile = ({ hideModal }) => {
               </div>
             </div>
 
-            <div className="mt-10 sm:mt-0">
+            {/* <div className="mt-10 sm:mt-0">
               <div className="md:grid md:grid-cols-3 md:gap-6">
                 <div className="md:col-span-1">
                   <div className="px-4 sm:px-0">
@@ -554,7 +585,7 @@ const EditProfile = ({ hideModal }) => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
             {loading && <Toast text="Ładowanie" icon="LOADING" />}
 
             {error && (

@@ -17,6 +17,7 @@ import {
 } from "react-icons/im";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
+import "moment/locale/pl";
 import EditExperience from "./editExperience";
 import EditGraduation from "./editGraduation";
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -37,13 +38,23 @@ const EmployeeProfile = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [filteredOffers, setFilteredOffers] = useState([]);
 
   const hideModal = () => {
     setEditProfile(false);
     setSelectExp(false);
     setSelectGrad(false);
   };
-
+  const filterEmployeeOfferApplications = (filter) => {
+    if (filter === undefined || filter === "") {
+      setFilteredOffers(user?.employeeOfferApplications);
+    } else {
+      const filtered = user?.employeeOfferApplications.filter((offer) => {
+        return offer.status === filter;
+      });
+      setFilteredOffers(filtered);
+    }
+  };
   const handleDropExp = (droppedItem) => {
     // Ignore drop outside droppable container
     if (!droppedItem.destination) {
@@ -78,26 +89,12 @@ const EmployeeProfile = () => {
   };
 
   const handleAccept = async (values, type) => {
-    console.log(values);
     if (values === null) {
       setEditExp(false);
       setEditGrad(false);
       return;
     }
     setLoading(true);
-    // TODO Prepare values to format
-    //     {
-    //   "milestones": [
-    //     {
-    //       "dateFrom": "2023-01-18T23:44:41.405Z",
-    //       "dateTo": "2023-01-18T23:44:41.405Z",
-    //       "firstValue": "string",
-    //       "secondValue": "string",
-    //       "thirdValue": "string",
-    //       "order": 0
-    //     }
-    //   ]
-    // }
     let { status, response } = await EmployeeService.updateUserDetails(
       values,
       type
@@ -125,13 +122,17 @@ const EmployeeProfile = () => {
     if (id) {
       let { data } = await DataService.getUserProfile(id);
       setUser(data);
+      setFilteredOffers(data?.employeeOfferApplications);
       console.log(data);
     }
   };
 
   useEffect(() => {
+    Moment.locale("pl");
+    filterEmployeeOfferApplications();
     getUser(id);
   }, []);
+  console.log(filteredOffers);
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">
@@ -144,7 +145,9 @@ const EmployeeProfile = () => {
                 </button>
               </Link>
             )}
-            {editProfile && <EditProfile hideModal={hideModal} />}
+            {editProfile && (
+              <EditProfile hideModal={hideModal} editProfileData={user} />
+            )}
             <div className="flex flex-col gap-1 text-center items-center">
               {user?.imagePath ? (
                 <img
@@ -295,7 +298,7 @@ const EmployeeProfile = () => {
                     >
                       {expList?.map((experience, index) => (
                         <Draggable
-                          key={experience.description + index}
+                          key={experience.description}
                           draggableId={experience.description}
                           index={index}
                         >
@@ -400,7 +403,10 @@ const EmployeeProfile = () => {
               </DragDropContext>
             ) : (
               user?.personalDataModel?.experience?.map((experience) => (
-                <div className="item-container my-2 md:col-span-2 md:mt-0">
+                <div
+                  className="item-container my-2 md:col-span-2 md:mt-0"
+                  key={experience.description}
+                >
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
@@ -616,7 +622,10 @@ const EmployeeProfile = () => {
               </DragDropContext>
             ) : (
               user?.personalDataModel?.graduations?.map((graduation) => (
-                <div className="item-container my-2 md:col-span-2 md:mt-0">
+                <div
+                  className="item-container my-2 md:col-span-2 md:mt-0"
+                  key={graduation}
+                >
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
@@ -663,53 +672,78 @@ const EmployeeProfile = () => {
           </div>
           {user?.isLoggedInUserAccount && (
             <div className="bg-white shadow mt-6 rounded-lg p-6">
-              <h1>Oferty na które zaaplikowałeś</h1>
+              <div className="flex w-full justify-between">
+                <h1 className="my-auto">Oferty na które zaaplikowałeś</h1>
+                <select
+                  className=""
+                  label="Filtry"
+                  name="filterOffers"
+                  placeholder="Wybierz filtr"
+                  defaultValue={""}
+                  type="text"
+                  onChange={(e) =>
+                    filterEmployeeOfferApplications(e.target.value)
+                  }
+                >
+                  <option value="">Wszystkie</option>
+                  <option value="Oczekująca">Oczekująca</option>
+                  <option value="Zaakceptowana">Zaakceptowana</option>
+                  <option value="Odrzucona">Odrzucona</option>
+                </select>
+              </div>
               <div className="grid mt-5 gap-4 grid-cols-2 justify-center items-center w-full">
-                {user?.employeeOfferApplications?.map((application) => (
+                {filteredOffers?.map((application) => (
                   <div
                     key={application.offerPublicUrl}
-                    className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center h-64"
-                    style={{ backgroundImage: `url(${loginBg})` }}
+                    className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center max-h-[10rem]"
                   >
-                    <div className="absolute bg-gradient-to-t from-green-200 to-yellow-500  opacity-50 inset-0 z-0"></div>
-                    <div className="relative flex flex-row items-end  h-72 w-full ">
-                      <div className="p-6 rounded-lg  flex flex-col w-full z-5">
-                        <h4 className="mt-1 text-white text-xl font-semibold  leading-tight truncate">
-                          {application.offerName}
-                        </h4>
-                        <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                          {application.isOpened
-                            ? "Wyświetlona"
-                            : "Nie wyświetlona"}
-                        </h2>
-                        <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                          Status: {application.status.toUpperCase()}
-                        </h2>
-                        <div className="flex justify-between items-center">
+                    {application.status === "Oczekująca" && (
+                      <div className="absolute bg-gradient-to-t from-yellow-300 to-yellow-500 opacity-50 inset-0 z-0"></div>
+                    )}
+                    {application.status === "Zaakceptowana" && (
+                      <div className="absolute bg-gradient-to-t from-green-300 to-green-500 opacity-50 inset-0 z-0"></div>
+                    )}
+                    {application.status === "Odrzucona" && (
+                      <div className="absolute bg-gradient-to-t from-red-300 to-red-500 opacity-50 inset-0 z-0"></div>
+                    )}
+                    <Link to={`/Offers/Offer/${application.offerPublicUrl}`}>
+                      <div className="relative flex flex-row items-end h-62 w-full ">
+                        <div className="p-6 rounded-lg  flex flex-col w-full z-5">
+                          <h4 className="mt-1 text-black text-xl font-semibold  leading-tight truncate">
+                            {application.offerName}
+                          </h4>
+                          <h2 className="text-sm flex items-center text-black font-normal">
+                            {application.isOpened
+                              ? "Oferta została otwarta"
+                              : "Oferta nie została jeszcze wyświetlona"}
+                          </h2>
+                          {/* <div className="flex justify-between items-center">
                           <div className="flex flex-col">
                             <h2 className="text-sm flex items-center text-gray-300 font-normal">
                               <ImLocation className="h-4 w-4 mr-1 text-white" />
                               LOCATION
                             </h2>
                           </div>
-                        </div>
-                        <div className="flex pt-4  text-sm text-gray-300">
-                          <div className="flex items-center mr-auto">
-                            <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
-                            <p className="font-normal">
-                              {Moment(application.applicationDate).fromNow()}
-                            </p>
-                          </div>
-                          <div className="flex items-center font-medium text-white ">
-                            PLN 1800
-                            <span className="text-gray-300 text-sm font-normal">
-                              {" "}
-                              /M
-                            </span>
+                        </div> */}
+                          <div className="flex pt-4  text-sm text-black">
+                            <div className="flex items-center mr-auto">
+                              <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
+                              <p className="font-normal">
+                                {Moment(application.applicationDate)
+                                  .lang("pl")
+                                  .fromNow()}
+                              </p>
+                            </div>
+                            <div className="flex items-center font-medium text-black">
+                              PLN 1800
+                              <span className="text-gray-500 text-sm font-normal">
+                                /M
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>

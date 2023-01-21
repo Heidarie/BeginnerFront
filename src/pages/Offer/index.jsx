@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { ImLocation } from "react-icons/im";
-import { MdOutlinePeopleAlt } from "react-icons/md";
+import { MdOutlinePeopleAlt, MdOutlineHomeWork } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import ScrollContainer from "react-indiana-drag-scroll";
@@ -51,7 +51,7 @@ const OfferPage = () => {
   useEffect(() => {
     getOfferDetails(publicUrl);
   }, [publicUrl]);
-
+  console.log(offer);
   return (
     <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 mt-14">
       {offer && (
@@ -62,33 +62,45 @@ const OfferPage = () => {
               <dl>
                 <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6 break-words">
                   <dt className="mt-1 text-sm text-gray-900 sm:col-span-1 my-auto text-center">
-                    <img
-                      className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
-                      //src={offer?.employer?.companyImagePath}
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                      alt={offer?.employer?.companyPublicUrl}
-                    />
-                    <p className="text-2xl font-semibold text-gray-700 py-2">
+                    {offer.employer.companyImagePath ? (
+                      <img
+                        src={offer.employer.companyImagePath}
+                        key={`${offer.employer.companyImagePath}`}
+                        alt="ProfilePhoto"
+                        className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
+                      />
+                    ) : (
+                      <img
+                        className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
+                        //src={offer?.employer?.companyImagePath}
+                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                        alt={offer?.employer?.companyPublicUrl}
+                      />
+                    )}
+                    <p className="text-lg sm:text-md font-semibold text-gray-700">
                       {offer?.employer?.companyName}
                     </p>
-                    <p className="text-xl font-semibold text-gray-700">
-                      {offer?.jobType}
-                    </p>
+                    <div className="flex text-xl bg-[#00df9a] rounded-2xl max-w-[10rem] mx-auto font-semibold text-black mt-2">
+                      <MdOutlineHomeWork className="m-auto h-8 w-8" />
+                      <p className="max-w-[7rem] text-start m-auto -ml-4">
+                        {offer?.jobType}
+                      </p>
+                    </div>
                   </dt>
-                  <dd className="text-sm col-span-3 text-center sm:text-left max-w-full my-auto font-medium text-gray-700 m-auto">
-                    <p className="font-medium text-2xl leading-6 text-gray-900  capitalize break-words">
+                  <dd className="text-sm col-span-3 text-center sm:text-left max-w-full my-auto font-medium text-gray-700">
+                    <p className="font-medium text-2xl leading-6 text-gray-900 capitalize break-words mt-5">
                       {offer?.title}
                     </p>
-                    <div className="mt-1 max-w-full py-1">
-                      <p className="text-2xl font-bold w-fit text-white p-2 rounded-lg bg-[#00df9a] py-1 m-auto sm:m-0">
-                        Główny język {offer?.profession}
+                    <div className="mt-5 max-w-full ">
+                      <p className="text-xl font-bold w-fit text-white p-2 rounded-lg bg-[#00df9a] m-auto sm:m-0">
+                        {offer?.development} / {offer?.profession}
                       </p>
                     </div>
                   </dd>
                 </div>
               </dl>
-              <div className="grid grid-cols-3 px-4 py-5 sm:px-6 text-center overflow-hidden ">
-                <div className="bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div className="grid grid-cols-3 shadow-2xl bg-gray-100 p-2 sm:p-5 text-center overflow-hidden">
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm m-auto font-medium text-gray-700">
                     <ImLocation className="w-8 h-8 m-auto" />
                   </dt>
@@ -102,7 +114,7 @@ const OfferPage = () => {
                     </p>
                   </dd>
                 </div>
-                <div className="bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm m-auto font-medium text-gray-700">
                     <MdOutlinePeopleAlt className="w-8 h-8 m-auto" />
                   </dt>
@@ -110,7 +122,7 @@ const OfferPage = () => {
                     {offer?.offerDetails?.companySize}
                   </dd>
                 </div>
-                <div className="bg-gray-50 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <div className="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt className="text-sm m-auto font-medium text-gray-700">
                     <FaMoneyBill className="w-8 h-8 m-auto" />
                   </dt>
@@ -121,6 +133,14 @@ const OfferPage = () => {
               </div>
               <div className="border-t border-gray-200">
                 <dl>
+                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm text-left my-auto font-medium text-gray-700">
+                      Opis
+                    </dt>
+                    <dd className="p-2 mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 break-words">
+                      {offer?.offerDetails?.description}
+                    </dd>
+                  </div>
                   <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
                     <dt className="text-sm text-left my-auto font-medium text-gray-700">
                       Wymagania
@@ -129,7 +149,7 @@ const OfferPage = () => {
                       <ScrollContainer
                         horizontal="true"
                         nativeMobileScroll="true"
-                        className="scroll-container flex justify-start scroll-container bg-[#00df9881]"
+                        className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
                       >
                         <ul className="flex">
                           {offer?.offerDetails?.requirements &&
@@ -157,7 +177,7 @@ const OfferPage = () => {
                       <ScrollContainer
                         horizontal="true"
                         nativeMobileScroll="true"
-                        className="scroll-container flex justify-start scroll-container bg-[#00df9881]"
+                        className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
                       >
                         <ul className="flex">
                           {offer?.offerDetails?.languages &&
@@ -180,7 +200,7 @@ const OfferPage = () => {
                       Obowiązki
                     </dt>
                     <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                      <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9881]">
+                      <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9a]">
                         <ul className="flex">
                           {offer?.offerDetails?.duties &&
                             offer?.offerDetails?.duties?.map((duty) => {
@@ -197,15 +217,33 @@ const OfferPage = () => {
                       </ScrollContainer>
                     </dd>
                   </div>
-                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 ">
                     <dt className="text-sm text-left my-auto font-medium text-gray-700">
-                      Opis
+                      Benefity
                     </dt>
-                    <dd className="p-2 mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0 break-words">
-                      {offer?.offerDetails?.description}
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <ScrollContainer
+                        horizontal="true"
+                        nativeMobileScroll="true"
+                        className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
+                      >
+                        <ul className="flex">
+                          {offer?.offerDetails?.benefits &&
+                            offer?.offerDetails?.benefits?.map((benefit) => {
+                              return (
+                                <li
+                                  className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                                  key={benefit}
+                                >
+                                  {benefit}
+                                </li>
+                              );
+                            })}
+                        </ul>
+                      </ScrollContainer>
                     </dd>
                   </div>
-                  <div className="bg-white px-4 py-5 sm:gap-4 sm:px-6">
+                  <div className="bg-gray-100 shadow-2xl px-4 py-5 sm:gap-4 sm:px-6">
                     <div className="col-span-1 bottom-0 text-center m-auto">
                       {offer.canApply && !happyFlow ? (
                         <button

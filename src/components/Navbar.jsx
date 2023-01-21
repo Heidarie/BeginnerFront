@@ -209,12 +209,12 @@ const Navbar = () => {
                     <div>
                       <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border border-gray-300 shadow-sm  py-0 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
                         <div className="w-12 -left-2 md:-left-4 relative">
-                          {user.image ? (
+                          {user?.image && !user?.image.includes("no_image") ? (
                             <img
                               src={user.image}
-                              key={`${process.env.REACT_APP_BASE_API_URL}/${user.image}`}
+                              key={`${user?.image}`}
                               alt="ProfilePhoto"
-                              className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
+                              className="w-fit h-fit"
                             />
                           ) : (
                             <FaCameraRetro style={{ fontSize: "50px" }} />

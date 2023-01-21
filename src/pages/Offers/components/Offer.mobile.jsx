@@ -42,7 +42,7 @@ const Offer = React.forwardRef((props, ref) => {
             <div className="justify-start text-center items-center">
               {logoPath ? (
                 <img
-                  src={`data:image/png;base64,${logoPath}`}
+                  src={logoPath}
                   key={`${logoPath}`}
                   alt="ProfilePhoto"
                   className="w-fit h-fit"
