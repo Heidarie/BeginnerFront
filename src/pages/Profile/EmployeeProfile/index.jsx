@@ -132,7 +132,7 @@ const EmployeeProfile = () => {
     filterEmployeeOfferApplications();
     getUser(id);
   }, []);
-  console.log(filteredOffers);
+
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">

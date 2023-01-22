@@ -85,10 +85,11 @@ const EditProfile = ({ hideModal }) => {
                               <img
                                 src={URL.createObjectURL(selectedImage)}
                                 alt={selectedImage.name}
+                                className="m-auto h-fit w-fit"
                               />
                             ) : (
                               <svg
-                                className="h-full w-full text-gray-300"
+                                className="h-full w-full m-auto text-gray-300"
                                 fill="currentColor"
                                 viewBox="0 0 24 24"
                               >

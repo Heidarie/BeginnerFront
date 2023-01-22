@@ -5,20 +5,7 @@ import { classNames } from "../../utils";
 const EmployerOffers = ({ offerDetails }) => {
   const [visible, setVisible] = useState(false);
   console.log(offerDetails);
-  const premium = false;
-  const test = {
-    title: "TYTUŁ oferty",
-    city: "Włocławek",
-    salaryFrom: 100,
-    salaryTo: 100,
-    profession: "Python",
-    occupation: "Backend Developer",
-    level: "Intern",
-    publicUrl: "TYTUŁ-oferty-MaciejCompany",
-    isActive: true,
-    participants: 1,
-    daysLeft: 29,
-  };
+
   return (
     <div className="flex flex-col items-center text-center justify-center">
       <div className="relative rounded-lg bg-white text-left shadow-xl sm:w-full sm:max-w-7xl mt-[2rem] top-16">
@@ -28,11 +15,11 @@ const EmployerOffers = ({ offerDetails }) => {
             offerDetails.premium
               ? "col-span-1 border-4 border-blue-200"
               : "col-span-1",
-            `group flex flex-col justify-betweenoverflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
+            `group flex flex-col justify-between overflow-clip items-center rounded-xl bg-white drop-shadow-2xl`
           )}
         >
           <div className="w-full">
-            <div className="grid grid-cols-6 m-auto justify-start p-4 items-center">
+            <div className="grid grid-cols-1 md:grid-cols-6 m-auto justify-center md:justify-start p-4 items-center">
               <div className="col-span-1">
                 <div className="justify-start text-center items-center">
                   <img
@@ -80,6 +67,25 @@ const EmployerOffers = ({ offerDetails }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="grid grid-cols-3 w-full justify-between m-auto text-center">
+          <div className="col-span-1">
+            <div className="text-center m-auto">
+              <label
+                htmlFor="push-everything"
+                className="text-lg font-medium text-gray-600 m-auto"
+              >
+                Posiada CV
+              </label>
+              <input
+                type="checkbox"
+                name="hasCv"
+                className="mx-2 mb-1 h-4 w-4 border-gray-600 text-[#00df9a] focus:ring-[#00df9a]"
+              />
+            </div>
+          </div>
+          <div className="col-span-1">FILTR 2</div>
+          <div className="col-span-1">FILTR 3</div>
         </div>
         {visible && <Applicants publicUrl={offerDetails.publicUrl} />}
       </div>

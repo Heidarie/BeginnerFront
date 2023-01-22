@@ -89,9 +89,24 @@ const getUserProfile = async (userPublicUrl) => {
     return error;
   }
 };
+const getEmployerProfile = async (companyPublicUrl) => {
+  try {
+    let response = await axios.get(API_URL + `/Company/${companyPublicUrl}`);
+    if (response.status === 200 || 201) {
+      return response;
+    }
+    if (response.status === 403 || 401) {
+      console.log("error", response);
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
 
 const DataService = {
   getUserProfile,
+  getEmployerProfile,
   getOffers,
   getFilters,
   getOfferDetails,

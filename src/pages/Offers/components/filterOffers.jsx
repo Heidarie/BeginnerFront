@@ -143,7 +143,7 @@ const FilterOffers = ({
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">
                 <label className="block text-sm font-medium text-gray-700">
-                  occupation
+                  Typ zawodu
                 </label>
                 <Select
                   components={animatedComponents}
@@ -154,6 +154,7 @@ const FilterOffers = ({
                   value={occupations}
                   options={filtersData?.occupationFilter}
                   isMulti
+                  placeholder="Wybierz.."
                   name="jobTypes"
                   className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                 />
@@ -162,14 +163,14 @@ const FilterOffers = ({
           </div>
         </div>
       </div>
-      <div className="mt-5 md:col-span-2 md:mt-0 ">
+      <div className="md:col-span-2 ">
         <div className="shadow-md sm:rounded-md overflow-visible">
           <div className="bg-white px-4 py-5 sm:p-6">
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6 sm:col-span-3">
                 <div className="col-span-6">
                   <label className="block text-sm font-medium text-gray-700">
-                    jobtype
+                    Typ pracy
                   </label>
                   <Select
                     components={animatedComponents}
@@ -181,6 +182,7 @@ const FilterOffers = ({
                     options={filtersData?.jobTypeFilter}
                     isMulti
                     name="jobTypes"
+                    placeholder="Wybierz.."
                     className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -188,7 +190,7 @@ const FilterOffers = ({
               <div className="col-span-6 sm:col-span-3">
                 <div className="col-span-6">
                   <label className="block text-sm font-medium text-gray-700">
-                    level
+                    Poziom
                   </label>
                   <Select
                     components={animatedComponents}
@@ -200,6 +202,7 @@ const FilterOffers = ({
                     options={filtersData?.levelFilter}
                     isMulti
                     name="jobTypes"
+                    placeholder="Wybierz.."
                     className="mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -209,13 +212,13 @@ const FilterOffers = ({
         </div>
       </div>
       {filtersData?.professionFilter ? (
-        <div className="mt-5 md:col-span-2 md:mt-0">
+        <div className="md:col-span-2">
           <div className="shadow-md sm:rounded-md overflow-visible">
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6">
                   <label className="block text-sm font-medium text-gray-700">
-                    profession
+                    Język pracy
                   </label>
                   <Select
                     components={animatedComponents}
@@ -227,6 +230,7 @@ const FilterOffers = ({
                     options={filtersData?.professionFilter}
                     isMulti
                     name="jobTypes"
+                    placeholder="Wybierz.."
                     className="mt-1 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -235,13 +239,13 @@ const FilterOffers = ({
           </div>
         </div>
       ) : (
-        <div className="mt-5 md:col-span-2 md:mt-0">
+        <div className="md:col-span-2">
           <div className="shadow-md sm:rounded-md overflow-visible">
             <div className="bg-white px-4 py-5 sm:p-6">
               <div className="grid grid-cols-6 gap-6">
                 <div className="col-span-6">
                   <label className="block text-sm font-medium text-gray-700">
-                    profession
+                    Język pracy
                   </label>
                   <Select
                     components={animatedComponents}
@@ -254,6 +258,7 @@ const FilterOffers = ({
                     isMulti
                     isDisabled={true}
                     name="jobTypes"
+                    placeholder="Wybierz.."
                     className="mt-1 block w-full rounded-md text-black bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
@@ -262,13 +267,13 @@ const FilterOffers = ({
           </div>
         </div>
       )}
-      <div className="mt-5 md:col-span-2 md:mt-0">
+      <div className="md:col-span-2">
         <div className="shadow-md sm:rounded-md overflow-visible">
           <div className="bg-white px-4 py-5 sm:p-6">
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">
                 <label className="block text-sm font-medium text-gray-700">
-                  salary {salaryRange[0]} zł - {salaryRange[1]} zł
+                  Wynagrodzenie {salaryRange[0]} zł - {salaryRange[1]} zł
                 </label>
                 <Slider
                   range={{ draggableTrack: true }}

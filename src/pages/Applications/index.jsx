@@ -14,7 +14,6 @@ const Applications = () => {
   const getEmployerOffers = () => {
     setLoading(true);
     EmployerService.getEmployerOffers().then((res) => {
-      console.log(res);
       if (res.status === 200 || res.status === 201) {
         setLoading(false);
         setEmployerOffers(res.data);
@@ -31,14 +30,14 @@ const Applications = () => {
   };
   const handleUserData = async () => {
     const { data } = await DataService.getUserData();
-    console.log(data);
     setUser(data);
-  };
-  useEffect(() => {
-    handleUserData();
-    if (user?.role === "Employer") {
+    if (data.role === "Employer") {
       getEmployerOffers();
     }
+  };
+
+  useEffect(() => {
+    handleUserData();
   }, []);
   return (
     <div>

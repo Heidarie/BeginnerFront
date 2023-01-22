@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
 import Toast from "../../components/Toast";
 import EmployerService from "../../components/employer.service";
+import { FaCameraRetro } from "react-icons/fa";
 
 const Applicants = ({ publicUrl }) => {
   const [loading, setLoading] = useState(false);
@@ -54,28 +55,36 @@ const Applicants = ({ publicUrl }) => {
         }}
         navigation={true}
         modules={[Pagination, Navigation]}
-        className="mySwiper w-full max-h-fit"
+        className="mySwiper w-full max-h-fit max-w-lg sm:max-w-7xl"
       >
         {applicants.map((applicant) => (
           <SwiperSlide
             key={applicant.applicationId}
             className="text-center justify-center flex"
           >
-            <div className="relative overflow-hidden rounded-lg bg-white text-left shadow-xl my-4 sm:w-full sm:max-w-5xl ">
-              <div className="bg-gray-100 px-2 py-2 sm:p-4 ">
-                <div className="overflow-hidden bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
+            <div className="relative overflow-hidden rounded-lg bg-white text-left shadow-xl my-4 w-full max-w-5xl ">
+              <div className="bg-gray-100 px-2 py-2 p-4 ">
+                <div className="overflow-hidden bg-white shadow sm:rounded-lg max-w-6xl w-full">
                   <div className="px-4 py-5 sm:px-6">
-                    <img
-                      src={applicant.imagePath}
-                      alt=""
-                      className="inline-block h-12 w-12 m-auto rounded-full ring-2 ring-[#00df9a] "
-                    />
-                    <h3 className="text-lg font-medium leading-6 text-gray-900">
-                      Informacje na temat {applicant?.name} {applicant?.surname}
-                    </h3>
+                    {applicant?.imagePath &&
+                    !applicant?.imagePath.includes("no_image") ? (
+                      <img
+                        src={applicant.imagePath}
+                        key={`${applicant?.imagePath}`}
+                        alt="ProfilePhoto"
+                        className="inline-block h-12 w-12 m-auto rounded-full ring-2 ring-[#00df9a] "
+                      />
+                    ) : (
+                      <FaCameraRetro className="inline-block h-12 w-12 m-auto rounded-full ring-2 ring-[#00df9a] " />
+                    )}
+                    <Link to={`/Account/User/${applicant?.publicUrl}`}>
+                      <h3 className="text-lg font-medium leading-6 text-gray-900">
+                        {applicant?.name} {applicant?.surname}
+                      </h3>
+                    </Link>
 
                     <p className="mt-1 max-w-2xl text-sm text-gray-700">
-                      Personal details and application.
+                      Dane szczegółowe dotyczące aplikanta.
                     </p>
                   </div>
                   <div className="border-t border-gray-200">
@@ -90,23 +99,23 @@ const Applicants = ({ publicUrl }) => {
                           </Link>
                         </dd>
                       </div>
-                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      {/* <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-700">
                           Zawód
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                           Backend Developer
                         </dd>
-                      </div>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      </div> */}
+                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-700">
-                          Email address
+                          Email
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                           {applicant?.email}
                         </dd>
                       </div>
-                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-700">
                           Edukacja
                         </dt>
@@ -116,7 +125,7 @@ const Applicants = ({ publicUrl }) => {
                             : "Brak wykształcenia"}
                         </dd>
                       </div>
-                      <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt className="text-sm font-medium text-gray-700">
                           Wykształcenie
                         </dt>
