@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
 import CustomInput from "../../components/form/CustomInput";
@@ -9,6 +9,8 @@ import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,12 +19,14 @@ const Login = () => {
     let { status, request, response } = await AuthService.login(values);
     if (status === 200) {
       setLoading(false);
+      console.log(request);
       window.location.reload();
-      window.location.redirect(request.response);
+      navigate(request.data.returnUrl);
     } else {
+      console.log(response);
       setLoading(false);
       setError(true);
-      setErrorMessage(response.data.message);
+      setErrorMessage(response.message);
       setTimeout(() => {
         setError(false);
         setErrorMessage("");

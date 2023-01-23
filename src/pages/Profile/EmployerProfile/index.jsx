@@ -47,11 +47,10 @@ const EmployerProfile = () => {
         <div className="flex flex-row rounded-lg border border-gray-200/80 bg-white p-6">
           <div className="relative">
             <img
-              className="min-w-40 min-h-40  rounded-md object-cover"
+              className="max-w-40 max-h-40 rounded-md object-cover"
               src={employer?.image}
               alt="User"
             />
-
             <div
               className="absolute -right-3 h-5 w-5 top-2 rounded-full border-4 border-white bg-green-400 visible"
               title="User is online"
@@ -123,7 +122,12 @@ const EmployerProfile = () => {
                     <MdOutlineModeEditOutline className="w-5 h-5 m-auto text-black mr-2" />
                     Edytuj profil
                   </button>
-                  {editProfile && <EditProfile hideModal={hideModal} />}
+                  {editProfile && (
+                    <EditProfile
+                      hideModal={hideModal}
+                      editProfileData={employer}
+                    />
+                  )}
                 </div>
               ) : (
                 <button className="flex rounded-md bg-blue-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600">
@@ -134,7 +138,7 @@ const EmployerProfile = () => {
             </div>
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-center space-x-5 w-screen">
+        <div className="mt-2 flex items-center justify-center text-center space-x-5 max-w-8xl">
           <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
             <div className="flex flex-row items-center justify-center">
               <RiFileList3Line className="h-6 w-6 mr-3 fill-gray-500/95" />

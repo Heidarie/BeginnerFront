@@ -27,7 +27,7 @@ const FilterOffers = ({
   const [jobTypes, setJobTypes] = useState([]);
   const [levels, setLevels] = useState([]);
   const [professions, setProfessions] = useState([]);
-  const [salaryRange, setSalaryRange] = useState([0, 5000]);
+  const [salaryRange, setSalaryRange] = useState([0, 1000000]);
 
   async function loadFilters() {
     setLoading(true);
@@ -280,7 +280,7 @@ const FilterOffers = ({
                   min={0}
                   max={100000}
                   step={100}
-                  defaultValue={[0, 5000]}
+                  defaultValue={[0, 1000000]}
                   onChange={(e) => {
                     setSalaryRange(e || []);
                     salaryRangeQuery[1](e || []);

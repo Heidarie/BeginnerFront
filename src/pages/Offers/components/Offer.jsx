@@ -43,16 +43,12 @@ const Offer = React.forwardRef((props, ref) => {
         <div className="grid grid-cols-6 xl:mb-4 md:grid-cols-1 my-4 justify-start md:justify-items-center items-center">
           <div className="col-span-1 w-full justify-center items-center">
             <div className="flex h-12 w-12 md:h-16 md:w-16 xl:h-24 xl:w-24 justify-start text-center md:justify-center items-center mx-auto">
-              {logoPath ? (
-                <img
-                  src={logoPath}
-                  key={`${logoPath}`}
-                  alt="ProfilePhoto"
-                  className="w-fit h-fit"
-                />
-              ) : (
-                <FaCameraRetro style={{ fontSize: "50px" }} />
-              )}
+              <img
+                src={logoPath}
+                key={`${logoPath}`}
+                alt="ProfilePhoto"
+                className="w-fit h-fit"
+              />
             </div>
             <p className="ml-2 md:ml-0 mt-1 text-center text-md text-semibold text-black xl:text-2xl">
               {companyName}
@@ -81,7 +77,7 @@ const Offer = React.forwardRef((props, ref) => {
                 requirements?.map((requirement, id) => {
                   return (
                     <li
-                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black"
+                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black break-words"
                       key={requirement + id}
                     >
                       {requirement}

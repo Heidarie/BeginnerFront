@@ -1,18 +1,19 @@
 import axios from "axios";
 import DataService from "./data.service";
 
-const API_URL = process.env.REACT_APP_BASE_API_URL;
-
-axios.defaults.withCredentials = true;
-const config = {
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_BASE_API_URL,
+  withCredentials: true,
   headers: {
     "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*",
   },
-};
+});
 
 const register = async (link, values) => {
   try {
-    return await axios.post(API_URL + link, values);
+    return await instance.post(link, values);
   } catch (error) {
     console.log(error);
     return error;
@@ -20,12 +21,9 @@ const register = async (link, values) => {
 };
 
 const login = async (values) => {
+  console.log(process.env.REACT_APP_BASE_API_URL);
   try {
-    let response = await axios.post(
-      API_URL + "/Authentication/Login",
-      values,
-      config
-    );
+    let response = await instance.post("/Authentication/Login", values);
     if (response.status === 200 || 201) {
       return response;
     }
@@ -37,8 +35,8 @@ const login = async (values) => {
 
 const confirmAccount = async (token, mail) => {
   try {
-    let response = await axios.post(
-      API_URL + `/Authentication/ConfirmAccount?token=${token}&mail=${mail}`
+    let response = await instance.post(
+      `/Authentication/ConfirmAccount?token=${token}&mail=${mail}`
     );
 
     return response;
@@ -49,7 +47,7 @@ const confirmAccount = async (token, mail) => {
 };
 
 const logout = async () => {
-  const response = await axios.post(API_URL + "/Authentication/Logout");
+  const response = await instance.post("/Authentication/Logout");
   DataService.deleteCookieAuthState("AuthState");
   return response;
 };

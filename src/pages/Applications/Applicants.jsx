@@ -41,7 +41,23 @@ const Applicants = ({ publicUrl }) => {
       }
     });
   };
-
+  const downloadResumee = (publicUrl, applicationid) => {
+    setLoading(true);
+    EmployerService.getUserResumee(publicUrl, applicationid).then((res) => {
+      console.log(res);
+      if (res.status === 200 || res.status === 201) {
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setError(true);
+        setErrorMessage(res.response.data.message);
+        setTimeout(() => {
+          setErrorMessage("");
+          setError(false);
+        }, 3000);
+      }
+    });
+  };
   useEffect(() => {
     getEmployerOffers();
   }, []);
@@ -66,17 +82,12 @@ const Applicants = ({ publicUrl }) => {
               <div className="bg-gray-100 px-2 py-2 p-4 ">
                 <div className="overflow-hidden bg-white shadow sm:rounded-lg max-w-6xl w-full">
                   <div className="px-4 py-5 sm:px-6">
-                    {applicant?.imagePath &&
-                    !applicant?.imagePath.includes("no_image") ? (
-                      <img
-                        src={applicant.imagePath}
-                        key={`${applicant?.imagePath}`}
-                        alt="ProfilePhoto"
-                        className="inline-block h-12 w-12 m-auto rounded-full ring-2 ring-[#00df9a] "
-                      />
-                    ) : (
-                      <FaCameraRetro className="inline-block h-12 w-12 m-auto rounded-full ring-2 ring-[#00df9a] " />
-                    )}
+                    <img
+                      src={applicant.imagePath}
+                      key={`${applicant?.imagePath}`}
+                      alt="ProfilePhoto"
+                      className="inline-block h-12 w-12 m-auto rounded-full ring-2 ring-[#00df9a] "
+                    />
                     <Link to={`/Account/User/${applicant?.publicUrl}`}>
                       <h3 className="text-lg font-medium leading-6 text-gray-900">
                         {applicant?.name} {applicant?.surname}
@@ -152,7 +163,7 @@ const Applicants = ({ publicUrl }) => {
                         </dt>
                         <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                           <ul className="divide-y divide-gray-200 rounded-md border border-gray-200">
-                            {applicant?.hasResume ? (
+                            {applicant?.hasResumee ? (
                               <li className="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
                                 <div className="flex w-0 flex-1 items-center">
                                   <FiPaperclip
@@ -164,12 +175,17 @@ const Applicants = ({ publicUrl }) => {
                                   </span>
                                 </div>
                                 <div className="ml-4 flex-shrink-0">
-                                  <a
-                                    href="#a"
+                                  <p
+                                    onClick={() =>
+                                      downloadResumee(
+                                        applicant?.publicUrl,
+                                        applicant?.applicationId
+                                      )
+                                    }
                                     className="font-medium text-indigo-600 hover:text-indigo-500"
                                   >
                                     Download
-                                  </a>
+                                  </p>
                                 </div>
                               </li>
                             ) : (

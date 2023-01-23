@@ -89,6 +89,7 @@ const EmployeeProfile = () => {
   };
 
   const handleAccept = async (values, type) => {
+    console.log(values);
     if (values === null) {
       setEditExp(false);
       setEditGrad(false);
@@ -149,16 +150,13 @@ const EmployeeProfile = () => {
               <EditProfile hideModal={hideModal} editProfileData={user} />
             )}
             <div className="flex flex-col gap-1 text-center items-center">
-              {user?.imagePath ? (
-                <img
-                  src={`data:image/png;base64,${user.imagePath}`}
-                  key={`${user.imagePath}`}
-                  alt="ProfilePhoto"
-                  className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
-                />
-              ) : (
-                <FaCameraRetro style={{ fontSize: "50px" }} />
-              )}
+              <img
+                src={`${user?.image}`}
+                key={`${user?.image}`}
+                alt="ProfilePhoto"
+                className="h-32 w-32 bg-white p-2 rounded-full shadow mb-4"
+              />
+
               <p className="font-semibold">{`${user?.name} ${user?.surname}`}</p>
               <div className="text-sm leading-normal text-gray-400 flex justify-center items-center">
                 <IoFlame />

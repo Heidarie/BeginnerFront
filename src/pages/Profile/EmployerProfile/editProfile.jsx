@@ -7,8 +7,8 @@ import { Form, Formik } from "formik";
 import EmployerService from "../../../components/employer.service";
 import Toast from "../../../components/Toast";
 import CustomSelect from "../../../components/form/CustomSelect";
-
-const EditProfile = ({ hideModal }) => {
+import { regions } from "../../../assets/regions";
+const EditProfile = ({ hideModal, editProfileData }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -44,15 +44,21 @@ const EditProfile = ({ hideModal }) => {
       }, 3000);
     }
   };
+  console.log(editProfileData);
+
   return (
     <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
       <Formik
         initialValues={{
-          companyName: "",
-          mainCity: "",
-          mainCountry: "",
-          regionCode: 0,
-          description: "",
+          companyName: editProfileData?.companyName || "",
+          mainCity: editProfileData?.city || "",
+          mainCountry: editProfileData?.mainCountry || "",
+          regionCode:
+            regions.find((region) => region.name === editProfileData?.region)
+              .value || 0,
+          postalCode: editProfileData?.employerPersonalData.postalCode || "",
+          description: editProfileData?.employerPersonalData.description || "",
+          street: editProfileData?.employerPersonalData.street || "",
           image: "",
         }}
         onSubmit={onSubmit}
@@ -103,9 +109,7 @@ const EditProfile = ({ hideModal }) => {
                             type="file"
                             accept=".jpeg, .jpg"
                             onChange={(event) => {
-                              console.log(event.target.files[0]);
                               setSelectedImage(event.target.files[0]);
-                              //event.target.files[0]
                             }}
                           />
                         </div>
@@ -184,22 +188,11 @@ const EditProfile = ({ hideModal }) => {
                           <option value="" disabled>
                             Wybierz województwo
                           </option>
-                          <option value="0">Wielkopolskie</option>
-                          <option value="1">Lubelskie</option>
-                          <option value="2">Mazowieckie</option>
-                          <option value="3">Warmińsko-mazurskie</option>
-                          <option value="4">Dolnośląskie</option>
-                          <option value="5">Śląskie</option>
-                          <option value="6">Małopolskie</option>
-                          <option value="7">Zachodniopomorskie</option>
-                          <option value="8">Pomorskie</option>
-                          <option value="9">Lubuskie</option>
-                          <option value="10">Kujawsko-pomorskie</option>
-                          <option value="11">Podlaskie</option>
-                          <option value="12">Świętokrzyskie</option>
-                          <option value="13">Łódzkie</option>
-                          <option value="14">Opolskie</option>
-                          <option value="15">Podkarpackie</option>
+                          {regions.map((region) => (
+                            <option value={region.value} key={region.value}>
+                              {region.name}
+                            </option>
+                          ))}
                         </CustomSelect>
                       </div>
                     </div>

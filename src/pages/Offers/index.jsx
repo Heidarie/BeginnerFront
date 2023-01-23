@@ -16,7 +16,7 @@ const Offers = ({ flag }) => {
   const [jobTypes, setJobTypes] = useState([]);
   const [levels, setLevels] = useState([]);
   const [professions, setProfessions] = useState([]);
-  const [salaryRange, setSalaryRange] = useState([0, 5000]);
+  const [salaryRange, setSalaryRange] = useState([0, 1000000]);
 
   const { offers, hasMore, loading, error } = useOffersFilter(
     query,

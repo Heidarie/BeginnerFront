@@ -10,6 +10,7 @@ import Toast from "../../../components/Toast";
 import Select from "react-select";
 import DataService from "../../../components/data.service";
 import CustomSelect from "../../../components/form/CustomSelect";
+import { regions } from "../../../assets/regions";
 
 const EditProfile = ({ hideModal, editProfileData }) => {
   const [error, setError] = useState(false);
@@ -20,6 +21,8 @@ const EditProfile = ({ hideModal, editProfileData }) => {
   const [profession, setProfession] = useState([]);
   const [skills, setSkills] = useState([]);
   const [certificates, setCertificates] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedResumee, setSelectedResumee] = useState(null);
 
   async function loadFilters() {
     setLoading(true);
@@ -84,15 +87,14 @@ const EditProfile = ({ hideModal, editProfileData }) => {
   const onSubmit = async (values, actions) => {
     setError(false);
     setLoading(true);
-
     const updateValues = {
       Name: values.Name,
       Surname: values.Surname,
       Occupation: occupation?.id,
       Profession: profession?.id,
       City: values.City,
-      Image: values.Image,
-      Resumee: values.Resumee,
+      Image: selectedImage,
+      Resumee: selectedResumee,
       RegionCode: values.RegionCode,
       "PersonalDataModel.Description": values.Description,
       "PersonalDataModel.Certificates": certificates?.map(
@@ -158,7 +160,9 @@ const EditProfile = ({ hideModal, editProfileData }) => {
           Description: editProfileData?.personalDataModel?.description || "",
           Image: "",
           Resume: "",
-          RegionCode: editProfileData?.regionCode || 0,
+          RegionCode:
+            regions.find((region) => region.name === editProfileData?.region)
+              .value || 0,
           City: editProfileData?.city || "",
         }}
         onSubmit={onSubmit}
@@ -187,19 +191,30 @@ const EditProfile = ({ hideModal, editProfileData }) => {
                         </label>
                         <div className="mt-1 flex items-center">
                           <span className="inline-block h-12 w-12 overflow-hidden rounded-full bg-gray-100 mr-5">
-                            <svg
-                              className="h-full w-full text-gray-300"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
+                            {selectedImage ? (
+                              <img
+                                src={URL.createObjectURL(selectedImage)}
+                                alt={selectedImage.name}
+                                className="m-auto h-fit w-fit"
+                              />
+                            ) : (
+                              <svg
+                                className="h-full w-full m-auto text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            )}
                           </span>
 
                           <CustomFile
                             name="Image"
                             type="file"
-                            accept=".jpeg, .png, .jpg"
+                            accept=".jpeg, .jpg"
+                            onChange={(event) => {
+                              setSelectedImage(event.target.files[0]);
+                            }}
                           />
                         </div>
                       </div>
@@ -212,6 +227,9 @@ const EditProfile = ({ hideModal, editProfileData }) => {
                             name="Resumee"
                             type="file"
                             accept=".pdf"
+                            onChange={(event) => {
+                              setSelectedResumee(event.target.files[0]);
+                            }}
                           />
                         </div>
                       </div>
@@ -282,22 +300,11 @@ const EditProfile = ({ hideModal, editProfileData }) => {
                           <option value="" disabled>
                             Wybierz województwo
                           </option>
-                          <option value="0">Wielkopolskie</option>
-                          <option value="1">Lubelskie</option>
-                          <option value="2">Mazowieckie</option>
-                          <option value="3">Warmińsko-mazurskie</option>
-                          <option value="4">Dolnośląskie</option>
-                          <option value="5">Śląskie</option>
-                          <option value="6">Małopolskie</option>
-                          <option value="7">Zachodniopomorskie</option>
-                          <option value="8">Pomorskie</option>
-                          <option value="9">Lubuskie</option>
-                          <option value="10">Kujawsko-pomorskie</option>
-                          <option value="11">Podlaskie</option>
-                          <option value="12">Świętokrzyskie</option>
-                          <option value="13">Łódzkie</option>
-                          <option value="14">Opolskie</option>
-                          <option value="15">Podkarpackie</option>
+                          {regions.map((region) => (
+                            <option value={region.value} key={region.value}>
+                              {region.name}
+                            </option>
+                          ))}
                         </CustomSelect>
                         <div className="col-span-6 sm:col-span-3">
                           <label className="block text-sm font-medium text-gray-200">

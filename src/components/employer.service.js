@@ -1,12 +1,17 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_BASE_API_URL;
-
-axios.defaults.withCredentials = true;
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_BASE_API_URL,
+  withCredentials: true,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+  },
+});
 
 const getEmployerOffers = async () => {
   try {
-    let response = await axios.get(API_URL + `/Employer/Offers`);
+    let response = await instance.get(`/Employer/Offers`);
     console.log(response);
     if (response.status === 200) {
       return response;
@@ -19,7 +24,7 @@ const getEmployerOffers = async () => {
 
 const updateEmployerData = async (values) => {
   try {
-    let response = await axios.put(API_URL + `/Company/Update`, values, {
+    let response = await instance.put(`/Company/Update`, values, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -36,7 +41,7 @@ const updateEmployerData = async (values) => {
 
 const createOffer = async (values) => {
   try {
-    let response = await axios.put(API_URL + `/Offers/CreateOffer`, values);
+    let response = await instance.put(`/Offers/CreateOffer`, values);
     console.log(response);
     if (response.status === 201 || response.status === 200) {
       return response;
@@ -49,8 +54,23 @@ const createOffer = async (values) => {
 
 const getApplicants = async (publicUrl) => {
   try {
-    let response = await axios.get(
-      API_URL + `/Employer/ApplicationManagement/${publicUrl}`
+    let response = await instance.get(
+      `/Employer/ApplicationManagement/${publicUrl}`
+    );
+    console.log(response);
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+const getUserResumee = async (publicUrl, applicationid) => {
+  try {
+    let response = await instance.get(
+      `/Account/GetFile?userPublicUrl=${publicUrl}&applicationId=${applicationid}`
     );
     console.log(response);
     if (response.status === 201 || response.status === 200) {
@@ -64,6 +84,7 @@ const getApplicants = async (publicUrl) => {
 
 const EmployerService = {
   getEmployerOffers,
+  getUserResumee,
   updateEmployerData,
   createOffer,
   getApplicants,

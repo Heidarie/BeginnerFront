@@ -61,21 +61,12 @@ const OfferPage = () => {
             <div className="overflow-hidden bg-white shadow sm:rounded-lg sm:max-w-6xl sm:w-full">
               <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-4 sm:gap-4 sm:px-6 break-words">
                 <div className="mt-1 text-sm text-gray-900 sm:col-span-1 my-auto text-center">
-                  {offer.employer.companyImagePath ? (
-                    <img
-                      src={offer.employer.companyImagePath}
-                      key={`${offer.employer.companyImagePath}`}
-                      alt="ProfilePhoto"
-                      className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
-                    />
-                  ) : (
-                    <img
-                      className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
-                      //src={offer?.employer?.companyImagePath}
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                      alt={offer?.employer?.companyPublicUrl}
-                    />
-                  )}
+                  <img
+                    src={offer.employer.companyImagePath}
+                    key={`${offer.employer.companyImagePath}`}
+                    alt="ProfilePhoto"
+                    className="w-fit h-fit max-h-[150px] max-w-[150px] m-auto"
+                  />
                   <p className="text-lg sm:text-md font-semibold text-gray-700">
                     {offer?.employer?.companyName}
                   </p>

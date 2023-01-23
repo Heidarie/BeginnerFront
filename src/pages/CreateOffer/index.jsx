@@ -9,6 +9,7 @@ import Toast from "../../components/Toast";
 import EmployerService from "../../components/employer.service";
 import Select from "react-select";
 import DataService from "../../components/data.service";
+import { createOfferSchema } from "./schema";
 
 const CreateOffer = ({ hideModal }) => {
   const [error, setError] = useState(false);
@@ -100,7 +101,7 @@ const CreateOffer = ({ hideModal }) => {
         postalCode: values.postalCode,
         street: values.street,
         description: values.description,
-        companySize: values.description,
+        companySize: values.companySize,
         duties: dutiesList?.map((object) => object.value),
         languages: languagesList?.map((object) => object.value),
         requirements: requirementsList?.map((object) => object.value),
@@ -163,6 +164,7 @@ const CreateOffer = ({ hideModal }) => {
           requirements: [],
           benefits: [],
         }}
+        validationSchema={createOfferSchema}
         onSubmit={onSubmit}
       >
         {({ isSubmitting }) => (
@@ -222,7 +224,7 @@ const CreateOffer = ({ hideModal }) => {
                             options={filtersData?.jobTypeFilter}
                             isClearable={true}
                             placeholder="Wybierz technologię"
-                            name="jobLevel"
+                            name="jobType"
                             className="basic-single text-black mt-1 block w-full rounded-md bg-gray-50 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                           />
                         </div>

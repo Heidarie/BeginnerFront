@@ -101,29 +101,31 @@ const Navbar = () => {
                     </p>
                   </div>
                 </Link>
-                <Link className="" to="/Applications">
-                  <div
-                    className="px-2 py-1 bg-[#00df9a] rounded-md"
-                    onMouseOver={() => handleHover(1)}
-                    onMouseOut={() => handleHover(1)}
-                  >
-                    <AiOutlineSolution
-                      size={30}
-                      className={classNames(
-                        hover[1] ? "hidden" : "visible",
-                        " text-black"
-                      )}
-                    />
-                    <p
-                      className={classNames(
-                        hover[1] ? "hover:text-white" : "hidden",
-                        "text-sm font-medium py-[0.52rem] -my-[0.2rem] -mx-[0.33rem] px-1 hover:px-5 duration-500"
-                      )}
+                {user?.role === "Employer" && (
+                  <Link className="" to="/Applications">
+                    <div
+                      className="px-2 py-1 bg-[#00df9a] rounded-md"
+                      onMouseOver={() => handleHover(1)}
+                      onMouseOut={() => handleHover(1)}
                     >
-                      Aplikacje
-                    </p>
-                  </div>
-                </Link>
+                      <AiOutlineSolution
+                        size={30}
+                        className={classNames(
+                          hover[1] ? "hidden" : "visible",
+                          " text-black"
+                        )}
+                      />
+                      <p
+                        className={classNames(
+                          hover[1] ? "hover:text-white" : "hidden",
+                          "text-sm font-medium py-[0.52rem] -my-[0.2rem] -mx-[0.33rem] px-1 hover:px-5 duration-500"
+                        )}
+                      >
+                        Aplikacje
+                      </p>
+                    </div>
+                  </Link>
+                )}
 
                 <Link className="" to="/Contacts">
                   <div
@@ -209,16 +211,12 @@ const Navbar = () => {
                     <div>
                       <Menu.Button className="inline-flex justify-center w-full h-11 items-center rounded-md border border-gray-300 shadow-sm  py-0 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-[#00df9a]">
                         <div className="w-12 -left-2 md:-left-4 relative">
-                          {user?.image && !user?.image.includes("no_image") ? (
-                            <img
-                              src={user.image}
-                              key={`${user?.image}`}
-                              alt="ProfilePhoto"
-                              className="w-fit h-fit"
-                            />
-                          ) : (
-                            <FaCameraRetro style={{ fontSize: "50px" }} />
-                          )}
+                          <img
+                            src={user.image}
+                            key={`${user?.image}`}
+                            alt="ProfilePhoto"
+                            className="inline-block h-12 w-12 rounded-full ring-2 ring-[#00df9a] "
+                          />
                         </div>
 
                         <div className="pr-3 hidden sm:block">

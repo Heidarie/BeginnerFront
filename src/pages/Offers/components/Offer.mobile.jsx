@@ -40,16 +40,12 @@ const Offer = React.forwardRef((props, ref) => {
         <div className="p-2 grid grid-cols-6 mb-2 justify-start items-center">
           <div className="col-span-1">
             <div className="justify-start text-center items-center">
-              {logoPath ? (
-                <img
-                  src={logoPath}
-                  key={`${logoPath}`}
-                  alt="ProfilePhoto"
-                  className="w-fit h-fit"
-                />
-              ) : (
-                <FaCameraRetro style={{ fontSize: "50px" }} />
-              )}
+              <img
+                src={logoPath}
+                key={`${logoPath}`}
+                alt="ProfilePhoto"
+                className="w-fit h-fit"
+              />
             </div>
             <p className="mt-1 text-center text-md text-semibold text-black">
               {companyName}
