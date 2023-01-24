@@ -25,8 +25,13 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogout = async () => {
-    await AuthService.logout();
-    navigate("/");
+    var res = await AuthService.logout();
+    console.log(res);
+    if(res.status === 200)
+    {
+      navigate("/Login");
+      window.location.reload();
+    }
   };
   const handleNavMenu = () => {
     setNavMenu(!navMenu);
@@ -278,7 +283,6 @@ const Navbar = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <a
-                                href="/Login"
                                 className={classNames(
                                   active
                                     ? "bg-red-100 text-gray-900 "

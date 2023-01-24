@@ -48,7 +48,6 @@ const confirmAccount = async (token, mail) => {
 
 const logout = async () => {
   const response = await instance.post("/Authentication/Logout");
-  DataService.deleteCookieAuthState("AuthState");
   return response;
 };
 
