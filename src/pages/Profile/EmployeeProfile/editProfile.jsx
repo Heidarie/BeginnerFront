@@ -162,7 +162,7 @@ const EditProfile = ({ hideModal, editProfileData }) => {
           Resume: "",
           RegionCode:
             regions.find((region) => region.name === editProfileData?.region)
-              .value || 0,
+              ?.value || 0,
           City: editProfileData?.city || "",
         }}
         onSubmit={onSubmit}

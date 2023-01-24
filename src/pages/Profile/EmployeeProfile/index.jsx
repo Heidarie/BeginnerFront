@@ -39,6 +39,7 @@ const EmployeeProfile = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [filteredOffers, setFilteredOffers] = useState([]);
+  const [filterAppliedOffers, setFilterAppliedOffers] = useState("");
 
   const hideModal = () => {
     setEditProfile(false);
@@ -46,6 +47,7 @@ const EmployeeProfile = () => {
     setSelectGrad(false);
   };
   const filterEmployeeOfferApplications = (filter) => {
+    setFilterAppliedOffers(filter);
     if (filter === undefined || filter === "") {
       setFilteredOffers(user?.employeeOfferApplications);
     } else {
@@ -121,10 +123,20 @@ const EmployeeProfile = () => {
 
   const getUser = async (id) => {
     if (id) {
-      let { data } = await DataService.getUserProfile(id);
-      setUser(data);
-      setFilteredOffers(data?.employeeOfferApplications);
-      console.log(data);
+      let { status, data, response } = await DataService.getUserProfile(id);
+      if (status === 200) {
+        setUser(data);
+        setFilteredOffers(data?.employeeOfferApplications);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setError(true);
+        setErrorMessage(response.data.message);
+        setTimeout(() => {
+          setErrorMessage("");
+          setError(false);
+        }, 3000);
+      }
     }
   };
 
@@ -678,6 +690,7 @@ const EmployeeProfile = () => {
                   name="filterOffers"
                   placeholder="Wybierz filtr"
                   defaultValue={""}
+                  value={filterAppliedOffers}
                   type="text"
                   onChange={(e) =>
                     filterEmployeeOfferApplications(e.target.value)
@@ -690,60 +703,77 @@ const EmployeeProfile = () => {
                 </select>
               </div>
               <div className="grid mt-5 gap-4 grid-cols-2 justify-center items-center w-full">
-                {filteredOffers?.map((application) => (
-                  <div
-                    key={application.offerPublicUrl}
-                    className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center max-h-[10rem]"
-                  >
-                    {application.status === "Oczekująca" && (
-                      <div className="absolute bg-gradient-to-t from-yellow-300 to-yellow-500 opacity-50 inset-0 z-0"></div>
+                {filteredOffers.length === 0 ? (
+                  <div className="col-span-2">
+                    {filterAppliedOffers === "" && (
+                      <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
+                        Nie zaaplikowałeś jeszcze na żadną ofertę
+                      </h3>
                     )}
-                    {application.status === "Zaakceptowana" && (
-                      <div className="absolute bg-gradient-to-t from-green-300 to-green-500 opacity-50 inset-0 z-0"></div>
+                    {filterAppliedOffers === "Oczekująca" && (
+                      <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
+                        Brak oczekujących ofert na rozpatrzenie
+                      </h3>
                     )}
-                    {application.status === "Odrzucona" && (
-                      <div className="absolute bg-gradient-to-t from-red-300 to-red-500 opacity-50 inset-0 z-0"></div>
+                    {filterAppliedOffers === "Zaakceptowana" && (
+                      <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
+                        Żadna z ofert nie została jeszcze zaakceptowana
+                      </h3>
                     )}
-                    <Link to={`/Offers/Offer/${application.offerPublicUrl}`}>
-                      <div className="relative flex flex-row items-end h-62 w-full ">
-                        <div className="p-6 rounded-lg  flex flex-col w-full z-5">
-                          <h4 className="mt-1 text-black text-xl font-semibold  leading-tight truncate">
-                            {application.offerName}
-                          </h4>
-                          <h2 className="text-sm flex items-center text-black font-normal">
-                            {application.isOpened
-                              ? "Oferta została otwarta"
-                              : "Oferta nie została jeszcze wyświetlona"}
-                          </h2>
-                          {/* <div className="flex justify-between items-center">
-                          <div className="flex flex-col">
-                            <h2 className="text-sm flex items-center text-gray-300 font-normal">
-                              <ImLocation className="h-4 w-4 mr-1 text-white" />
-                              LOCATION
+                    {filterAppliedOffers === "Odrzucona" && (
+                      <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
+                        Brak odrzuconych ofert
+                      </h3>
+                    )}
+                  </div>
+                ) : (
+                  filteredOffers?.map((application) => (
+                    <div
+                      key={application.offerPublicUrl}
+                      className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center max-h-[10rem]"
+                    >
+                      {application.status === "Oczekująca" && (
+                        <div className="absolute bg-gradient-to-t from-yellow-300 to-yellow-500 opacity-50 inset-0 z-0"></div>
+                      )}
+                      {application.status === "Zaakceptowana" && (
+                        <div className="absolute bg-gradient-to-t from-green-300 to-green-500 opacity-50 inset-0 z-0"></div>
+                      )}
+                      {application.status === "Odrzucona" && (
+                        <div className="absolute bg-gradient-to-t from-red-300 to-red-500 opacity-50 inset-0 z-0"></div>
+                      )}
+                      <Link to={`/Offers/Offer/${application.offerPublicUrl}`}>
+                        <div className="relative flex flex-row items-end h-62 w-full ">
+                          <div className="p-6 rounded-lg  flex flex-col w-full z-5">
+                            <h4 className="mt-1 text-black text-xl font-semibold  leading-tight truncate">
+                              {application.offerName}
+                            </h4>
+                            <h2 className="text-sm flex items-center text-black font-normal">
+                              {application.isOpened
+                                ? "Oferta została otwarta"
+                                : "Oferta nie została jeszcze wyświetlona"}
                             </h2>
-                          </div>
-                        </div> */}
-                          <div className="flex pt-4  text-sm text-black">
-                            <div className="flex items-center mr-auto">
-                              <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
-                              <p className="font-normal">
-                                {Moment(application.applicationDate)
-                                  .lang("pl")
-                                  .fromNow()}
-                              </p>
-                            </div>
-                            <div className="flex items-center font-medium text-black">
-                              PLN 1800
-                              <span className="text-gray-500 text-sm font-normal">
-                                /M
-                              </span>
+                            <div className="flex pt-4  text-sm text-black">
+                              <div className="flex items-center mr-auto">
+                                <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
+                                <p className="font-normal">
+                                  {Moment(application.applicationDate)
+                                    .lang("pl")
+                                    .fromNow()}
+                                </p>
+                              </div>
+                              <div className="flex items-center font-medium text-black">
+                                PLN 1800
+                                <span className="text-gray-500 text-sm font-normal">
+                                  /M
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
+                      </Link>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           )}

@@ -10,7 +10,11 @@ const EmployerOffers = ({ offerDetails }) => {
     <div className="flex flex-col items-center text-center justify-center">
       <div className="relative rounded-lg bg-white text-left shadow-xl sm:w-full sm:max-w-7xl mt-[2rem] top-16">
         <div
-          onClick={() => setVisible(!visible)}
+          onClick={() => {
+            if (offerDetails.participants > 0) {
+              setVisible(!visible);
+            }
+          }}
           className={classNames(
             offerDetails.premium
               ? "col-span-1 border-4 border-blue-200"

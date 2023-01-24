@@ -44,7 +44,6 @@ const EditProfile = ({ hideModal, editProfileData }) => {
       }, 3000);
     }
   };
-  console.log(editProfileData);
 
   return (
     <Modal hideModal={hideModal} className="sm:max-w-4xl p-4">
@@ -55,7 +54,7 @@ const EditProfile = ({ hideModal, editProfileData }) => {
           mainCountry: editProfileData?.mainCountry || "",
           regionCode:
             regions.find((region) => region.name === editProfileData?.region)
-              .value || 0,
+              ?.value || 0,
           postalCode: editProfileData?.employerPersonalData.postalCode || "",
           description: editProfileData?.employerPersonalData.description || "",
           street: editProfileData?.employerPersonalData.street || "",

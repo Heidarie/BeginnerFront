@@ -101,7 +101,16 @@ const Feed = ({ flag }) => {
           />
         </div>
       )}
-      {error && <Toast text={errorMessage} icon="ERROR" />}
+      {error && (
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
+      )}
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
     </>
   );

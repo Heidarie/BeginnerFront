@@ -1,16 +1,22 @@
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_BASE_API_URL;
-
-axios.defaults.withCredentials = true;
+const instance = axios.create({
+  baseURL: process.env.REACT_APP_BASE_API_URL,
+  withCredentials: true,
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*",
+  },
+});
 
 const getProfile = () => {
-  return axios.get(API_URL + "/Account/Profile");
+  return instance.get("/Account/Profile");
 };
 
 const updateUserData = async (values) => {
   try {
-    let response = await axios.put(API_URL + `/Account/UpdateUser`, values, {
+    let response = await instance.put(`/Account/UpdateUser`, values, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -32,8 +38,8 @@ const updateUserDetails = async (values, type) => {
     })),
   };
   try {
-    let response = await axios.put(
-      API_URL + `/Account/Update?type=${type}`,
+    let response = await instance.put(
+      `/Account/Update?type=${type}`,
       orderValues
     );
     if (response.status === 200) {
@@ -47,7 +53,7 @@ const updateUserDetails = async (values, type) => {
 
 const applyOffer = async (publicUrl) => {
   try {
-    let response = await axios.post(API_URL + `/Apply/${publicUrl}`);
+    let response = await instance.post(`/Apply/${publicUrl}`);
     if (response.status === 200) {
       return response;
     }

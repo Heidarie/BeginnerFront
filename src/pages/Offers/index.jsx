@@ -16,7 +16,7 @@ const Offers = ({ flag }) => {
   const [jobTypes, setJobTypes] = useState([]);
   const [levels, setLevels] = useState([]);
   const [professions, setProfessions] = useState([]);
-  const [salaryRange, setSalaryRange] = useState([0, 1000000]);
+  const [salaryRange, setSalaryRange] = useState([0, 1_000_000]);
 
   const { offers, hasMore, loading, error } = useOffersFilter(
     query,
@@ -32,15 +32,24 @@ const Offers = ({ flag }) => {
     professions,
     salaryRange
   ) {
-    const occupationsList = occupations?.map((obj) => obj.id).join(",");
-    const professionsList = professions?.map((obj) => obj.id).join(",");
-    const jobTypesList = jobTypes?.map((obj) => obj.id).join(",");
-    const levelsList = levels?.map((obj) => obj.id).join(",");
-    setQuery(
-      `Occupation=${occupationsList}&Profession=${professionsList}&SalaryFrom=${salaryRange[0]}&SalaryTo=${salaryRange[1]}&JobType=${jobTypesList}&Level=${levelsList}`
-    );
-    //&City=City
-    setPageNumber(0);
+    if (
+      occupations.toString() ||
+      professions.toString() ||
+      jobTypes.toString() ||
+      levels.toString()
+    ) {
+      const occupationsList = occupations?.map((obj) => obj.id).join(",");
+      const professionsList = professions?.map((obj) => obj.id).join(",");
+      const jobTypesList = jobTypes?.map((obj) => obj.id).join(",");
+      const levelsList = levels?.map((obj) => obj.id).join(",");
+      setQuery(
+        `Occupation=${occupationsList}&Profession=${professionsList}&SalaryFrom=${salaryRange[0]}&SalaryTo=${salaryRange[1]}&JobType=${jobTypesList}&Level=${levelsList}`
+      );
+      setPageNumber(0);
+    } else {
+      setQuery(`SalaryFrom=${salaryRange[0]}&SalaryTo=${salaryRange[1]}`);
+      setPageNumber(0);
+    }
   }
   const observer = useRef();
 
@@ -71,12 +80,7 @@ const Offers = ({ flag }) => {
       behavior: "smooth",
     });
   };
-  // window.innerHeight use to call next page
   window.addEventListener("scroll", toggleVisibility);
-
-  useEffect(() => {
-    handleQuery(occupations, jobTypes, levels, professions, salaryRange);
-  }, [occupations, jobTypes, levels, professions, salaryRange]);
 
   return (
     <>
@@ -89,6 +93,7 @@ const Offers = ({ flag }) => {
           levelsQuery={[levels, setLevels]}
           professionsQuery={[professions, setProfessions]}
           salaryRangeQuery={[salaryRange, setSalaryRange]}
+          createQuery={handleQuery}
         />
       )}
       {error && (

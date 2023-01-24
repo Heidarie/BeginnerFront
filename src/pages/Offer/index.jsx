@@ -131,15 +131,14 @@ const OfferPage = () => {
                         {offer?.offerDetails?.description}
                       </div>
                     </div>
-                    <div className="bg-gray-50 sm:grid sm:grid-rows-2 sm:px-6">
+                    <div className="bg-gray-50 my-auto sm:px-6 sm:py-2">
                       <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
                         Wymagania
                       </div>
-                      <div className="text-sm text-gray-900 sm:col-span-2 my-auto">
+                      <div className="text-sm text-gray-900 sm:col-span-2">
                         <ScrollContainer
                           horizontal="true"
-                          nativeMobileScroll="true"
-                          className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
+                          className="mySwiper justify-start bg-[#00df9a]"
                         >
                           <ul className="flex">
                             {offer?.offerDetails?.requirements &&
@@ -159,15 +158,14 @@ const OfferPage = () => {
                         </ScrollContainer>
                       </div>
                     </div>
-                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                    <div className="bg-gray-50 my-auto sm:px-6 sm:py-2">
                       <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
                         Języki
                       </div>
-                      <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      <div className="mt-1 text-sm text-gray-900 sm:mt-0">
                         <ScrollContainer
                           horizontal="true"
-                          nativeMobileScroll="true"
-                          className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
+                          className="scroll-container flex justify-start bg-[#00df9a] "
                         >
                           <ul className="flex">
                             {offer?.offerDetails?.languages &&
@@ -187,12 +185,16 @@ const OfferPage = () => {
                         </ScrollContainer>
                       </div>
                     </div>
-                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                    <div className="bg-gray-50 my-auto sm:px-6 sm:py-2">
                       <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
                         Obowiązki
                       </div>
                       <div className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                        <ScrollContainer className="scroll-container flex justify-start scroll-container bg-[#00df9a]">
+                        <ScrollContainer
+                          horizontal="true"
+                          nativeMobileScroll="true"
+                          className="scroll-container flex justify-start bg-[#00df9a]"
+                        >
                           <ul className="flex">
                             {offer?.offerDetails?.duties &&
                               offer?.offerDetails?.duties?.map((duty) => {
@@ -209,7 +211,7 @@ const OfferPage = () => {
                         </ScrollContainer>
                       </div>
                     </div>
-                    <div className="bg-gray-50 my-auto sm:grid sm:grid-rows-2 sm:px-6">
+                    <div className="bg-gray-50 my-auto sm:px-6 sm:py-2">
                       <div className="text-sm p-2 sm:p-0 text-left my-auto font-medium text-gray-700">
                         Benefity
                       </div>
@@ -217,7 +219,7 @@ const OfferPage = () => {
                         <ScrollContainer
                           horizontal="true"
                           nativeMobileScroll="true"
-                          className="scroll-container flex justify-start scroll-container bg-[#00df9a]"
+                          className="scroll-container flex justify-start bg-[#00df9a]"
                         >
                           <ul className="flex">
                             {offer?.offerDetails?.benefits &&

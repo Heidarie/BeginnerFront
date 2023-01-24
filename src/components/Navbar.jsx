@@ -27,8 +27,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     var res = await AuthService.logout();
     console.log(res);
-    if(res.status === 200)
-    {
+    if (res.status === 200) {
       navigate("/Login");
       window.location.reload();
     }
@@ -48,10 +47,11 @@ const Navbar = () => {
   };
   useEffect(() => {
     setIsLoggedIn(DataService.checkCookieAuthState("AuthState"));
-    if (user === undefined) {
+    if (user === undefined && isLoggedIn) {
       handleUserData();
     }
-  }, []);
+  }, [isLoggedIn, user]);
+
   return (
     <nav className="bg-gray-800 fixed w-full top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 z-[100]">

@@ -13,6 +13,7 @@ const EmployerProfile = () => {
   let { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [editProfile, setEditProfile] = useState(false);
   const [createOffer, setCreateOffer] = useState(false);
   const [employer, setEmployer] = useState(undefined);
@@ -21,24 +22,29 @@ const EmployerProfile = () => {
     setEditProfile(false);
     setCreateOffer(false);
   };
-  const getEmployerData = (id) => {
+
+  const getEmployer = async (id) => {
+    setLoading(true);
     if (id) {
-      DataService.getEmployerProfile(id)
-        .then((res) => {
-          setEmployer(res.data);
-        })
-        .catch((error) => {
-          setError(true);
-          setTimeout(() => {
-            setError(false);
-          }, 3000);
-        });
+      let { status, data, response } = await DataService.getEmployerProfile(id);
+      if (status === 200) {
+        setEmployer(data);
+        console.log(data);
+        setLoading(false);
+      } else {
+        setLoading(false);
+        setError(true);
+        setErrorMessage(response.data.message);
+        setTimeout(() => {
+          setErrorMessage("");
+          setError(false);
+        }, 3000);
+      }
     }
   };
 
   useEffect(() => {
-    getEmployerData(id);
-    console.log(employer);
+    getEmployer(id);
   }, [id]);
 
   return (
@@ -89,7 +95,7 @@ const EmployerProfile = () => {
                 <div className="text-xs text-gray-400/80 hover:text-gray-400">
                   {employer?.city !== null &&
                   employer?.employerPersonalData?.street !== null
-                    ? `${employer?.employerPersonalData?.street}, ${employer?.city}, ${employer?.employerPersonalData.postalCode}`
+                    ? `${employer?.employerPersonalData?.street}, ${employer?.city}, ${employer?.employerPersonalData?.postalCode}`
                     : "MIASTO"}
                 </div>
               </div>
@@ -97,7 +103,7 @@ const EmployerProfile = () => {
 
             <div className="flex max-w-md md:block md:max-w-2xl">
               <h4 className="text-md text-gray-400/80 hover:text-gray-400">
-                {employer?.employerPersonalData.description}
+                {employer?.employerPersonalData?.description}
               </h4>
             </div>
           </div>
@@ -143,7 +149,7 @@ const EmployerProfile = () => {
             <div className="flex flex-row items-center justify-center">
               <RiFileList3Line className="h-6 w-6 mr-3 fill-gray-500/95" />
               <span className="font-bold text-gray-600">
-                {employer?.offers.length}
+                {employer?.offers?.length}
               </span>
             </div>
 
@@ -287,7 +293,14 @@ const EmployerProfile = () => {
 
       {loading && <Toast text="Ładowanie" icon="LOADING" />}
       {error && (
-        <Toast text="Wystąpił bład przy aktualizacji danych" icon="ERROR" />
+        <Toast
+          text={
+            errorMessage === "" || errorMessage === undefined
+              ? "Wystąpił nieoczekiwany błąd"
+              : errorMessage
+          }
+          icon="ERROR"
+        />
       )}
     </div>
   );

@@ -17,17 +17,20 @@ const FilterOffers = ({
   levelsQuery,
   professionsQuery,
   salaryRangeQuery,
+  createQuery,
 }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [filtersData, setFiltersData] = useState([]);
-  const [occupations, setOccupations] = useState([]);
-  const [jobTypes, setJobTypes] = useState([]);
-  const [levels, setLevels] = useState([]);
-  const [professions, setProfessions] = useState([]);
-  const [salaryRange, setSalaryRange] = useState([0, 1000000]);
+  const [occupations, setOccupations] = useState(occupationsQuery[0] || []);
+  const [jobTypes, setJobTypes] = useState(jobTypesQuery[0] || []);
+  const [levels, setLevels] = useState(levelsQuery[0] || []);
+  const [professions, setProfessions] = useState(professionsQuery[0] || []);
+  const [salaryRange, setSalaryRange] = useState(
+    salaryRangeQuery[0] || [(0, 1_000_000)]
+  );
 
   async function loadFilters() {
     setLoading(true);
@@ -93,12 +96,12 @@ const FilterOffers = ({
     setJobTypes([]);
     setLevels([]);
     setProfessions([]);
-    setSalaryRange([0, 0]);
+    setSalaryRange([0, 1_000_000]);
     occupationsQuery[1]([]);
     jobTypesQuery[1]([]);
     levelsQuery[1]([]);
     professionsQuery[1]([]);
-    salaryRangeQuery[1]([0, 5000]);
+    salaryRangeQuery[1]([0, 1_000_000]);
   };
 
   useEffect(() => {
@@ -115,7 +118,10 @@ const FilterOffers = ({
   }, [occupations]);
   return (
     <Modal hideModal={hideModal} className="sm:max-w-2xl p-4">
-      {occupations.length !== 0 ? (
+      {occupations.length ||
+      professions.length ||
+      levels.length ||
+      jobTypes.length !== 0 ? (
         <div className="grid grid-cols-6 gap-6 m-2">
           <h2 className="col-span-3 my-auto">Wybierz filtry ofert</h2>
           <button
@@ -273,14 +279,15 @@ const FilterOffers = ({
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">
                 <label className="block text-sm font-medium text-gray-700">
-                  Wynagrodzenie {salaryRange[0]} zł - {salaryRange[1]} zł
+                  Wynagrodzenie {salaryRange[0].toLocaleString()} zł -{" "}
+                  {salaryRange[1].toLocaleString()} zł
                 </label>
                 <Slider
                   range={{ draggableTrack: true }}
                   min={0}
-                  max={100000}
+                  max={1_000_000}
                   step={100}
-                  defaultValue={[0, 1000000]}
+                  defaultValue={[0, 1_000_000]}
                   onChange={(e) => {
                     setSalaryRange(e || []);
                     salaryRangeQuery[1](e || []);
@@ -290,6 +297,22 @@ const FilterOffers = ({
             </div>
           </div>
         </div>
+        <button
+          type="button"
+          className="focus:outline-none text-white hover:text-black bg-green-600 hover:bg-green-500 focus:ring-4 focus:ring-green-300 font-medium text-sm px-5 py-2.5 w-full text-center justify-center"
+          onClick={() => {
+            createQuery(
+              occupations,
+              jobTypes,
+              levels,
+              professions,
+              salaryRange
+            );
+            hideModal(true);
+          }}
+        >
+          Szukaj
+        </button>
       </div>
       {error && (
         <Toast
