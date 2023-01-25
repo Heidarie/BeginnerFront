@@ -707,17 +707,17 @@ const EmployeeProfile = () => {
                     )}
                     {filterAppliedOffers === "Oczekująca" && (
                       <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
-                        Brak oczekujących ofert na rozpatrzenie
+                        Brak oczekujących aplikacji na rozpatrzenie
                       </h3>
                     )}
                     {filterAppliedOffers === "Zaakceptowana" && (
                       <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
-                        Żadna z ofert nie została jeszcze zaakceptowana
+                        Żadna z aplikacji nie została jeszcze rozpatrzona
                       </h3>
                     )}
                     {filterAppliedOffers === "Odrzucona" && (
                       <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
-                        Brak odrzuconych ofert
+                        Brak odrzuconych aplikacji
                       </h3>
                     )}
                   </div>
@@ -744,8 +744,8 @@ const EmployeeProfile = () => {
                             </h4>
                             <h2 className="text-sm flex items-center text-black font-normal my-auto">
                               {application.isOpened
-                                ? "Oferta została już wyświetlona"
-                                : "Oferta nie została jeszcze wyświetlona"}
+                                ? "Aplikacja została wyświetlona"
+                                : "Aplikacja nie została jeszcze wyświetlona"}
                             </h2>
                             <div className="pt-4 grid grid-cols-3 text-sm text-black">
                               <div className="col-span-2 flex items-center mr-auto">
