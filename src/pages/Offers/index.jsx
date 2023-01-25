@@ -84,7 +84,30 @@ const Offers = ({ flag }) => {
 
   return (
     <>
-      <OfferScroll offers={offers} flag={flag} ref={lastOfferElementRef} />
+      {offers?.length > 0 && (
+        <OfferScroll offers={offers} flag={flag} ref={lastOfferElementRef} />
+      )}
+      {loading && (
+        <div className="flex h-screen justify-center items-center m-auto">
+          <h2 className="text-gray-600 font-extrabold text-6xl text-center">
+            Trwa ładowanie ofert...
+          </h2>
+        </div>
+      )}
+      {error && (
+        <div className="flex h-screen justify-center items-center m-auto">
+          <h2 className="text-gray-600 font-extrabold text-6xl text-center">
+            Niestety ale wystąpił błąd przy ładowaniu ofert.
+          </h2>
+        </div>
+      )}
+      {offers?.length === 0 && !loading && (
+        <div className="flex h-screen justify-center items-center">
+          <h2 className="text-gray-600 font-extrabold text-6xl text-center">
+            Niestety ale nie ma jeszcze ofert dla takich filtrów.
+          </h2>
+        </div>
+      )}
       {filters && (
         <FilterOffers
           hideModal={hideModal}
