@@ -58,11 +58,13 @@ const Applicants = ({ publicUrl, hasCv }) => {
       if (res.status === 200 || res.status === 201) {
         setLoading(false);
         if (resultFlag === 1) {
-          const newApplicants = applicants.map(
-            (applicant) =>
-              applicant.publicUrl === employeePublicUrl &&
-              (applicant.isAccepted = true)
-          );
+          const newApplicants = applicants.map((applicant) => {
+            if (applicant.publicUrl === employeePublicUrl) {
+              return { ...applicant, isAccepted: true };
+            } else {
+              return applicant;
+            }
+          });
           setApplicants(newApplicants);
         } else {
           setApplicants(
@@ -113,6 +115,7 @@ const Applicants = ({ publicUrl, hasCv }) => {
   useEffect(() => {
     filterOfferApplicants(hasCv);
   }, [hasCv]);
+  console.log(applicants);
   return (
     <>
       <Swiper

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import loginBg from "../../assets/loginBg.png";
 import Footer from "../../components/Footer";
@@ -7,6 +7,7 @@ import CustomLoginInput from "../../components/form/CustomLoginInput";
 import { Form, Formik, Field } from "formik";
 import AuthService from "../../components/auth.service";
 import Toast from "../../components/Toast";
+import DataService from "../../components/data.service";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onSubmit = async (values, actions) => {
     let { status, data, response } = await AuthService.login(values);
@@ -31,6 +33,13 @@ const Login = () => {
       }, 3000);
     }
   };
+  useEffect(() => {
+    setIsLoggedIn(DataService.checkCookieAuthState("AuthState"));
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <div className="bg-white dark:bg-gray-900 text-white">
       <div className="flex justify-center h-screen w-full">
