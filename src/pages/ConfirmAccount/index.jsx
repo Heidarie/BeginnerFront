@@ -35,7 +35,7 @@ const ConfirmAccount = () => {
     if (token && mail) {
       ConfirmUserAccount(token, mail);
     }
-  }, []);
+  }, [token, mail]);
 
   return (
     <div className="flex h-screen justify-center items-center bg-gray-100">

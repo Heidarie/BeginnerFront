@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { classNames } from "../../utils";
 import { AiOutlineArrowUp } from "react-icons/ai";
 import useOffersFilter from "./components/useOffersFilter";

@@ -2,7 +2,6 @@ import React from "react";
 import { classNames } from "../../../utils/classNames";
 import ScrollContainer from "react-indiana-drag-scroll";
 import { Link, useLocation } from "react-router-dom";
-import { FaCameraRetro } from "react-icons/fa";
 
 const Offer = React.forwardRef((props, ref) => {
   const {

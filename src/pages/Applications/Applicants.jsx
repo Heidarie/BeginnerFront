@@ -13,7 +13,6 @@ import EmployerService from "../../components/employer.service";
 const Applicants = ({ publicUrl, hasCv }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [happyFlow, setHappyFlow] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [applicants, setApplicants] = useState([]);
   const [solidApplicants, setSolidApplicants] = useState([]);
@@ -296,7 +295,6 @@ const Applicants = ({ publicUrl, hasCv }) => {
           </SwiperSlide>
         ))}
       </Swiper>
-      {happyFlow && <Toast text="Udało się utworzyć ofertę!" icon="HAPPY" />}
       {error && (
         <Toast
           text={
