@@ -30,7 +30,6 @@ const EditExperience = ({ hideModal, graduation, setGrad, gradList }) => {
     if (gradList) {
       newList = gradList.filter((item) => item !== graduation);
     }
-    console.log(newList);
     newList.push(updateValues);
     setGrad(newList);
 

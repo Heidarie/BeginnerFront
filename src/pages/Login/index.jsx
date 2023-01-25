@@ -16,14 +16,12 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = async (values, actions) => {
-    let { status, request, response } = await AuthService.login(values);
+    let { status, data, response } = await AuthService.login(values);
     if (status === 200) {
       setLoading(false);
-      console.log(request);
+      navigate(data.returnUrl);
       window.location.reload();
-      navigate(request.data.returnUrl);
     } else {
-      console.log(response);
       setLoading(false);
       setError(true);
       setErrorMessage(response.message);

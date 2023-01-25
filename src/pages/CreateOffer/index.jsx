@@ -108,7 +108,6 @@ const CreateOffer = ({ hideModal }) => {
         benefits: benefitsList?.map((object) => object.value),
       },
     };
-    console.log(updateValues);
 
     let { status, response } = await EmployerService.createOffer(updateValues);
 

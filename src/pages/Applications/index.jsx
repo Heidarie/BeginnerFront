@@ -39,11 +39,12 @@ const Applications = () => {
   useEffect(() => {
     handleUserData();
   }, []);
+
   return (
     <div>
       {employerOffers.length !== 0 ? (
         employerOffers.map((offer) => (
-          <EmployerOffers key={offer} offerDetails={offer} />
+          <EmployerOffers key={offer.publicUrl} offerDetails={offer} />
         ))
       ) : user?.role === "Employer" ? (
         <div className="flex h-screen justify-center items-center bg-gray-100">

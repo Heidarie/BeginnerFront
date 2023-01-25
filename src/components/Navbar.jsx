@@ -10,7 +10,6 @@ import {
   RiFileList3Line,
   RiMessage3Line,
 } from "react-icons/ri";
-import { FaCameraRetro } from "react-icons/fa";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "../utils";
@@ -26,7 +25,6 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     var res = await AuthService.logout();
-    console.log(res);
     if (res.status === 200) {
       navigate("/Login");
       window.location.reload();
@@ -256,7 +254,7 @@ const Navbar = () => {
                                   active
                                     ? "bg-gray-100 text-gray-900"
                                     : "text-gray-700",
-                                  "block px-4 py-2 text-sm"
+                                  "block px-4 py-2 text-sm w-full text-start"
                                 )}
                               >
                                 Profil
@@ -265,34 +263,33 @@ const Navbar = () => {
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <a
-                                href="/"
+                              <Link
                                 className={classNames(
                                   active
                                     ? "bg-gray-100 text-gray-900"
                                     : "text-gray-700",
-                                  "block px-4 py-2 text-sm"
+                                  "block px-4 py-2 text-sm w-full text-start"
                                 )}
                               >
                                 Ustawienia konta
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </div>
                         <div className="py-1">
                           <Menu.Item>
                             {({ active }) => (
-                              <a
+                              <Link
                                 className={classNames(
                                   active
                                     ? "bg-red-100 text-gray-900 "
                                     : "text-gray-700 ",
-                                  "block px-4 py-2 text-sm"
+                                  "block px-4 py-2 text-sm w-full"
                                 )}
                                 onClick={handleLogout}
                               >
                                 Wyloguj się
-                              </a>
+                              </Link>
                             )}
                           </Menu.Item>
                         </div>

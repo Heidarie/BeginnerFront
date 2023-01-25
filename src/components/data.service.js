@@ -37,7 +37,6 @@ const getOfferDetails = async (publicUrl) => {
 const getOffers = async (page, query) => {
   try {
     let response = await instance.get(`/Offers/?page=${page}&${query}`);
-    console.log(response);
     if (response.status === 200 || response.status === 201) {
       return response;
     }

@@ -26,7 +26,6 @@ const EditProfile = ({ hideModal, editProfileData }) => {
       "EmployerPersonalData.Street": values.street,
       "EmployerPersonalData.PostalCode": values.postalCode,
     };
-    console.log(updateValues);
 
     let { status, response } = await EmployerService.updateEmployerData(
       updateValues

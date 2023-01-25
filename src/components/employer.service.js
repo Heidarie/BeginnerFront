@@ -12,7 +12,6 @@ const instance = axios.create({
 const getEmployerOffers = async () => {
   try {
     let response = await instance.get(`/Employer/Offers`);
-    console.log(response);
     if (response.status === 200) {
       return response;
     }
@@ -29,7 +28,6 @@ const updateEmployerData = async (values) => {
         "Content-Type": "multipart/form-data",
       },
     });
-    console.log(response);
     if (response.status === 201) {
       return response;
     }
@@ -42,7 +40,6 @@ const updateEmployerData = async (values) => {
 const createOffer = async (values) => {
   try {
     let response = await instance.put(`/Offers/CreateOffer`, values);
-    console.log(response);
     if (response.status === 201 || response.status === 200) {
       return response;
     }
@@ -52,12 +49,11 @@ const createOffer = async (values) => {
   }
 };
 
-const getApplicants = async (publicUrl) => {
+const getApplicants = async (offerPublicUrl) => {
   try {
     let response = await instance.get(
-      `/Employer/ApplicationManagement/${publicUrl}`
+      `/Employer/ApplicationManagement/${offerPublicUrl}`
     );
-    console.log(response);
     if (response.status === 201 || response.status === 200) {
       return response;
     }
@@ -70,9 +66,27 @@ const getApplicants = async (publicUrl) => {
 const getUserResumee = async (publicUrl, applicationid) => {
   try {
     let response = await instance.get(
-      `/Account/GetFile?userPublicUrl=${publicUrl}&applicationId=${applicationid}`
+      `/Account/GetFile?userPublicUrl=${publicUrl}&applicationId=${applicationid}`,
+      { responseType: "blob" }
     );
-    console.log(response);
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+const postApplicantResult = async (
+  offerPublicUrl,
+  employeePublicUrl,
+  status
+) => {
+  try {
+    let response = await instance.post(
+      `/Employer/ApplicationManagement/${offerPublicUrl}?employeePublicUrl=${employeePublicUrl}&status=${status}`
+    );
     if (response.status === 201 || response.status === 200) {
       return response;
     }
@@ -87,6 +101,7 @@ const EmployerService = {
   getUserResumee,
   updateEmployerData,
   createOffer,
+  postApplicantResult,
   getApplicants,
 };
 

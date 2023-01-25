@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import Applicants from "./Applicants";
 import { classNames } from "../../utils";
-
+import { BiDownArrowAlt } from "react-icons/bi";
 const EmployerOffers = ({ offerDetails }) => {
   const [visible, setVisible] = useState(false);
-  console.log(offerDetails);
+  const [hasCv, setHasCv] = useState(false);
 
   return (
     <div className="flex flex-col items-center text-center justify-center">
@@ -64,10 +64,15 @@ const EmployerOffers = ({ offerDetails }) => {
                 </div>
                 <div className="justify-end text-center items-center">
                   <h2 className="font-semibold text-md text-black">
-                    Akutalnie zaaplikowało:
+                    Aktualnie zaaplikowało:
                     {offerDetails.participants}
                   </h2>
                 </div>
+              </div>
+              <div className="col-span-6 -m-4">
+                {offerDetails.participants > 0 && (
+                  <BiDownArrowAlt className="mx-auto h-5 w-5 text-gray-600 my-3 animate-bounce opacity-100" />
+                )}
               </div>
             </div>
           </div>
@@ -84,14 +89,17 @@ const EmployerOffers = ({ offerDetails }) => {
               <input
                 type="checkbox"
                 name="hasCv"
+                defaultChecked={false}
+                value={hasCv}
+                onClick={() => setHasCv(!hasCv)}
                 className="mx-2 mb-1 h-4 w-4 border-gray-600 text-[#00df9a] focus:ring-[#00df9a]"
               />
             </div>
           </div>
-          <div className="col-span-1">FILTR 2</div>
-          <div className="col-span-1">FILTR 3</div>
         </div>
-        {visible && <Applicants publicUrl={offerDetails.publicUrl} />}
+        {visible && (
+          <Applicants publicUrl={offerDetails.publicUrl} hasCv={hasCv} />
+        )}
       </div>
     </div>
   );

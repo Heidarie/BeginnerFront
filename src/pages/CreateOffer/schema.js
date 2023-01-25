@@ -2,7 +2,10 @@ import * as yup from "yup";
 
 export const createOfferSchema = yup.object().shape({
   title: yup.string().required("Tytuł jest wymagany"),
-  salaryFrom: yup.number().min(1).required("Płaca minimalna jest wymagana"),
+  salaryFrom: yup
+    .number()
+    .min(1, "Płaca minimalna nie może być mniejsza niż 1 zł")
+    .required("Płaca minimalna jest wymagana"),
   salaryTo: yup
     .number()
     .moreThan(yup.ref("salaryFrom"), "Musi być większa od płacy minimalnej"),
@@ -20,5 +23,8 @@ export const createOfferSchema = yup.object().shape({
     .string()
     .min(10, "Opis musi posiadać conajmniej 10 znaków")
     .required("Opis jest wymagany"),
-  companySize: yup.number().required("Wielkość firmy jest wymagana"),
+  companySize: yup
+    .number()
+    .min(1, "Wielkość firmy nie może być mniejsza niż 1 osoba")
+    .required("Wielkość firmy jest wymagana"),
 });

@@ -6,7 +6,6 @@ import DatePicker from "react-date-picker";
 import Toast from "../../../components/Toast";
 
 const EditExperience = ({ hideModal, experience, setExp, expList }) => {
-  console.log(experience?.dateFrom);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [expDateFrom, setExpDateFrom] = useState(

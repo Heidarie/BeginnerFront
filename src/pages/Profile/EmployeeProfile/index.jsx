@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from "react";
-import loginBg from "../../../assets/loginBg.png";
 import Footer from "../../../components/Footer";
 import { IoFlame } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import EditProfile from "./editProfile";
-import { FaCameraRetro } from "react-icons/fa";
 import { RiQuillPenFill } from "react-icons/ri";
-import {
-  ImCross,
-  ImPlus,
-  ImMenu,
-  ImPencil,
-  ImCheckmark,
-  ImLocation,
-} from "react-icons/im";
+import { ImCross, ImPlus, ImMenu, ImPencil, ImCheckmark } from "react-icons/im";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Moment from "moment";
 import "moment/locale/pl";
@@ -91,7 +82,6 @@ const EmployeeProfile = () => {
   };
 
   const handleAccept = async (values, type) => {
-    console.log(values);
     if (values === null) {
       setEditExp(false);
       setEditGrad(false);
@@ -420,11 +410,17 @@ const EmployeeProfile = () => {
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
-                        <h3 className="col-span-6">
+                        <h3 className="col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
                             Nazwa firmy
                           </label>
                           {experience.employerName}
+                        </h3>
+                        <h3 className="col-span-3">
+                          <label className="block text-sm font-medium text-gray-700">
+                            Tytuł
+                          </label>
+                          {experience.position}
                         </h3>
                         <h3 className="col-span-6">
                           <label className="block text-sm font-medium text-gray-700">
@@ -524,8 +520,8 @@ const EmployeeProfile = () => {
                     >
                       {gradList?.map((graduation, index) => (
                         <Draggable
-                          key={graduation.type + index}
-                          draggableId={graduation.type}
+                          key={graduation.schoolName + index}
+                          draggableId={graduation.schoolName}
                           index={index}
                         >
                           {(provided) => (
@@ -565,7 +561,6 @@ const EmployeeProfile = () => {
                                       </label>
                                       {graduation?.schoolName}
                                     </h3>
-
                                     <h3 className="col-span-3">
                                       <label className="block text-sm font-medium text-gray-700">
                                         Tytuł
@@ -631,10 +626,10 @@ const EmployeeProfile = () => {
                 </Droppable>
               </DragDropContext>
             ) : (
-              user?.personalDataModel?.graduations?.map((graduation) => (
+              user?.personalDataModel?.graduations?.map((graduation, index) => (
                 <div
                   className="item-container my-2 md:col-span-2 md:mt-0"
-                  key={graduation}
+                  key={graduation?.schoolName + index}
                 >
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
@@ -730,7 +725,7 @@ const EmployeeProfile = () => {
                   filteredOffers?.map((application) => (
                     <div
                       key={application.offerPublicUrl}
-                      className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center max-h-[10rem]"
+                      className="relative flex flex-col justify-between bg-white shadow-md rounded-3xl bg-cover text-gray-800 overflow-hidden cursor-pointer w-full object-cover object-center  max-h-fit"
                     >
                       {application.status === "Oczekująca" && (
                         <div className="absolute bg-gradient-to-t from-yellow-300 to-yellow-500 opacity-50 inset-0 z-0"></div>
@@ -742,26 +737,26 @@ const EmployeeProfile = () => {
                         <div className="absolute bg-gradient-to-t from-red-300 to-red-500 opacity-50 inset-0 z-0"></div>
                       )}
                       <Link to={`/Offers/Offer/${application.offerPublicUrl}`}>
-                        <div className="relative flex flex-row items-end h-62 w-full ">
-                          <div className="p-6 rounded-lg  flex flex-col w-full z-5">
-                            <h4 className="mt-1 text-black text-xl font-semibold  leading-tight truncate">
+                        <div className="relative flex flex-row items-end w-full ">
+                          <div className="m-2 p-2 rounded-lg flex flex-col w-full z-5">
+                            <h4 className="mt-1 text-black text-xl font-semibold w-full leading-tight truncate">
                               {application.offerName}
                             </h4>
-                            <h2 className="text-sm flex items-center text-black font-normal">
+                            <h2 className="text-sm flex items-center text-black font-normal my-auto">
                               {application.isOpened
-                                ? "Oferta została otwarta"
+                                ? "Oferta została już wyświetlona"
                                 : "Oferta nie została jeszcze wyświetlona"}
                             </h2>
-                            <div className="flex pt-4  text-sm text-black">
-                              <div className="flex items-center mr-auto">
-                                <RiQuillPenFill className="h-5 w-5 text-yellow-500 mr-1" />
+                            <div className="pt-4 grid grid-cols-3 text-sm text-black">
+                              <div className="col-span-2 flex items-center mr-auto">
+                                <RiQuillPenFill className=" text-yellow-500 mr-1" />
                                 <p className="font-normal">
-                                  {Moment(application.applicationDate)
-                                    .lang("pl")
-                                    .fromNow()}
+                                  {Moment(
+                                    application.applicationDate
+                                  ).fromNow()}
                                 </p>
                               </div>
-                              <div className="flex items-center font-medium text-black">
+                              <div className="col-span-1 items-center font-medium text-black">
                                 PLN 1800
                                 <span className="text-gray-500 text-sm font-normal">
                                   /M

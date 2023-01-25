@@ -29,7 +29,6 @@ const EmployerProfile = () => {
       let { status, data, response } = await DataService.getEmployerProfile(id);
       if (status === 200) {
         setEmployer(data);
-        console.log(data);
         setLoading(false);
       } else {
         setLoading(false);
@@ -149,7 +148,7 @@ const EmployerProfile = () => {
             <div className="flex flex-row items-center justify-center">
               <RiFileList3Line className="h-6 w-6 mr-3 fill-gray-500/95" />
               <span className="font-bold text-gray-600">
-                {employer?.offers?.length}
+                {employer?.offersNumber}
               </span>
             </div>
 
