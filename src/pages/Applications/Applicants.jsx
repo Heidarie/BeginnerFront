@@ -115,7 +115,7 @@ const Applicants = ({ publicUrl, hasCv }) => {
   useEffect(() => {
     filterOfferApplicants(hasCv);
   }, [hasCv]);
-  console.log(applicants);
+
   return (
     <>
       <Swiper

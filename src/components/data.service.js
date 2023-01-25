@@ -17,7 +17,6 @@ const getFilters = async (value) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -29,7 +28,6 @@ const getOfferDetails = async (publicUrl) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -41,7 +39,6 @@ const getOffers = async (page, query) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -73,10 +70,9 @@ const getUserData = async () => {
       return response;
     }
     if (response.status === 403 || 401) {
-      console.log("error", response);
+      return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -87,10 +83,9 @@ const getUserProfile = async (userPublicUrl) => {
       return response;
     }
     if (response.status === 403 || 401) {
-      console.log("error", response);
+      return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -101,10 +96,9 @@ const getEmployerProfile = async (companyPublicUrl) => {
       return response;
     }
     if (response.status === 403 || 401) {
-      console.log("error", response);
+      return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };

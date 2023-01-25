@@ -14,20 +14,17 @@ const register = async (link, values) => {
   try {
     return await instance.post(link, values);
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
 
 const login = async (values) => {
-  console.log(process.env.REACT_APP_BASE_API_URL);
   try {
     let response = await instance.post("/Authentication/Login", values);
     if (response.status === 200 || 201) {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -40,7 +37,6 @@ const confirmAccount = async (token, mail) => {
 
     return response;
   } catch (error) {
-    console.log(error);
     return error;
   }
 };

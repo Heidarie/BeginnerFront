@@ -25,7 +25,6 @@ const updateUserData = async (values) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -46,7 +45,6 @@ const updateUserDetails = async (values, type) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -58,7 +56,6 @@ const applyOffer = async (publicUrl) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };

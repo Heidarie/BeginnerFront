@@ -16,7 +16,6 @@ const getEmployerOffers = async () => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -32,7 +31,6 @@ const updateEmployerData = async (values) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -44,7 +42,6 @@ const createOffer = async (values) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -58,7 +55,6 @@ const getApplicants = async (offerPublicUrl) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -73,7 +69,6 @@ const getUserResumee = async (publicUrl, applicationid) => {
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
@@ -91,7 +86,6 @@ const postApplicantResult = async (
       return response;
     }
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
