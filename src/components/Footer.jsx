@@ -11,7 +11,7 @@ const Footer = () => {
               to="/"
               className="text-base leading-6 text-gray-700 hover:text-gray-900"
             >
-              About
+              O nas
             </Link>
           </div>
           <div className="px-5 py-2">
@@ -27,7 +27,7 @@ const Footer = () => {
               to="/"
               className="text-base leading-6 text-gray-700 hover:text-gray-900"
             >
-              Team
+              Nasz skład
             </Link>
           </div>
           <div className="px-5 py-2">
@@ -35,7 +35,7 @@ const Footer = () => {
               to="/"
               className="text-base leading-6 text-gray-700 hover:text-gray-900"
             >
-              Pricing
+              Cennik
             </Link>
           </div>
           <div className="px-5 py-2">
@@ -43,7 +43,7 @@ const Footer = () => {
               to="/"
               className="text-base leading-6 text-gray-700 hover:text-gray-900"
             >
-              Contact
+              Kontakt
             </Link>
           </div>
           <div className="px-5 py-2">
@@ -51,7 +51,7 @@ const Footer = () => {
               to="/"
               className="text-base leading-6 text-gray-700 hover:text-gray-900"
             >
-              Terms
+              Prawa
             </Link>
           </div>
         </nav>
@@ -119,7 +119,7 @@ const Footer = () => {
           </Link>
         </div>
         <p className="mt-8 text-base leading-6 text-center text-gray-400">
-          © 2022 Beginner, Inc. All rights reserved.
+          © 2023 Beginner, Sp.z.o. Wszelkie prawa zastrzeżone.
         </p>
       </div>
     </section>

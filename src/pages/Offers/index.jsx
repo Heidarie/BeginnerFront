@@ -104,7 +104,7 @@ const Offers = ({ flag }) => {
       {offers?.length === 0 && !loading && (
         <div className="flex h-screen justify-center items-center">
           <h2 className="text-gray-600 font-extrabold text-6xl text-center">
-            Niestety ale nie ma jeszcze ofert dla takich filtrów.
+            {`Nie znaleziono ofert :(.`}
           </h2>
         </div>
       )}

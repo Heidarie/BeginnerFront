@@ -13,11 +13,6 @@ const Feed = ({ flag }) => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  // const inputRef = useRef(null);
-
-  // const sendPost = (e) => {
-  //   e.preventDefault();
-  // };
   const setUserData = async () => {
     try {
       setLoading(true);

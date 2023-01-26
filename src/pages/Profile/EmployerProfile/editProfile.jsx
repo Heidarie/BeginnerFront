@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Modal from "../../../components/Modal";
 import CustomInput from "./components/CustomInput";
 import CustomTextArea from "./components/CustomTextArea";
-// import CustomFile from "./components/CustomFile";
 import { Form, Formik } from "formik";
 import EmployerService from "../../../components/employer.service";
 import Toast from "../../../components/Toast";
 import CustomSelect from "../../../components/form/CustomSelect";
 import { regions } from "../../../assets/regions";
+
 const EditProfile = ({ hideModal, editProfileData }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

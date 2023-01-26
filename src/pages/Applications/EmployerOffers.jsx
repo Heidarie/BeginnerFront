@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Applicants from "./Applicants";
 import { classNames } from "../../utils";
 import { BiDownArrowAlt } from "react-icons/bi";
+
 const EmployerOffers = ({ offerDetails }) => {
   const [visible, setVisible] = useState(false);
   const [hasCv, setHasCv] = useState(false);

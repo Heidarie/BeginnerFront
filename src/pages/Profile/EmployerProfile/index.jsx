@@ -3,7 +3,6 @@ import Toast from "../../../components/Toast";
 import { Link, useParams } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi";
 import { MdOutlineModeEditOutline } from "react-icons/md";
-import { BiMessageDetail } from "react-icons/bi";
 import { RiFileList3Line } from "react-icons/ri";
 import EditProfile from "./editProfile";
 import CreateOffer from "../../CreateOffer/index";
