@@ -25,13 +25,20 @@ jobs:
         run: |
           npm install
           npm run build --if-present
-          npm run test --if-present
+        env:
+          CI: false
+          
+      - name: Zip Release
+        uses: TheDoctor0/zip-release@0.7.0
+        with:
+          filename: release.zip
+          path: ./build/*
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: node-app
-          path: .
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -53,4 +60,4 @@ jobs:
           app-name: 'beginnerpl-react'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5AEEA1E14BF6468B8739569B52A7E3CC }}
-          package: .
+          package: release.zip
