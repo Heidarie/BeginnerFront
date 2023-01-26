@@ -343,15 +343,15 @@ const Navbar = () => {
           >
             Oferty
           </Link>
-
-          <Link
-            onClick={() => setNavMenu(!navMenu)}
-            to="/Applications"
-            className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-          >
-            Aplikacje
-          </Link>
-
+          {user?.role === "Employer" && (
+            <Link
+              onClick={() => setNavMenu(!navMenu)}
+              to="/Applications"
+              className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            >
+              Aplikacje
+            </Link>
+          )}
           <Link
             onClick={() => setNavMenu(!navMenu)}
             to="/Contacts"

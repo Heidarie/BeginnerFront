@@ -12,13 +12,12 @@ const HomePage = () => {
   useEffect(() => {
     window.addEventListener("resize", handleMobile);
   });
-
   return (
     <div className="w-full flex justify-center">
       <div className="max-w-full grid md:grid-cols-2">
         <div onMouseOver={() => setPrimary(1)}>
           {primary === 1 ? (
-            <div className="ease-in duration-500 lg:block xl:w-9/12 md:w-8/12 max-h-screen absolute overflow-auto left-0 rounded-lg">
+            <div className="ease-in duration-500 hidden md:block lg:block xl:w-9/12 md:w-8/12 max-h-screen absolute overflow-auto left-0 rounded-lg">
               <Feed flag={true} />
             </div>
           ) : (
