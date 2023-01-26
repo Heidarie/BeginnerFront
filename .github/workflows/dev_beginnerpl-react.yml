@@ -27,6 +27,7 @@ jobs:
           npm run build --if-present
         env:
           CI: false
+          
             
       - name: Zip Release
         uses: TheDoctor0/zip-release@0.7.0
