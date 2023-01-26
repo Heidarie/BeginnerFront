@@ -11,22 +11,22 @@ const Applications = () => {
   const [user, setUser] = useState(undefined);
   const [employerOffers, setEmployerOffers] = useState([]);
 
-  const getEmployerOffers = () => {
+  const getEmployerOffers = async () => {
     setLoading(true);
-    EmployerService.getEmployerOffers().then((res) => {
-      if (res.status === 200 || res.status === 201) {
-        setLoading(false);
-        setEmployerOffers(res.data);
-      } else {
-        setLoading(false);
-        setError(true);
-        setErrorMessage(res.response.data.message);
-        setTimeout(() => {
-          setErrorMessage("");
-          setError(false);
-        }, 3000);
-      }
-    });
+    const { status, response, data } =
+      await EmployerService.getEmployerOffers();
+    if (status === 200 || status === 201) {
+      setLoading(false);
+      setEmployerOffers(data);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(response?.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
   };
   const handleUserData = async () => {
     const { data } = await DataService.getUserData();

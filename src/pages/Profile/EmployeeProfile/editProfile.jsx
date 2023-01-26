@@ -45,7 +45,7 @@ const EditProfile = ({ hideModal, editProfileData }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response.data.message);
+      setErrorMessage(response?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -75,7 +75,7 @@ const EditProfile = ({ hideModal, editProfileData }) => {
       if (response) {
         setLoading(false);
         setError(true);
-        setErrorMessage(response.data.message);
+        setErrorMessage(response?.message);
         setTimeout(() => {
           setErrorMessage("");
           setError(false);
@@ -113,7 +113,7 @@ const EditProfile = ({ hideModal, editProfileData }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response.data.message);
+      setErrorMessage(response?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

@@ -56,7 +56,7 @@ const FilterOffers = ({
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response.data.message);
+      setErrorMessage(response?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -83,7 +83,7 @@ const FilterOffers = ({
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response.data.message);
+      setErrorMessage(response?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

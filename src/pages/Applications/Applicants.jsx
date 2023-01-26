@@ -17,23 +17,24 @@ const Applicants = ({ publicUrl, hasCv }) => {
   const [applicants, setApplicants] = useState([]);
   const [solidApplicants, setSolidApplicants] = useState([]);
 
-  const getOfferApplicants = () => {
+  const getOfferApplicants = async () => {
     setLoading(true);
-    EmployerService.getApplicants(publicUrl).then((res) => {
-      if (res.status === 200 || res.status === 201) {
-        setLoading(false);
-        setApplicants(res.data);
-        setSolidApplicants(res.data);
-      } else {
-        setLoading(false);
-        setError(true);
-        setErrorMessage(res.response.data.message);
-        setTimeout(() => {
-          setErrorMessage("");
-          setError(false);
-        }, 3000);
-      }
-    });
+    const { status, data, response } = await EmployerService.getApplicants(
+      publicUrl
+    );
+    if (status === 200 || status === 201) {
+      setLoading(false);
+      setApplicants(data);
+      setSolidApplicants(data);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(response?.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
   };
 
   const filterOfferApplicants = () => {
@@ -47,66 +48,71 @@ const Applicants = ({ publicUrl, hasCv }) => {
     }
   };
 
-  const handleApplicant = (offerPublicUrl, employeePublicUrl, resultFlag) => {
+  const handleApplicant = async (
+    offerPublicUrl,
+    employeePublicUrl,
+    resultFlag
+  ) => {
     //1-Accept 2-Decline
     setLoading(true);
-    EmployerService.postApplicantResult(
+    const { status, response } = await EmployerService.postApplicantResult(
       offerPublicUrl,
       employeePublicUrl,
       resultFlag
-    ).then((res) => {
-      if (res.status === 200 || res.status === 201) {
-        setLoading(false);
-        if (resultFlag === 1) {
-          const newApplicants = applicants.map((applicant) => {
-            if (applicant.publicUrl === employeePublicUrl) {
-              return { ...applicant, isAccepted: true };
-            } else {
-              return applicant;
-            }
-          });
-          setApplicants(newApplicants);
-        } else {
-          setApplicants(
-            applicants.filter(
-              (applicant) => applicant.publicUrl !== employeePublicUrl
-            )
-          );
-        }
-      } else {
-        setLoading(false);
-        setError(true);
-        setErrorMessage(res.response.data.message);
-        setTimeout(() => {
-          setErrorMessage("");
-          setError(false);
-        }, 3000);
-      }
-    });
-  };
-  const downloadResumee = (publicUrl, applicationid, fileName) => {
-    setLoading(true);
-    EmployerService.getUserResumee(publicUrl, applicationid).then((res) => {
-      if (res.status === 200 || res.status === 201) {
-        setLoading(false);
-        const fileURL = window.URL.createObjectURL(new Blob([res.data]), {
-          type: "application/octet-stream",
+    );
+    if (status === 200 || status === 201) {
+      setLoading(false);
+      if (resultFlag === 1) {
+        const newApplicants = applicants?.map((applicant) => {
+          if (applicant.publicUrl === employeePublicUrl) {
+            return { ...applicant, isAccepted: true };
+          } else {
+            return applicant;
+          }
         });
-        const link = document.createElement("a");
-        link.href = fileURL;
-        link.setAttribute("download", `${fileName}.pdf`);
-        document.body.appendChild(link);
-        link.click();
+        setApplicants(newApplicants);
       } else {
-        setLoading(false);
-        setError(true);
-        setErrorMessage(res.response.data.message);
-        setTimeout(() => {
-          setErrorMessage("");
-          setError(false);
-        }, 3000);
+        setApplicants(
+          applicants?.filter(
+            (applicant) => applicant.publicUrl !== employeePublicUrl
+          )
+        );
       }
-    });
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(response?.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
+  };
+  const downloadResumee = async (publicUrl, applicationid, fileName) => {
+    setLoading(true);
+    const { data, status, response } = await EmployerService.getUserResumee(
+      publicUrl,
+      applicationid
+    );
+    if (status === 200 || status === 201) {
+      setLoading(false);
+      const fileURL = window.URL.createObjectURL(new Blob([data]), {
+        type: "application/octet-stream",
+      });
+      const link = document.createElement("a");
+      link.href = fileURL;
+      link.setAttribute("download", `${fileName}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(response?.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
   };
   useEffect(() => {
     getOfferApplicants();

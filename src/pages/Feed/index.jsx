@@ -14,15 +14,15 @@ const Feed = ({ flag }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const setUserData = async () => {
-    try {
-      setLoading(true);
-      const { data } = await DataService.getUserData();
+    setLoading(true);
+    const { status, data, response } = await DataService.getUserData();
+    if (status === 200 || status === 201) {
       setUser(data);
       setLoading(false);
-    } catch (error) {
+    } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(response?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

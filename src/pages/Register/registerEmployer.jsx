@@ -27,7 +27,7 @@ const RegisterEmployer = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response.data.message);
+      setErrorMessage(response?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
