@@ -19,9 +19,7 @@ const PasswordRecovery = () => {
 
   const onSubmit = async (values) => {
     const { email } = values;
-    let { status, response } = await AuthService.sendResetPasswordEmail({
-      email: email,
-    });
+    let { status, response } = await AuthService.sendResetPasswordEmail(email);
     if (status === 200) {
       setLoading(false);
       setHappyFlow(response?.message);
@@ -32,7 +30,7 @@ const PasswordRecovery = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

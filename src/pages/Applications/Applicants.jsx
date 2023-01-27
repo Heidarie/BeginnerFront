@@ -29,7 +29,27 @@ const Applicants = ({ publicUrl, hasCv }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
+      setTimeout(() => {
+        setErrorMessage("");
+        setError(false);
+      }, 3000);
+    }
+  };
+
+  const stopOffer = async () => {
+    setLoading(true);
+    const { status, data, response } = await EmployerService.getApplicants(
+      publicUrl
+    );
+    if (status === 200 || status === 201) {
+      setLoading(false);
+      setApplicants(data);
+      setSolidApplicants(data);
+    } else {
+      setLoading(false);
+      setError(true);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -81,7 +101,7 @@ const Applicants = ({ publicUrl, hasCv }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -107,7 +127,7 @@ const Applicants = ({ publicUrl, hasCv }) => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

@@ -73,7 +73,7 @@ const EditExperience = ({ hideModal, experience, setExp, expList }) => {
                         />
                         <CustomInput
                           className="col-span-3"
-                          label="Tytuł"
+                          label="Stanowisko"
                           name="position"
                           type="text"
                           placeholder="np. Wyższa szkoła Bankowa w Poznaniu"

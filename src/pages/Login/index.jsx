@@ -26,7 +26,7 @@ const Login = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setError(false);
         setErrorMessage("");
@@ -131,9 +131,7 @@ const Login = () => {
               </Formik>
 
               <p className="mt-6 text-sm text-center text-gray-400">
-                <Link to="/PasswordRecovery">
-                  Nie posiadasz jeszcze konta?{" "}
-                </Link>
+                Nie posiadasz jeszcze konta?{" "}
                 <Link
                   to="/Register"
                   className="text-blue-500 focus:outline-none focus:underline hover:underline"

@@ -103,7 +103,7 @@ const EmployeeProfile = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -121,7 +121,7 @@ const EmployeeProfile = () => {
       } else {
         setLoading(false);
         setError(true);
-        setErrorMessage(response?.message);
+        setErrorMessage(response?.data?.message);
         setTimeout(() => {
           setErrorMessage("");
           setError(false);
@@ -418,7 +418,7 @@ const EmployeeProfile = () => {
                         </h3>
                         <h3 className="col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
-                            Tytuł
+                            Stanowisko
                           </label>
                           {experience.position}
                         </h3>

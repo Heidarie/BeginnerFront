@@ -35,7 +35,7 @@ const RegisterEmployee = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -84,7 +84,7 @@ const RegisterEmployee = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

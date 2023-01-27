@@ -20,9 +20,11 @@ const PasswordRecovery = () => {
     const { confirmPassword } = values;
     console.log(confirmPassword);
     setLoading(true);
-    let { status, response } = await AuthService.setNewPassword(token, mail, {
-      password: confirmPassword,
-    });
+    let { status, response } = await AuthService.setNewPassword(
+      token,
+      mail,
+      confirmPassword
+    );
     if (status === 200) {
       setLoading(false);
       setHappyFlow(response?.message);
@@ -33,7 +35,7 @@ const PasswordRecovery = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
