@@ -15,6 +15,8 @@ import Feed from "./pages/Feed";
 import Modal from "./components/Modal";
 import Applications from "./pages/Applications/index";
 import ConfirmAccount from "./pages/ConfirmAccount";
+import PasswordRecovery from "./pages/PasswordRecovery";
+import ResetPassword from "./pages/ResetPassword";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -28,6 +30,8 @@ root.render(
       <Route path="/Offers" element={<OffersPage />} />
       <Route path="/Offers/Offer/:publicUrl" element={<OfferPage />} />
       <Route path="/Feed" element={<Feed />} />
+      <Route path="/PasswordRecovery" element={<PasswordRecovery />} />
+      <Route path="/ResetPassword" element={<ResetPassword />} />
       <Route path="/Account/User/:id" element={<EmployeeProfile />} />
       <Route path="/Company/:id" element={<EmployerProfile />} />
       <Route path="/Account/User/Edit/:id" element={<EditProfile />} />

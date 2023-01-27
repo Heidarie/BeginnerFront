@@ -130,7 +130,7 @@ const Navbar = () => {
                   </Link>
                 )}
 
-                <Link className="" to="/Contacts">
+                {/* <Link className="" to="/Contacts">
                   <div
                     className="px-2 py-1 bg-[#00df9a] rounded-md"
                     onMouseOver={() => handleHover(2)}
@@ -152,9 +152,9 @@ const Navbar = () => {
                       Kontakty
                     </p>
                   </div>
-                </Link>
+                </Link> */}
 
-                <Link className="" to="/Messages">
+                {/* <Link className="" to="/Messages">
                   <div
                     className="px-2 py-1 bg-[#00df9a] rounded-md"
                     onMouseOver={() => handleHover(3)}
@@ -176,7 +176,7 @@ const Navbar = () => {
                       Wiadomości
                     </p>
                   </div>
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
@@ -352,21 +352,21 @@ const Navbar = () => {
               Aplikacje
             </Link>
           )}
-          <Link
+          {/* <Link
             onClick={() => setNavMenu(!navMenu)}
             to="/Contacts"
             className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Kontakty
-          </Link>
+          </Link> */}
 
-          <Link
+          {/* <Link
             onClick={() => setNavMenu(!navMenu)}
             to="/Messages"
             className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
           >
             Wiadomości
-          </Link>
+          </Link> */}
         </div>
       </div>
     </nav>

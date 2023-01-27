@@ -73,7 +73,7 @@ const RegisterEmployee = () => {
       regionCode: parseInt(values.regionCode),
     };
     setLoading(true);
-    let { status } = await AuthService.register(
+    let { status, response } = await AuthService.register(
       "/Authentication/Register",
       newValues
     );
@@ -84,7 +84,9 @@ const RegisterEmployee = () => {
     } else {
       setLoading(false);
       setError(true);
+      setErrorMessage(response?.message);
       setTimeout(() => {
+        setErrorMessage("");
         setError(false);
       }, 3000);
     }

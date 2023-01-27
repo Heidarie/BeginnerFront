@@ -47,9 +47,9 @@ const EmployerProfile = () => {
 
   return (
     <div>
-      <div className="mx-auto grid mt-20 max-w-8xl">
-        <div className="flex flex-row rounded-lg border border-gray-200/80 bg-white p-6">
-          <div className="relative">
+      <div className="mx-auto mt-20 max-w-fit md:max-w-8xl">
+        <div className="grid grid-cols-6 max-w-8xl rounded-lg border border-gray-200/80 bg-white p-6">
+          <div className="col-span-1">
             <img
               className="max-w-40 max-h-40 rounded-md object-cover"
               src={employer?.image}
@@ -61,7 +61,7 @@ const EmployerProfile = () => {
             ></div>
           </div>
 
-          <div className="flex flex-col px-6">
+          <div className="col-span-3 px-6">
             <div className="flex h-8 flex-row">
               <h2 className="text-lg font-semibold">{employer?.companyName}</h2>
 
@@ -106,13 +106,13 @@ const EmployerProfile = () => {
             </div>
           </div>
 
-          <div className="w-100 flex flex-grow flex-col items-end justify-start">
-            <div className="flex flex-col space-x-3">
+          <div className="col-span-2 ">
+            <div className="grid grid-cols-1 space-x-3 text-end justify-end">
               {employer?.isLoggedInUserAccount ? (
-                <div className="flex flex-col space-y-3 md:flex-row md:space-x-3 md:space-y-0">
+                <div className="col-span-1 text-end">
                   <button
                     onClick={() => setCreateOffer(true)}
-                    className="flex rounded-md bg-green-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600"
+                    className="flex focus:outline-none min-w-[9rem] max-w-[9rem] m-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg  dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                   >
                     <HiOutlinePlus className="w-5 h-5 m-auto mr-2" />
                     Stwórz ofertę
@@ -120,8 +120,7 @@ const EmployerProfile = () => {
                   {createOffer && <CreateOffer hideModal={hideModal} />}
                   <button
                     onClick={() => setEditProfile(true)}
-                    className="flex rounded-md bg-yellow-400 py-2 px-4 text-black 
-        transition-all duration-150 ease-in-out hover:bg-gray-200"
+                    className="flex focus:outline-none min-w-[9rem] max-w-[9rem] m-auto text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-lg  dark:bg-yellow-400 dark:hover:bg-yellow-400 dark:focus:ring-yellow-500"
                   >
                     <MdOutlineModeEditOutline className="w-5 h-5 m-auto text-black mr-2" />
                     Edytuj profil
@@ -142,7 +141,7 @@ const EmployerProfile = () => {
             </div>
           </div>
         </div>
-        <div className="mt-2 flex items-center justify-center text-center space-x-5 max-w-8xl">
+        <div className=" mt-2 flex items-center justify-center text-center space-x-5 max-w-8xl">
           <span className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
             <div className="flex flex-row items-center justify-center">
               <RiFileList3Line className="h-6 w-6 mr-3 fill-gray-500/95" />

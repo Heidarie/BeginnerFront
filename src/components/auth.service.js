@@ -41,12 +41,40 @@ const confirmAccount = async (token, mail) => {
   }
 };
 
+const sendResetPasswordEmail = async (values) => {
+  try {
+    let response = await instance.post(
+      "/Authentication/SendResetPasswordMail",
+      values
+    );
+
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
+const setNewPassword = async (token, mail, password) => {
+  try {
+    let response = await instance.post(
+      `/Authentication/ResetPassword?token=${token}&email=${mail}`,
+      password
+    );
+
+    return response;
+  } catch (error) {
+    return error;
+  }
+};
+
 const logout = async () => {
   const response = await instance.post("/Authentication/Logout");
   return response;
 };
 
 const AuthService = {
+  sendResetPasswordEmail,
+  setNewPassword,
   register,
   login,
   logout,
