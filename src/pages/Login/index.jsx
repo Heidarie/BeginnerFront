@@ -131,7 +131,9 @@ const Login = () => {
               </Formik>
 
               <p className="mt-6 text-sm text-center text-gray-400">
-                Nie posiadasz jeszcze konta?{" "}
+                <Link to="/PasswordRecovery">
+                  Nie posiadasz jeszcze konta?{" "}
+                </Link>
                 <Link
                   to="/Register"
                   className="text-blue-500 focus:outline-none focus:underline hover:underline"
