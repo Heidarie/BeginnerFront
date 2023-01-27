@@ -43,20 +43,17 @@ const getOffers = async (page, query) => {
   }
 };
 const checkCookieAuthState = (name) => {
-  let cookieName = name + "=";
-  let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(";");
-  for (let i = 0; i < ca.length; i++) {
-    let c = ca[i];
-    while (c.charAt(0) === " ") {
-      c = c.substring(1);
-    }
-    if (c.indexOf(cookieName) === 0) {
-      return true;
-    }
+  const cookieName = document.cookie.split("; ").reduce((r, v) => {
+    const parts = v.split("=");
+    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+  }, "");
+  if (cookieName === "unlogged" || cookieName === undefined) {
+    return false;
+  } else {
+    return true;
   }
-  return false;
 };
+
 function deleteCookieAuthState(name) {
   if (checkCookieAuthState(name)) {
     document.cookie =
