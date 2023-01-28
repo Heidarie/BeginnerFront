@@ -12,6 +12,7 @@ const RegisterEmployer = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [happyFlow, setHappyFlow] = useState(false);
 
   const navigate = useNavigate();
   const onSubmit = async (values, actions) => {
@@ -22,12 +23,16 @@ const RegisterEmployer = () => {
     );
     if (status === 201) {
       setLoading(false);
-      navigate({ pathname: "/Login" });
-      window.location.reload();
+      setHappyFlow(true);
+      setTimeout(() => {
+        setHappyFlow(false);
+        navigate({ pathname: "/Login" });
+        window.location.reload();
+      }, 2000);
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -146,7 +151,8 @@ const RegisterEmployer = () => {
           .
         </p>
       </div>
-      {loading && <Toast text="Ładowanie" icon="LOADING" />}
+      {happyFlow && <Toast text="Pomyślnie utworzono konto!" icon="HAPPY" />}
+      {loading && <Toast text="Tworzenie konta..." icon="LOADING" />}
       {error && (
         <Toast
           text={

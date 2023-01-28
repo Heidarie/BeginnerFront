@@ -7,15 +7,15 @@ import loginBg from "../../assets/loginBg.png";
 function Register() {
   const [view, setView] = useState("basic");
   return (
-    <div className="bg-white dark:bg-gray-900 text-white top-16">
+    <div className="bg-white dark:bg-black h-screen text-white top-16">
       <div className="flex justify-center h-fit w-full">
-        <div className="w-screen bg-cover lg:block lg:w-full">
+        <div className="w-full block">
           <div
-            className="block lg:flex items-center bg-cover w-full h-fit lg:h-screen justify-center px-20 bg-gray-900 bg-opacity-40"
+            className="flex items-center bg-cover w-full justify-center px-20 bg-gray-900 bg-opacity-40"
             style={{ backgroundImage: `url(${loginBg})` }}
           >
-            <div className="flex items-center justify-center w-full max-w-md px-6 mx-auto lg:w-3/6 sm:bg-gray-800 rounded-lg pt-[5rem] md:mt-10 md:pt-2">
-              <div className="flex-1 ">
+            <div className="flex h-fit lg:h-fit items-center justify-center w-full max-w-md px-6 mx-auto lg:w-3/6 md:bg-gray-800 rounded-lg pt-[5rem] md:my-[5rem] md:pt-2">
+              <div className="flex-1">
                 <div className="flex justify-between mb-4 bg-gray-800 rounded-2xl">
                   <button
                     className="m-2 text-2xl text-white bg-gray-800 rounded-lg px-3 p-1"

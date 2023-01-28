@@ -5,11 +5,7 @@ import {
   AiFillCaretDown,
   AiOutlineSolution,
 } from "react-icons/ai";
-import {
-  RiContactsBookLine,
-  RiFileList3Line,
-  RiMessage3Line,
-} from "react-icons/ri";
+import { RiFileList3Line } from "react-icons/ri";
 import { Menu, Transition } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { classNames } from "../utils";

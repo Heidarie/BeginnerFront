@@ -44,8 +44,13 @@ const confirmAccount = async (token, mail) => {
 const sendResetPasswordEmail = async (values) => {
   try {
     let response = await instance.post(
-      "/Authentication/SendResetPasswordMail",
-      values
+      "/Authentication/SendResetPasswordEmail",
+      values,
+      {
+        headers: {
+          "Content-Type": "application/json-patch+json",
+        },
+      }
     );
 
     return response;
@@ -57,8 +62,13 @@ const sendResetPasswordEmail = async (values) => {
 const setNewPassword = async (token, mail, password) => {
   try {
     let response = await instance.post(
-      `/Authentication/ResetPassword?token=${token}&email=${mail}`,
-      password
+      `/Authentication/SetNewPassword?email=${mail}&token=${token}`,
+      password,
+      {
+        headers: {
+          "Content-Type": "application/json-patch+json",
+        },
+      }
     );
 
     return response;

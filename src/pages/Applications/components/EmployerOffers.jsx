@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import Applicants from "./Applicants";
-import { classNames } from "../../utils";
+import { classNames } from "../../../utils";
 import { BiDownArrowAlt } from "react-icons/bi";
+import CancelOffer from "./CancelOffer";
+import { ImCross } from "react-icons/im";
 
 const EmployerOffers = ({ offerDetails }) => {
   const [visible, setVisible] = useState(false);
   const [hasCv, setHasCv] = useState(false);
+  const [cancelOffer, setCancelOffer] = useState(false);
 
+  const hideModal = () => {
+    setCancelOffer(false);
+  };
+  console.log(offerDetails);
   return (
     <div className="flex flex-col items-center text-center justify-center">
       <div className="relative rounded-lg bg-white text-left shadow-xl sm:w-full sm:max-w-7xl mt-[2rem] top-16">
@@ -54,9 +61,24 @@ const EmployerOffers = ({ offerDetails }) => {
               </div>
               <div className="col-span-1">
                 <div className="justify-end text-center items-center">
-                  <h2 className="font-bold text-lg text-green-500">
-                    Oferta: {offerDetails.isActive ? "Aktywna" : "Zakończona"}
-                  </h2>
+                  {offerDetails.isActive ? (
+                    <div>
+                      <button
+                        onClick={() => setCancelOffer(true)}
+                        className="flex focus:outline-none min-w-[10rem] m-auto max-w-[10rem] text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-md px-5 py-2.5  mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                      >
+                        <ImCross className="my-auto mr-3" />
+                        Usuń ofertę
+                      </button>
+                      <h2 className="font-bold text-lg text-green-500">
+                        Oferta: Aktywna
+                      </h2>
+                    </div>
+                  ) : (
+                    <h2 className="font-bold text-lg text-red-700">
+                      Oferta: Zakończona
+                    </h2>
+                  )}
                 </div>
                 <div className="justify-end text-center items-center">
                   <h2 className="font-semibold text-md text-black">
@@ -98,6 +120,13 @@ const EmployerOffers = ({ offerDetails }) => {
             </div>
           </div>
         </div>
+
+        {cancelOffer && (
+          <CancelOffer
+            hideModal={hideModal}
+            offerPublicUrl={offerDetails.publicUrl}
+          />
+        )}
         {visible && (
           <Applicants publicUrl={offerDetails.publicUrl} hasCv={hasCv} />
         )}

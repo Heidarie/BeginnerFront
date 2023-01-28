@@ -16,7 +16,7 @@ const CustomInput = ({ label, forgotPassword, ...props }) => {
               {label}
             </label>
             <Link
-              to="/ForgotPassword"
+              to="/PasswordRecovery"
               className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
             >
               Zapomniałeś hasła?

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import DataService from "../../components/data.service";
 import EmployerService from "../../components/employer.service";
+import EmployerOffers from "./components/EmployerOffers";
 import Toast from "../../components/Toast";
-import EmployerOffers from "./EmployerOffers";
 
 const Applications = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ const Applications = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);

@@ -103,7 +103,7 @@ const EmployeeProfile = () => {
     } else {
       setLoading(false);
       setError(true);
-      setErrorMessage(response?.message);
+      setErrorMessage(response?.data?.message);
       setTimeout(() => {
         setErrorMessage("");
         setError(false);
@@ -121,7 +121,7 @@ const EmployeeProfile = () => {
       } else {
         setLoading(false);
         setError(true);
-        setErrorMessage(response?.message);
+        setErrorMessage(response?.data?.message);
         setTimeout(() => {
           setErrorMessage("");
           setError(false);
@@ -135,7 +135,7 @@ const EmployeeProfile = () => {
     filterEmployeeOfferApplications();
     getUser(id);
   }, []);
-
+  console.log(filterAppliedOffers);
   return (
     <div className="app bg-gray-100">
       <main className="grid grid-cols-1 lg:grid-cols-2 gap-6  w-2xl container px-2 mx-auto mt-12">
@@ -165,19 +165,21 @@ const EmployeeProfile = () => {
                 {user?.profession?.toUpperCase()}
               </div>
             </div>
-            <div className="flex justify-start items-start text-start gap-3 m-auto">
-              <h3 className="col-span-3 text-xl">
-                <label className="block text-lg font-medium text-gray-700">
+            <div className="flex justify-start items-start text-start m-auto">
+              <h3 className="col-span-3 text-xl font-light">
+                <label className="block text-lg font-md text-gray-700">
                   Opis
                 </label>
-                {user?.personalDataModel?.description}
+                <p className="ml-3 mt-3">
+                  {user?.personalDataModel?.description}
+                </p>
               </h3>
             </div>
           </div>
           <div className="bg-white shadow mt-6 rounded-lg p-6">
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-md font-semibold text-gray-700 mb-2">
                   Umiejętności
                 </label>
                 <ScrollContainer
@@ -189,7 +191,7 @@ const EmployeeProfile = () => {
                     {user?.personalDataModel?.skills?.map((skill, id) => {
                       return (
                         <li
-                          className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
+                          className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-bold text-white uppercase"
                           key={skill + id}
                         >
                           {skill}
@@ -204,7 +206,7 @@ const EmployeeProfile = () => {
           <div className="bg-white shadow mt-6 rounded-lg p-6">
             <div className="grid grid-cols-6 gap-6">
               <div className="col-span-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-md font-semibold text-gray-700 mb-2">
                   Certyfikaty
                 </label>
                 <ScrollContainer
@@ -217,7 +219,7 @@ const EmployeeProfile = () => {
                       (certificate, id) => {
                         return (
                           <li
-                            className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-semibold text-black"
+                            className="outline-offset-2 outline-white p-3 text-sm xl:text-md 2xl:text-lg font-bold text-white uppercase"
                             key={certificate + id}
                           >
                             {certificate}
@@ -232,7 +234,9 @@ const EmployeeProfile = () => {
           </div>
           <div className="bg-white shadow mt-6 rounded-lg p-6">
             <div className="grid grid-cols-6 gap-6">
-              <h3 className="col-span-3 my-auto">Doświadczenie</h3>
+              <h3 className="col-span-3 my-auto text-md font-semibold">
+                Doświadczenie
+              </h3>
               <div className="col-span-3 items-end text-end">
                 {!editExp ? (
                   user?.isLoggedInUserAccount && (
@@ -332,7 +336,7 @@ const EmployeeProfile = () => {
                                   </>
                                 )}
                                 <div className="bg-white px-4 py-5 sm:p-6">
-                                  <div className="grid grid-cols-6 gap-6">
+                                  <div className="grid grid-cols-6 gap-6 text-lg font-light">
                                     <h3 className="col-span-3">
                                       <label className="block text-sm font-medium text-gray-700">
                                         Nazwa firmy
@@ -409,7 +413,7 @@ const EmployeeProfile = () => {
                 >
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
-                      <div className="grid grid-cols-6 gap-6">
+                      <div className="grid grid-cols-6 gap-6 text-lg font-light">
                         <h3 className="col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
                             Nazwa firmy
@@ -418,7 +422,7 @@ const EmployeeProfile = () => {
                         </h3>
                         <h3 className="col-span-3">
                           <label className="block text-sm font-medium text-gray-700">
-                            Tytuł
+                            Stanowisko
                           </label>
                           {experience.position}
                         </h3>
@@ -454,7 +458,9 @@ const EmployeeProfile = () => {
 
           <div className="bg-white shadow mt-6 rounded-lg p-6">
             <div className="grid grid-cols-6 gap-6">
-              <h3 className="col-span-3 my-auto">Wykształcenie</h3>
+              <h3 className="col-span-3 my-auto text-md font-semibold">
+                Wykształcenie
+              </h3>
               <div className="col-span-3 items-end text-end">
                 {!editGrad ? (
                   user?.isLoggedInUserAccount && (
@@ -554,7 +560,7 @@ const EmployeeProfile = () => {
                                   </>
                                 )}
                                 <div className="bg-white px-4 py-5 sm:p-6">
-                                  <div className="grid grid-cols-6 gap-6">
+                                  <div className="grid grid-cols-6 gap-6 text-lg font-light">
                                     <h3 className="col-span-6">
                                       <label className="block text-sm font-medium text-gray-700">
                                         Nazwa uczelni
@@ -633,7 +639,7 @@ const EmployeeProfile = () => {
                 >
                   <div className="shadow-md sm:rounded-md overflow-visible">
                     <div className="bg-white px-4 py-5 sm:p-6">
-                      <div className="grid grid-cols-6 gap-6">
+                      <div className="grid grid-cols-6 gap-6 text-lg font-light">
                         <h3 className="col-span-6">
                           <label className="block text-sm font-medium text-gray-700">
                             Nazwa uczelni
@@ -678,7 +684,9 @@ const EmployeeProfile = () => {
           {user?.isLoggedInUserAccount && (
             <div className="bg-white shadow mt-6 rounded-lg p-6">
               <div className="flex w-full justify-between">
-                <h1 className="my-auto">Oferty na które zaaplikowałeś</h1>
+                <h2 className="my-auto text-md font-semibold">
+                  Oferty na które zaaplikowałeś
+                </h2>
                 <select
                   className=""
                   label="Filtry"
@@ -700,7 +708,8 @@ const EmployeeProfile = () => {
               <div className="grid mt-5 gap-4 grid-cols-2 justify-center items-center w-full">
                 {filteredOffers.length === 0 ? (
                   <div className="col-span-2">
-                    {filterAppliedOffers === "" && (
+                    {(filterAppliedOffers === "" ||
+                      filterAppliedOffers === undefined) && (
                       <h3 className="mt-2 text-center font-bold text-lg text-gray-500">
                         Nie zaaplikowałeś jeszcze na żadną ofertę
                       </h3>
