@@ -17,6 +17,8 @@ const RegisterEmployee = () => {
   const [filtersData, setFiltersData] = useState([]);
   const [occupation, setOccupation] = useState(null);
   const [profession, setProfession] = useState([]);
+  const [happyFlow, setHappyFlow] = useState(false);
+
   const navigate = useNavigate();
 
   async function loadFilters() {
@@ -79,8 +81,12 @@ const RegisterEmployee = () => {
     );
     if (status === 201) {
       setLoading(false);
-      navigate({ pathname: "/Login" });
-      window.location.reload();
+      setHappyFlow(true);
+      setTimeout(() => {
+        setHappyFlow(false);
+        navigate({ pathname: "/Login" });
+        window.location.reload();
+      }, 2000);
     } else {
       setLoading(false);
       setError(true);
@@ -265,7 +271,8 @@ const RegisterEmployee = () => {
           .
         </p>
       </div>
-      {loading && <Toast text="Ładowanie" icon="LOADING" />}
+      {happyFlow && <Toast text="Pomyślnie utworzono konto!" icon="HAPPY" />}
+      {loading && <Toast text="Tworzenie konta..." icon="LOADING" />}
       {error && (
         <Toast
           text={

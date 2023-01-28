@@ -18,6 +18,7 @@ const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onSubmit = async (values, actions) => {
+    setLoading(true);
     let { status, data, response } = await AuthService.login(values);
     if (status === 200) {
       setLoading(false);
@@ -49,13 +50,16 @@ const Login = () => {
         >
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
-              <h2 className="text-4xl font-bold text-white">Beginner.</h2>
+              <h2 className="m-auto text-4xl font-extrabold text-white uppercase">
+                Beginner.
+              </h2>
 
-              <p className="max-w-xl mt-3 text-gray-300">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. In
-                autem ipsa, nulla laboriosam dolores, repellendus perferendis
-                libero suscipit nam temporibus molestiae
-              </p>
+              <h2 className="m-auto text-white font-extrabold text-6xl">
+                The journey{" "}
+                <span className="underline decoration-[10px] underline-offset-[6px] decoration-solid decoration-[#00df9a]">
+                  begins...
+                </span>
+              </h2>
             </div>
           </div>
         </div>

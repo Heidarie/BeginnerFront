@@ -7,8 +7,8 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Pagination, Navigation } from "swiper";
-import Toast from "../../components/Toast";
-import EmployerService from "../../components/employer.service";
+import Toast from "../../../components/Toast";
+import EmployerService from "../../../components/employer.service";
 
 const Applicants = ({ publicUrl, hasCv }) => {
   const [loading, setLoading] = useState(false);
@@ -201,7 +201,7 @@ const Applicants = ({ publicUrl, hasCv }) => {
                             handleApplicant(publicUrl, applicant?.publicUrl, 2)
                           }
                           type="button"
-                          className="flex focus:outline-none min-w-[9rem] max-w-[9rem] m-auto text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                          className="flex focus:outline-none min-w-[9rem] max-w-[9rem] m-auto text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-lg px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                         >
                           <ImCross className="my-auto mr-3" />
                           Odrzuć
@@ -334,7 +334,7 @@ const Applicants = ({ publicUrl, hasCv }) => {
           icon="ERROR"
         />
       )}
-      {loading && <Toast text="Ładowanie twoich ofert." icon="LOADING" />}
+      {loading && <Toast text="Ładowanie..." icon="LOADING" />}
     </>
   );
 };

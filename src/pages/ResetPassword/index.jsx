@@ -18,14 +18,13 @@ const PasswordRecovery = () => {
 
   const onSubmit = async (values) => {
     const { confirmPassword } = values;
-    console.log(confirmPassword);
     setLoading(true);
     let { status, response } = await AuthService.setNewPassword(
       token,
       mail,
       confirmPassword
     );
-    if (status === 200) {
+    if (status === 200 || status === 204) {
       setLoading(false);
       setHappyFlow(response?.message);
       setTimeout(() => {
@@ -46,7 +45,7 @@ const PasswordRecovery = () => {
   return (
     <div className="flex h-screen w-screen justify-center items-center bg-gray-100">
       <div className="m-auto">
-        {loading && (
+        {loading ? (
           <div>
             <div role="status" className="mb-4">
               <svg
@@ -75,8 +74,7 @@ const PasswordRecovery = () => {
               hasła...
             </h2>
           </div>
-        )}
-        {!loading && !happyFlow && token && mail ? (
+        ) : happyFlow === false && token && mail ? (
           <Formik
             initialValues={{
               password: "",
@@ -120,7 +118,7 @@ const PasswordRecovery = () => {
               </Form>
             )}
           </Formik>
-        ) : happyFlow ? (
+        ) : happyFlow !== false ? (
           <div>
             <div className="m-auto w-[10rem] h-[10rem] rounded-lg mb-4">
               <img
@@ -138,19 +136,10 @@ const PasswordRecovery = () => {
           </div>
         ) : (
           <div>
-            <div className="m-auto w-[10rem] h-[10rem] rounded-lg mb-4">
-              <img
-                src="https://www.svgrepo.com/show/406848/party-popper.svg"
-                className="m-auto w-[10rem] h-[10rem]"
-                alt="Party Popper SVG Vector"
-                title="Party Popper SVG Vector"
-              ></img>
-              <span className="sr-only">Warning icon</span>
-            </div>
             <h2 className="m-auto text-gray-600 font-extrabold text-6xl">
               Niestety ale{" "}
               <span className="underline decoration-[#da0202]">nie można</span>{" "}
-              zmienić hasła.
+              zmienić hasła.{" :("}
             </h2>
           </div>
         )}

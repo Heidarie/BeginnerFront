@@ -1,5 +1,5 @@
 import { Form, Formik } from "formik";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../components/auth.service";
 import CustomInput from "../../components/form/CustomInput";
@@ -13,20 +13,17 @@ const PasswordRecovery = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [happyFlow, setHappyFlow] = useState(false);
 
-  const params = new URLSearchParams(window.location.search);
-  const token = params.get("token") || undefined;
-  const mail = params.get("mail") || undefined;
-
   const onSubmit = async (values) => {
     const { email } = values;
     let { status, response } = await AuthService.sendResetPasswordEmail(email);
-    if (status === 200) {
+    console.log(status);
+    if (status === 200 || status === 204) {
       setLoading(false);
       setHappyFlow(response?.message);
       setTimeout(() => {
         setHappyFlow(false);
         navigate("/Login");
-      }, 3000);
+      }, 2000);
     } else {
       setLoading(false);
       setError(true);
@@ -71,7 +68,7 @@ const PasswordRecovery = () => {
             </h2>
           </div>
         )}
-        {!loading && !happyFlow ? (
+        {happyFlow === false ? (
           <Formik
             initialValues={{
               email: "",

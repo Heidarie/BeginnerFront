@@ -91,9 +91,23 @@ const postApplicantResult = async (
   }
 };
 
+const deleteOffer = async (offerPublicUrl, notifyApplicants) => {
+  try {
+    let response = await instance.delete(
+      `/Offers/Delete/${offerPublicUrl}?notifyApplicants=${notifyApplicants}`
+    );
+    if (response.status === 201 || response.status === 200) {
+      return response;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
 const EmployerService = {
   getEmployerOffers,
   getUserResumee,
+  deleteOffer,
   updateEmployerData,
   createOffer,
   postApplicantResult,
