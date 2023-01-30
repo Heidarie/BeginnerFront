@@ -60,7 +60,6 @@ const EmployerProfile = () => {
               title="User is online"
             ></div>
           </div>
-
           <div className="col-span-2 md:col-span-3 px-6 ">
             <div className="flex h-8 flex-row">
               <h2 className="text-lg font-semibold">{employer?.companyName}</h2>
