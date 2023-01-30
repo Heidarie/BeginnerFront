@@ -10,7 +10,7 @@ export const basicSchema = yup.object().shape({
     .required("Email jest wymagany"),
   password: yup
     .string()
-    .min(5)
+    .min(8)
     .matches(passwordRules, { message: "Stwórz mocniejsze hasło" })
     .required("Hasło jest wymagane"),
   confirmPassword: yup
@@ -24,11 +24,18 @@ export const basicSchema = yup.object().shape({
   name: yup
     .string()
     .min(3, "Imię musi posiadać conajmniej 3 znaki")
-    .required("Imię jest wymagane"),
+    .required("Imię jest wymagane")
+    .matches(/^[\s\p{L}]+$/u, "Imię może składać się tylko z liter"),
   surname: yup
     .string()
     .min(3, "Nazwisko musi posiadać conajmniej 3 znaki")
-    .required("Nazwisko jest wymagane"),
+    .required("Nazwisko jest wymagane")
+    .matches(/^[\s\p{L}]+$/u, "Nazwisko może składać się tylko z liter"),
+  city: yup
+    .string()
+    .min(2, "Miasto musi posiadać conajmniej 2 znaki")
+    .required("Miasto jest wymagane")
+    .matches(/^[\s\p{L}]+$/u, "Miasto może składać się tylko z liter"),
 });
 
 export const advancedSchema = yup.object().shape({
@@ -38,7 +45,7 @@ export const advancedSchema = yup.object().shape({
     .required("Email jest wymagany"),
   password: yup
     .string()
-    .min(5)
+    .min(8)
     .matches(passwordRules, { message: "Stwórz mocniejsze hasło" })
     .required("Hasło jest wymagane"),
   confirmPassword: yup
@@ -53,4 +60,9 @@ export const advancedSchema = yup.object().shape({
     .string()
     .min(2, "Nazwa firmy musi posiadać conajmniej 2 znaki")
     .required("Nazwa firmy jest wymagana"),
+  city: yup
+    .string()
+    .min(2, "Miasto musi posiadać conajmniej 2 znaki")
+    .required("Miasto jest wymagane")
+    .matches(/^[\s\p{L}]+$/u, "Miasto może składać się tylko z liter"),
 });
