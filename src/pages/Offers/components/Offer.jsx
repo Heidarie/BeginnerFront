@@ -54,7 +54,7 @@ const Offer = React.forwardRef((props, ref) => {
             </p>
           </div>
           <div className="ml-2 -mt-5 md:m-0 2xl:mt-4 col-span-5 md:col-span-1 md:w-full p-1">
-            <h2 className="font-bold text-black text-lg sm:text-md md:text-center xl:text-xl 2xl:text-2xl break-words">
+            <h2 className="font-bold text-black text-lg sm:text-md md:text-center xl:text-xl 2xl:text-2xl break-words lg:min-h-[6rem]">
               {title}
             </h2>
             <h2 className="font-semibold text-black text-lg sm:text-md md:text-center xl:text-xl 2xl:text-2xl">
@@ -76,7 +76,7 @@ const Offer = React.forwardRef((props, ref) => {
                 requirements?.map((requirement, id) => {
                   return (
                     <li
-                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black break-words"
+                      className="outline-offset-2 outline-white p-3 text-sm xl:text-xl 2xl:text-2xl font-semibold text-black truncate"
                       key={requirement + id}
                     >
                       {requirement}
