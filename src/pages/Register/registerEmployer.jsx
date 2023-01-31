@@ -163,7 +163,6 @@ const RegisterEmployer = () => {
           icon="ERROR"
         />
       )}
-      {loading && <Toast text="Próba tworzenia konta" icon="LOADING" />}
     </div>
   );
 };

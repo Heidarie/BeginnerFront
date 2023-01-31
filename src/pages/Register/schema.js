@@ -10,7 +10,7 @@ export const basicSchema = yup.object().shape({
     .required("Email jest wymagany"),
   password: yup
     .string()
-    .min(8)
+    .min(8, "Hasło musi posiadać conajmniej 8 znaków")
     .matches(passwordRules, { message: "Stwórz mocniejsze hasło" })
     .required("Hasło jest wymagane"),
   confirmPassword: yup
@@ -45,7 +45,7 @@ export const advancedSchema = yup.object().shape({
     .required("Email jest wymagany"),
   password: yup
     .string()
-    .min(8)
+    .min(8, "Hasło musi posiadać conajmniej 8 znaków")
     .matches(passwordRules, { message: "Stwórz mocniejsze hasło" })
     .required("Hasło jest wymagane"),
   confirmPassword: yup

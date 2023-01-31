@@ -17,7 +17,6 @@ const Navbar = () => {
   const [navMenu, setNavMenu] = useState(false);
   const [hover, setHover] = useState([false, false, false, false, false]);
   const [user, setUser] = useState(undefined);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleLogout = async () => {
     var res = await AuthService.logout();
@@ -36,15 +35,18 @@ const Navbar = () => {
     );
   };
   const handleUserData = async () => {
-    const { data } = await DataService.getUserData();
-    setUser(data);
+    const response = await DataService.getUserData();
+    if (response.status === 200 || response.status === 201) {
+      setUser(response.data);
+    } else {
+      setUser(undefined);
+    }
   };
   useEffect(() => {
-    setIsLoggedIn(DataService.checkCookieAuthState("AuthState"));
-    if (user === undefined && isLoggedIn) {
+    if (user === undefined) {
       handleUserData();
     }
-  }, [isLoggedIn, user]);
+  }, [user]);
 
   return (
     <nav className="bg-gray-800 fixed w-full top-0 z-[100]">
