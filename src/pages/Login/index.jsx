@@ -15,7 +15,6 @@ const Login = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const onSubmit = async (values, actions) => {
     setLoading(true);
@@ -34,12 +33,16 @@ const Login = () => {
       }, 3000);
     }
   };
-  useEffect(() => {
-    setIsLoggedIn(DataService.checkCookieAuthState("AuthState"));
-    if (isLoggedIn) {
+  const handleUserData = async () => {
+    const response = await DataService.getUserData();
+    if (response.status === 200 || response.status === 201) {
       navigate("/");
     }
-  }, [isLoggedIn, navigate]);
+  };
+
+  useEffect(() => {
+    handleUserData();
+  }, []);
 
   return (
     <div className="bg-white dark:bg-gray-900 text-white">

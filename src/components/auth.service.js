@@ -41,11 +41,10 @@ const confirmAccount = async (token, mail) => {
   }
 };
 
-const sendResetPasswordEmail = async (values) => {
+const sendResetPasswordMail = async (email) => {
   try {
     let response = await instance.post(
-      "/Authentication/SendResetPasswordEmail",
-      values,
+      `/Authentication/SendResetPasswordMail?email=${email}`,
       {
         headers: {
           "Content-Type": "application/json-patch+json",
@@ -60,10 +59,15 @@ const sendResetPasswordEmail = async (values) => {
 };
 
 const setNewPassword = async (token, mail, password) => {
+  console.log(token, mail, password);
   try {
     let response = await instance.post(
-      `/Authentication/SetNewPassword?email=${mail}&token=${token}`,
-      password,
+      "/Authentication/SetNewPassword",
+      {
+        token: token,
+        email: mail,
+        password: password,
+      },
       {
         headers: {
           "Content-Type": "application/json-patch+json",
@@ -73,6 +77,7 @@ const setNewPassword = async (token, mail, password) => {
 
     return response;
   } catch (error) {
+    console.log("error");
     return error;
   }
 };
@@ -83,7 +88,7 @@ const logout = async () => {
 };
 
 const AuthService = {
-  sendResetPasswordEmail,
+  sendResetPasswordMail,
   setNewPassword,
   register,
   login,

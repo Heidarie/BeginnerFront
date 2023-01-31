@@ -42,24 +42,7 @@ const getOffers = async (page, query) => {
     return error;
   }
 };
-const checkCookieAuthState = (name) => {
-  const cookieName = document.cookie.split("; ").reduce((r, v) => {
-    const parts = v.split("=");
-    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-  }, "");
-  if (cookieName === "unlogged" || cookieName === undefined) {
-    return false;
-  } else {
-    return true;
-  }
-};
 
-function deleteCookieAuthState(name) {
-  if (checkCookieAuthState(name)) {
-    document.cookie =
-      name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-  }
-}
 const getUserData = async () => {
   try {
     let response = await instance.get("/api/About/Me");
@@ -106,9 +89,7 @@ const DataService = {
   getOffers,
   getFilters,
   getOfferDetails,
-  checkCookieAuthState,
   getUserData,
-  deleteCookieAuthState,
 };
 
 export default DataService;

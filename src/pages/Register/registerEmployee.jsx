@@ -272,7 +272,6 @@ const RegisterEmployee = () => {
         </p>
       </div>
       {happyFlow && <Toast text="Pomyślnie utworzono konto!" icon="HAPPY" />}
-      {loading && <Toast text="Tworzenie konta..." icon="LOADING" />}
       {error && (
         <Toast
           text={
